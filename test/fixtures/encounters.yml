@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: one
+  patient: one
+  chief_complaint: MyText
+  subjective: MyText
+  objective: MyText
+  assessment_and_plan: MyText
+
+two:
+  provider: two
+  patient: two
+  chief_complaint: MyText
+  subjective: MyText
+  objective: MyText
+  assessment_and_plan: MyText
