@@ -1,0 +1,17 @@
+<h2>Create a new provider account</h2>
+
+<%= form_with model: @provider do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <br><br>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+    <br><br>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <br>
+    <%= f.label :password_confirm, "Confirm password" %>
+    <%= f.password_field :password_confirm %>
+    <br><br>
+    <%= f.submit "Create Account!" %>
+<% end %>
