@@ -1,0 +1,10 @@
+<h2>All Patients for Dr. <%= @provider.name %></h2>
+
+<p>Search patient:</p>
+
+<p>Recently viewed patients:</p>
+<ul>
+<% @patients.order(:updated_at).limit(5).each do |patient| %>
+    <li><%= patient.name %></li>
+<% end %>
+</ul>
