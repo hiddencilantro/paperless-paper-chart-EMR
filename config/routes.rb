@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'static#main'
 
   resources :providers, only: [:new, :create, :show] do
-    resources :patients, only: [:index]
+    resources :patients, only: [:index, :show]
   end
   
   get '/login', to: 'sessions#new'

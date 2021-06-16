@@ -1,10 +1,19 @@
 <h2>All Patients for Dr. <%= @provider.name %></h2>
 
-<p>Search patient:</p>
+<% if flash[:message] %>
+    <p><%= flash[:message] %></p>
+<% end %>
+
+<%= form_with url: provider_patients_path, method: :get do |f| %>
+    <%= f.label :name, "Patient Name:" %>
+    <%= f.text_field :name %>
+    <br>
+    <%= f.submit "Search" %>
+<% end %>
 
 <p>Recently viewed patients:</p>
 <ul>
 <% @patients.order(:updated_at).limit(5).each do |patient| %>
-    <li><%= patient.name %></li>
+    <li><%= link_to patient.name, provider_patient_path(@provider, patient) %></li>
 <% end %>
 </ul>
