@@ -1,7 +1,8 @@
 class PatientsController < ApplicationController
     def index
-        @provider = Provider.find_by(id: params[:provider_id])
+        @provider = Provider.find_by(id: session[:user_id])
         @patients = @provider.patients
+        @all_patients = Patient.all
         if params[:name]
             @patient = Patient.find_by(name: params[:name])
             if @patient

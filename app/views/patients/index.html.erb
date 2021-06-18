@@ -7,7 +7,7 @@
 <%= button_to "Create New Patient File", new_provider_patient_path(@provider), method: :get %>
 <br>
 
-<%= form_with url: provider_patients_path, method: :get do |f| %>
+<%= form_with url: patients_path, method: :get do |f| %>
     <%= f.label :name, "Patient Name:" %>
     <%= f.text_field :name %>
     <br>
