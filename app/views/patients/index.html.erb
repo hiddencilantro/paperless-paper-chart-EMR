@@ -1,4 +1,4 @@
-<h2>All Patients for Dr. <%= @provider.name %></h2>
+<h2>Patient Info</h2>
 
 <% if flash[:message] %>
     <p><%= flash[:message] %></p>
@@ -14,9 +14,9 @@
     <%= f.submit "Search" %>
 <% end %>
 
-<p>Recently viewed patients:</p>
+<p>Patients recently viewed by Dr. <%= @provider.name %>:</p>
 <ul>
-<% @patients.order(:updated_at).limit(5).each do |patient| %>
-    <li><%= link_to patient.name, provider_patient_path(@provider, patient) %></li>
+<% @patients.order(updated_at: :desc).limit(5).each do |patient| %>
+    <li><%= link_to "#{patient.name} / #{patient.sex.titleize} / #{age(patient.dob)}", provider_patient_path(@provider, patient) %></li>
 <% end %>
 </ul>
