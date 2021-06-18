@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post '/providers/login', to: 'sessions#provider_authenticate'
 
   resources :providers, only: [:new, :create, :show] do
-    resources :patients, only: [:index, :show]
+    resources :patients, only: [:index, :show, :new, :create]
   end
 
 end

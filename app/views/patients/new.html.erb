@@ -1,0 +1,18 @@
+<h2>Create New Patient File</h2>
+
+<% if flash[:message] %>
+    <p><%= flash[:message] %></p>
+<% end %>
+
+<%= form_with model: [:provider, @patient] do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <br><br>
+    <%= f.label :sex %>
+    <%= f.select :sex, [["Male", "male"], ["Female", "female"], ["Unknown", "unknown"], ["Not Applicable", "not_applicable"]], include_blank: "Please select" %>
+    <br><br>
+    <%= f.label :dob, "Date of Birth" %>
+    <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true %> 
+    <br><br>
+    <%= f.submit %>
+<% end %>
