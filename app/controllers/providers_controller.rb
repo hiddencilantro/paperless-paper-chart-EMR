@@ -6,7 +6,7 @@ class ProvidersController < ApplicationController
     def create
         provider = Provider.new(provider_params)
         if provider.save
-            session[:user_id] = provider.id
+            session[:provider_id] = provider.id
             redirect_to provider
         else
             render :new
