@@ -1,3 +1,7 @@
+<% if flash[:message] %>
+    <p><%= flash[:message] %></p>
+<% end %>
+
 <h2>Welcome, <%= @provider.name %></h2>
 
 <p>Reminders/Sticky Note</p>

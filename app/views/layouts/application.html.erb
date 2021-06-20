@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <br>
+    <%= link_to "Home", current_user %>
+    <%= link_to "Logout", logout_path, method: :delete %>
     <%= yield %>
   </body>
 </html>

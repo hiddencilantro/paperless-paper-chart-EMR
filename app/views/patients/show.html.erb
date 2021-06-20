@@ -1,3 +1,7 @@
+<% if flash[:message] %>
+    <p><%= flash[:message] %></p>
+<% end %>
+
 <h2><%= @patient.name %></h3>
 <h3>Sex: <%= @patient.sex.titleize %></h6>
 <h3>Age: <%= age(@patient.dob) %></h6>

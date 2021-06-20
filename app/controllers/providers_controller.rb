@@ -1,4 +1,7 @@
 class ProvidersController < ApplicationController
+    before_action :check_if_logged_in, only: [:show]
+    before_action :check_if_provider, only: [:show]
+
     def new
         @provider = Provider.new
     end
@@ -15,6 +18,7 @@ class ProvidersController < ApplicationController
 
     def show
         @provider = Provider.find_by(id: params[:id])
+        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot access another provider's profile."} if !current_user?(@provider)
     end
 
     private

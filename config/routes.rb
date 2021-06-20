@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get '/providers/login', to: 'sessions#provider_login'
   post '/providers/login', to: 'sessions#provider_authenticate'
+  match '/logout', to: 'sessions#logout', via: [:get, :delete]
 
   resources :patients, only: [:index]
   resources :providers, only: [:new, :create, :show] do
