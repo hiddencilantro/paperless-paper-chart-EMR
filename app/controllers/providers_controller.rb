@@ -1,6 +1,6 @@
 class ProvidersController < ApplicationController
-    before_action :check_if_logged_in, only: [:show]
-    before_action :check_if_provider, only: [:show]
+    before_action :verify_if_logged_in, only: [:show]
+    before_action :verify_provider, only: [:show]
 
     def new
         @provider = Provider.new

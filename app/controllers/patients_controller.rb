@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
-    before_action :check_if_logged_in, only: [:index, :show]
-    before_action :check_if_provider, only: [:index]
+    before_action :verify_if_logged_in, only: [:index, :show]
+    before_action :verify_provider, only: [:index]
 
     def index
         @patients = current_user.patients
@@ -40,7 +40,7 @@ class PatientsController < ApplicationController
     def show
         @patient = Patient.find_by(id: params[:id])
         if !current_user.provider? && !current_user?(@patient)
-            redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You do not have access to view other patient files."}
+            redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You do not have access to other patient files."}
         end
     end
 

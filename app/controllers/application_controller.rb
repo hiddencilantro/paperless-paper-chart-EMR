@@ -19,19 +19,19 @@ class ApplicationController < ActionController::Base
 
     private
 
-    def check_if_logged_in
+    def verify_if_logged_in
         unless logged_in?
             redirect_to root_path, flash: {message: "Please log in."}
         end
     end
 
-    def check_if_provider
+    def verify_provider
         unless current_user.provider?
             redirect_back fallback_location: current_user, allow_other_host: false
         end
     end
 
-    def check_if_patient
+    def verify_patient
         unless current_user.patient?
             redirect_back fallback_location: current_user, allow_other_host: false
         end
