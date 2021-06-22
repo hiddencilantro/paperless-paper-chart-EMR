@@ -4,13 +4,14 @@ class PatientsController < ApplicationController
 
     def index
         @patients = current_user.patients
-        if params[:name]
-            @patient = Patient.find_by(name: params[:name])
-            if @patient
-                render :show
-            else
-                redirect_to provider_patients_path(current_user), flash: {message: "Patient record not found!"}
-            end
+    end
+
+    def search
+        @patient = Patient.find_by(name: params[:name])
+        if @patient
+            render :show
+        else
+            redirect_to provider_patients_path(current_user), flash: {message: "Patient record not found!"}
         end
     end
     
@@ -23,7 +24,7 @@ class PatientsController < ApplicationController
         if current_user.provider?
             patient.providers << current_user
             if patient.save
-                redirect_to provider_patient_path(current_user, patient)
+                redirect_to provider_patient_path(patient)
             else
                 render :new, flash: {message: "Patient could not be created."}
             end

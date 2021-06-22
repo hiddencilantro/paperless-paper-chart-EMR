@@ -9,7 +9,7 @@
 <%= button_to "Create New Patient File", new_provider_patient_path(current_user), method: :get %>
 <br>
 
-<%= form_with url: patients_path, method: :get do |f| %>
+<%= form_with url: search_patients_path, method: :get do |f| %>
     <%= f.label :name, "Patient Name:" %>
     <%= f.text_field :name %>
     <br>
@@ -19,6 +19,6 @@
 <p>Patients recently viewed by Dr. <%= current_user.name %>:</p>
 <ul>
 <% @patients.order(updated_at: :desc).limit(5).each do |patient| %>
-    <li><%= link_to "#{patient.name} / #{patient.sex.titleize} / #{age(patient.dob)}", provider_patient_path(current_user, patient) %></li>
+    <li><%= link_to "#{patient.name} / #{patient.sex.titleize} / #{age(patient.dob)}", provider_patient_path(patient) %></li>
 <% end %>
 </ul>
