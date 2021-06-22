@@ -1,6 +1,8 @@
-<% if flash[:message] %>
-    <p><%= flash[:message] %></p>
-<% end %>
+<div id="flash-notice">
+    <% if flash[:message] %>
+        <p><%= flash[:message] %></p>
+    <% end %>
+</div>
 
 <h2><%= @patient.name %></h3>
 <h3>Sex: <%= @patient.sex.titleize %></h6>

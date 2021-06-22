@@ -18,7 +18,7 @@ class ProvidersController < ApplicationController
 
     def show
         @provider = Provider.find_by(id: params[:id])
-        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot access another provider's profile."} if !current_user?(@provider)
+        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot access another provider's account."} if !current_user?(@provider)
     end
 
     private

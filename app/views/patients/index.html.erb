@@ -1,8 +1,10 @@
 <h2>Patient Info</h2>
 
-<% if flash[:message] %>
-    <p><%= flash[:message] %></p>
-<% end %>
+<div id="flash-notice">
+    <% if flash[:message] %>
+        <p><%= flash[:message] %></p>
+    <% end %>
+</div>
 
 <%= button_to "Create New Patient File", new_provider_patient_path(current_user), method: :get %>
 <br>
