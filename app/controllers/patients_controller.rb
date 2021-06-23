@@ -17,8 +17,8 @@ class PatientsController < ApplicationController
     
     def new
         @patient = Patient.new
-        if params[:provider_id].to_i != current_user.id
-            redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, flash: {message: "You cannot create a patient file for another provider."}
+        if params[:provider_id]
+            redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, flash: {message: "You cannot create a patient file for another provider."} unless params[:provider_id].to_i == current_user.id
         end
     end
 
