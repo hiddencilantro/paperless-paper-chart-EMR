@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
-    before_action :verify_if_logged_in, only: [:index, :show]
-    before_action :verify_provider, only: [:index]
+    before_action :verify_if_logged_in, only: [:index, :show, :search, :new], unless: :path_exception
+    before_action :verify_provider, only: [:index, :search, :new], unless: :path_exception
 
     def index
         @patients = current_user.patients
@@ -17,6 +17,9 @@ class PatientsController < ApplicationController
     
     def new
         @patient = Patient.new
+        if params[:provider_id].to_i != current_user.id
+            redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, flash: {message: "You cannot create a patient file for another provider."}
+        end
     end
 
     def create
@@ -49,5 +52,9 @@ class PatientsController < ApplicationController
 
     def patient_params
         params.require(:patient).permit(:name, :sex, :dob)
+    end
+
+    def path_exception
+        request.env['PATH_INFO'] == "/patients/new"
     end
 end

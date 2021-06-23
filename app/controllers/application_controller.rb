@@ -21,13 +21,13 @@ class ApplicationController < ActionController::Base
 
     def verify_if_logged_in
         unless logged_in?
-            redirect_to root_path, flash: {message: "Please log in."}
+            redirect_to root_path, flash: {message: "You must log in."}
         end
     end
 
     def verify_provider
         unless current_user.provider?
-            redirect_back fallback_location: current_user, allow_other_host: false
+            redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You must be logged in as a provider to access this page."}
         end
     end
 
