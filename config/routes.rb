@@ -6,14 +6,14 @@ Rails.application.routes.draw do
   post '/providers/login', to: 'sessions#provider_authenticate'
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
 
-  resources :patients, only: [:index, :new, :create, :show] do
+  resources :patients, only: [:new, :create, :show] do
     get 'search', on: :collection
   end
-  
-  scope shallow_path: "provider", shallow_prefix: "provider" do
+
+  # scope shallow_path: "provider", shallow_prefix: "provider" do
     resources :providers, only: [:new, :create, :show] do
-      resources :patients, only: [:index, :new, :create, :show], shallow: true
+      resources :patients, only: [:index, :new, :create]
     end
-  end
+  # end
 
 end

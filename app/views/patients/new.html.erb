@@ -1,12 +1,16 @@
 <h2>Create New Patient File</h2>
 
-<div id="flash-notice">
-    <% if flash[:message] %>
-        <p><%= flash[:message] %></p>
-    <% end %>
-</div>
+<% if @patient.errors.any? %>
+    <div id="flash-notice">
+        <ul>
+        <% @patient.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+        </ul>
+    </div>
+<% end %>
 
-<%= form_with model: [:provider, @patient] do |f| %>
+<%= form_with model: @patient, url: provider_patients_path(current_user) do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %>
     <br><br>

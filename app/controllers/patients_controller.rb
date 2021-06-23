@@ -20,18 +20,18 @@ class PatientsController < ApplicationController
     end
 
     def create
-        patient = Patient.new(patient_params)
+        @patient = Patient.new(patient_params)
         if current_user.provider?
-            patient.providers << current_user
-            if patient.save
-                redirect_to provider_patient_path(patient)
+            @patient.providers << current_user
+            if @patient.save
+                redirect_to @patient
             else
-                render :new, flash: {message: "Patient could not be created."}
+                render :new
             end
         else
-            if patient.save
-                session[:patient_id] = patient.id
-                redirect_to patient
+            if @patient.save
+                session[:patient_id] = @patient.id
+                redirect_to @patient
             else
                 render :new
             end
