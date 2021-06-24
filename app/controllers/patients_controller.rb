@@ -23,8 +23,8 @@ class PatientsController < ApplicationController
     end
 
     def create
-        @patient = Patient.new(patient_params)
         if current_user.provider?
+            @patient = Patient.new(patient_file_params)
             @patient.providers << current_user
             if @patient.save
                 redirect_to @patient
@@ -32,7 +32,8 @@ class PatientsController < ApplicationController
                 render :new
             end
         else
-            if @patient.save
+            @patient = Patient.find_or_create_by(patient_account_params)
+            if @patient.valid?
                 session[:patient_id] = @patient.id
                 redirect_to @patient
             else
@@ -50,8 +51,12 @@ class PatientsController < ApplicationController
 
     private
 
-    def patient_params
+    def patient_file_params
         params.require(:patient).permit(:first_name, :last_name, :sex, :dob)
+    end
+
+    def patient_account_params
+        params.require(:patient).permit(:first_name, :last_name, :username, :password, :password_confirmation, :sex, :dob)
     end
 
     def search_params
