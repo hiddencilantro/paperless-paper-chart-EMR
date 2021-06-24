@@ -7,14 +7,17 @@
 
 <%= form_with url: search_patients_path, method: :get do |f| %>
     <%= f.label :name, "Patient Name:" %>
-    <%= f.text_field :name %>
+    <%= f.fields_for :patient do |attribute| %>
+        <%= attribute.text_field :first_name, placeholder: "First Name" %>
+        <%= attribute.text_field :last_name, placeholder: "Last Name" %>
+    <% end %>
     <br>
     <%= f.submit "Search" %>
 <% end %>
 
-<p>Patient records last updated by Dr. <%= current_user.name %>:</p>
+<p>Patient records last updated by Dr. <%= full_name(current_user) %>:</p>
 <ul>
 <% @patients.order(updated_at: :desc).limit(5).each do |patient| %>
-    <li><%= link_to "#{patient.name} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
+    <li><%= link_to "#{full_name(patient)} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
 <% end %>
 </ul>

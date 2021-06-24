@@ -1,11 +1,7 @@
 <h1>Paperless Paper Chart</h1>
 <p>Welcome to Paperless Paper Chart, the world's most versatile and clutter-free EMR system.</p>
 
-<div id="flash-notice">
-    <% if flash[:message] %>
-        <p><%= flash[:message] %></p>
-    <% end %>
-</div>
+<%= render 'layouts/flash' %>
 
 <h3>Providers:</h3>
 <p>New to PPC? <%= link_to "Create an account", new_provider_path %> to get started!</p>

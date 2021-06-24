@@ -7,7 +7,7 @@ class PatientsController < ApplicationController
     end
 
     def search
-        @patient = Patient.find_by(name: params[:name])
+        @patient = Patient.find_by(first_name: search_params[:first_name], last_name: search_params[:last_name])
         if @patient
             render :show
         else
@@ -51,7 +51,11 @@ class PatientsController < ApplicationController
     private
 
     def patient_params
-        params.require(:patient).permit(:name, :sex, :dob)
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob)
+    end
+
+    def search_params
+        params.require(:patient).permit(:first_name, :last_name).compact_blank #Rails 6.1 -> remove blank values from params hash
     end
 
     def path_exception

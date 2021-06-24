@@ -1,8 +1,10 @@
 <%= render 'layouts/errors', {object: @provider} %>
 
 <%= form_with model: @provider do |f| %>
-    <%= f.label :name, "Full Name" %>
-    <%= f.text_field :name %>
+    <%= f.label :first_name, "First Name" %>
+    <%= f.text_field :first_name %>
+    <%= f.label :last_name, "Last Name" %>
+    <%= f.text_field :last_name %>
     <br><br>
     <%= f.label :username %>
     <%= f.text_field :username %>

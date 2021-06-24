@@ -3,8 +3,10 @@
 <%= render 'layouts/errors', {object: @patient} %>
 
 <%= form_with model: @patient, url: path do |f| %>
-    <%= f.label :name, "Full Name" %>
-    <%= f.text_field :name %>
+    <%= f.label :first_name, "First Name" %>
+    <%= f.text_field :first_name %>
+    <%= f.label :last_name, "Last Name" %>
+    <%= f.text_field :last_name %>
     <br><br>
     <% if !logged_in? %>
         <%= f.label :username %>
