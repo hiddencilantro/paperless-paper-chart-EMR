@@ -1,0 +1,27 @@
+<h2><%= title %></h2>
+
+<%= render 'layouts/errors', {object: @patient} %>
+
+<%= form_with model: @patient, url: path do |f| %>
+    <%= f.label :name, "Full Name" %>
+    <%= f.text_field :name %>
+    <br><br>
+    <% if !logged_in? %>
+        <%= f.label :username %>
+        <%= f.text_field :username %>
+        <br><br>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+        <br>
+        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.password_field :password_confirmation %>
+        <br><br>
+    <% end %>
+    <%= f.label :sex %>
+    <%= f.select :sex, [["Male", "male"], ["Female", "female"], ["Unknown", "unknown"], ["Not Applicable", "not_applicable"]], include_blank: "Please select" %>
+    <br><br>
+    <%= f.label :dob, "Date of Birth" %>
+    <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true %> 
+    <br><br>
+    <%= f.submit %>
+<% end %>

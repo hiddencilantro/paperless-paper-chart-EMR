@@ -10,10 +10,8 @@ Rails.application.routes.draw do
     get 'search', on: :collection
   end
 
-  # scope shallow_path: "provider", shallow_prefix: "provider" do
-    resources :providers, only: [:new, :create, :show] do
-      resources :patients, only: [:index, :new, :create]
-    end
-  # end
+  resources :providers, only: [:new, :create, :show] do
+    resources :patients, only: [:index, :new, :create]
+  end
 
 end

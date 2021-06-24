@@ -1,8 +1,4 @@
-<div id="flash-notice">
-    <% if flash[:message] %>
-        <p><%= flash[:message] %></p>
-    <% end %>
-</div>
+<%= render 'layouts/flash' %>
 
 <h2>Welcome, <%= @provider.name %></h2>
 

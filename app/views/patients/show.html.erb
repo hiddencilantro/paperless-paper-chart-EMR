@@ -1,10 +1,12 @@
-<div id="flash-notice">
-    <% if flash[:message] %>
-        <p><%= flash[:message] %></p>
-    <% end %>
-</div>
+<%= render 'layouts/flash' %>
 
 <h2><%= @patient.name %></h3>
 <h3>Sex: <%= @patient.sex.titleize %></h6>
 <h3>Age: <%= age(@patient.dob) %></h6>
 <h3>Date of Birth: <%= @patient.dob %></h6>
+<h4>Primary Providers:</h4>
+<ul>
+<% @patient.providers.each do |provider| %>
+    <li>Dr. <%= provider.name %></li>
+<% end %>
+</ul>

@@ -1,24 +1,5 @@
-<h2>Create New Patient File</h2>
-
-<% if @patient.errors.any? %>
-    <div id="flash-notice">
-        <ul>
-        <% @patient.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-        </ul>
-    </div>
-<% end %>
-
-<%= form_with model: @patient, url: provider_patients_path(current_user) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-    <br><br>
-    <%= f.label :sex %>
-    <%= f.select :sex, [["Male", "male"], ["Female", "female"], ["Unknown", "unknown"], ["Not Applicable", "not_applicable"]], include_blank: "Please select" %>
-    <br><br>
-    <%= f.label :dob, "Date of Birth" %>
-    <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true %> 
-    <br><br>
-    <%= f.submit %>
+<% if logged_in? && current_user.provider? %>
+    <%= render 'form', {path: provider_patients_path(current_user), title: "Create New Patient File"} %>
+<% else %>
+    <%= render 'form', {path: patients_path, title: "Create a new patient account"} %>
 <% end %>

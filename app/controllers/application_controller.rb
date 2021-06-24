@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
     helper_method :current_user, :logged_in?
 
+    private
+
     def current_user
         if session[:provider_id]
             @current_user ||= Provider.find_by(id: session[:provider_id])
@@ -16,8 +18,6 @@ class ApplicationController < ActionController::Base
     def current_user?(user)
         user == current_user
     end
-
-    private
 
     def verify_if_logged_in
         unless logged_in?
