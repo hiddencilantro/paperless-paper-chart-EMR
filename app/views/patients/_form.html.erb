@@ -3,7 +3,7 @@
 <%= render 'layouts/errors', {object: @patient} %>
 
 <%= form_with model: @patient, url: path do |f| %>
-    <% if current_user.provider? %>
+    <% if logged_in? && current_user.provider? %>
         <%= f.hidden_field :is_provider, value: true %>
     <% end %>
     <%= f.label :first_name, "First Name" %>
