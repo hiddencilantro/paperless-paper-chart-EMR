@@ -23,7 +23,7 @@ class PatientsController < ApplicationController
     end
 
     def create
-        if current_user.provider?
+        if logged_in? && current_user.provider?
             @patient = Patient.new(patient_file_params)
             @patient.providers << current_user
             if @patient.save
