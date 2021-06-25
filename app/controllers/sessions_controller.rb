@@ -1,15 +1,32 @@
 class SessionsController < ApplicationController
-    def provider_login
-        render :login
+    def login
     end
-    
+
     def provider_authenticate
-        provider = Provider.find_by(username: params[:username])
-        if provider && provider.authenticate(params[:password])
-            session[:provider_id] = provider.id
-            redirect_to provider
+        @provider = Provider.find_by(username: params[:username])
+        if @provider
+            if @provider.authenticate(params[:password])
+                session[:provider_id] = @provider.id
+                redirect_to @provider
+            else
+                redirect_to providers_login_path, flash: {message: "Incorrect password."}
+            end
         else
-            render :login
+            redirect_to providers_login_path, flash: {message: "Username doesn't exist."}
+        end
+    end
+
+    def patient_authenticate
+        @patient = Patient.find_by(username: params[:username])
+        if @patient
+            if @patient.authenticate(params[:password])
+                session[:patient_id] = @patient.id
+                redirect_to @patient
+            else
+                redirect_to patients_login_path, flash: {message: "Incorrect password."}
+            end
+        else
+            redirect_to patients_login_path, flash: {message: "Username doesn't exist."}
         end
     end
 

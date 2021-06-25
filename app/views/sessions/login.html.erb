@@ -1,11 +1,9 @@
 <h2>Login</h2>
 
-<%= form_with url: '/providers/login' do |f| %>
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-    <br>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-    <br>
-    <%= f.submit "Login" %>
+<%= render 'layouts/flash' %>
+
+<% if request.env['PATH_INFO'] == "/providers/login" %>
+    <%= render 'form', {path: '/providers/login'} %>
+<% elsif request.env['PATH_INFO'] == "/patients/login" %>
+    <%= render 'form', {path: '/patients/login'} %>
 <% end %>
