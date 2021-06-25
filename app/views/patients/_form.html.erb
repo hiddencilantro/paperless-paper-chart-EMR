@@ -3,6 +3,9 @@
 <%= render 'layouts/errors', {object: @patient} %>
 
 <%= form_with model: @patient, url: path do |f| %>
+    <% if current_user.provider? %>
+        <%= f.hidden_field :is_provider, value: true %>
+    <% end %>
     <%= f.label :first_name, "First Name" %>
     <%= f.text_field :first_name %>
     <%= f.label :last_name, "Last Name" %>

@@ -52,11 +52,11 @@ class PatientsController < ApplicationController
     private
 
     def patient_file_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob)
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :is_provider)
     end
 
     def patient_account_params
-        params.require(:patient).permit(:first_name, :last_name, :username, :password, :password_confirmation, :sex, :dob)
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation)
     end
 
     def search_params
