@@ -13,10 +13,6 @@ class Patient < ApplicationRecord
     validates :password_confirmation, presence: true, unless: :is_provider
     validate :password_requirements, unless: -> {password.blank?}
 
-    def patient?
-        self.is_a?(Patient)
-    end
-
     def password_requirements
         requirements = {
             " must be least 8 characters long" => /.{8,}/,
