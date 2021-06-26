@@ -11,7 +11,7 @@
     <%= f.label :last_name, "Last Name" %>
     <%= f.text_field :last_name %>
     <br><br>
-    <% if !logged_in? %>
+    <% if !logged_in? || current_user?(@patient) %>
         <%= f.label :username %>
         <%= f.text_field :username %>
         <br><br>
