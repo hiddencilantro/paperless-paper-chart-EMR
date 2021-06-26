@@ -1,0 +1,5 @@
+<% if current_user.provider? %>
+    <%= render 'form', {path: @patient, title: "Edit Patient File"} %>
+<% else %>
+    <%= render 'form', {path: @patient, title: "Edit Profile"} %>
+<% end %>
