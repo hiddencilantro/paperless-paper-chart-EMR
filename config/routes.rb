@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/patients/login', to: 'sessions#patient_authenticate'
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
 
-  resources :patients, only: [:new, :create, :show] do
+  resources :patients, only: [:new, :create, :show, :edit, :update] do
     get 'search', on: :collection
   end
 
