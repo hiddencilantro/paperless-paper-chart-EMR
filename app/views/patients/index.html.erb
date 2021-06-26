@@ -15,7 +15,7 @@
     <%= f.submit "Search" %>
 <% end %>
 
-<p>Patient records last updated by Dr. <%= full_name(current_user) %>:</p>
+<p>Patient records recently updated by Dr. <%= full_name(current_user) %>:</p>
 <ul>
 <% @patients.order(updated_at: :desc).limit(5).each do |patient| %>
     <li><%= link_to "#{full_name(patient)} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
