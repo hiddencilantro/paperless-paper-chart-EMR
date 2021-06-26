@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    helper_method :current_user, :logged_in?
+    helper_method :current_user, :logged_in?, :current_user?
 
     private
 
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
     def verify_provider
         unless current_user.provider?
-            redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You must be logged in as a provider to access this page."}
+            redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You must be a provider to access this page."}
         end
     end
 
