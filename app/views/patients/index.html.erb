@@ -20,4 +20,5 @@
 <% @patients.order(updated_at: :desc).limit(5).each do |patient| %>
     <li><%= link_to "#{full_name(patient)} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
 <% end %>
+<%# if we wanted, utilize #touch with after_action callback in order to display recently "viewed" records instead %>
 </ul>
