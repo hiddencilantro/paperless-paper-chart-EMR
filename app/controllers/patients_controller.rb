@@ -34,7 +34,7 @@ class PatientsController < ApplicationController
                 render :new
             end
         else
-            @patient = Patient.find_by(first_name: patient_account_params[:first_name], last_name: patient_account_params[:last_name], sex: patient_account_params[:sex], dob: date_reassembled_from_params)
+            @patient = Patient.find_by(first_name: patient_account_params[:first_name], last_name: patient_account_params[:last_name], sex: patient_account_params[:sex], dob: parsed_date)
             if @patient && @patient.username.blank?
                 @patient.assign_attributes(patient_account_params)
                 if @patient.save
@@ -109,7 +109,7 @@ class PatientsController < ApplicationController
         request.env['PATH_INFO'] == "/patients/new"
     end
 
-    def date_reassembled_from_params
+    def parsed_date
         Date.new(patient_account_params["dob(1i)"].to_i, patient_account_params["dob(2i)"].to_i, patient_account_params["dob(3i)"].to_i)
     end
 end
