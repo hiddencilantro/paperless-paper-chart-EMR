@@ -1,6 +1,6 @@
 <h2><%= title %></h2>
 
-<%= render 'layouts/errors', {object: @patient} %>
+<%= render 'layouts/errors', object: @patient %>
 
 <%= form_with model: @patient, url: path do |f| %>
     <% if logged_in? && current_user.provider? %>
