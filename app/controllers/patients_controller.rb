@@ -98,7 +98,7 @@ class PatientsController < ApplicationController
     end
 
     def patient_account_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation)
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation).compact_blank
     end
 
     def search_params
@@ -110,6 +110,8 @@ class PatientsController < ApplicationController
     end
 
     def parsed_date
-        Date.new(patient_account_params["dob(1i)"].to_i, patient_account_params["dob(2i)"].to_i, patient_account_params["dob(3i)"].to_i)
+        unless patient_account_params["dob(1i)"].blank? || patient_account_params["dob(2i)"].blank? || patient_account_params["dob(3i)"].blank?
+            Date.new(patient_account_params["dob(1i)"].to_i, patient_account_params["dob(2i)"].to_i, patient_account_params["dob(3i)"].to_i)
+        end
     end
 end
