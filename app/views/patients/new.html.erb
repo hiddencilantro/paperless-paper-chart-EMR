@@ -1,5 +1,5 @@
 <% if logged_in? && current_user.provider? %>
-    <%= render 'form', {path: provider_patients_path(current_user), title: "Create New Patient File"} %>
+    <%= render 'form', path: provider_patients_path(current_user), title: "Create New Patient File" %>
 <% else %>
-    <%= render 'form', {path: patients_path, title: "Create a new patient account"} %>
+    <%= render 'form', path: patients_path, title: "Create a new patient account" %>
 <% end %>
