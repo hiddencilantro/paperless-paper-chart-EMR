@@ -1,5 +1,7 @@
-<% if current_user.provider? %>
-    <%= render 'form', {path: @patient, title: "Edit Patient File"} %>
+<% if logged_in? && current_user.provider? %>
+    <%= render 'form', path: @patient, title: "Edit Patient File" %>
+<% elsif logged_in? && current_user.patient? %>
+    <%= render 'form', path: @patient, title: "Edit Profile" %>
 <% else %>
-    <%= render 'form', {path: @patient, title: "Edit Profile"} %>
+    <%= render 'form', path: @patient, title: "Create a new patient account" %>
 <% end %>

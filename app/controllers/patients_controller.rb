@@ -41,7 +41,7 @@ class PatientsController < ApplicationController
                     session[:patient_id] = @patient.id
                     redirect_to @patient
                 else
-                    render template: 'patients/_form', locals: {path: @patient, title: "Create a new patient account"}
+                    render :edit
                 end
             elsif @patient && @patient.username
                 redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
