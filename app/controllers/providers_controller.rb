@@ -4,8 +4,14 @@ class ProvidersController < ApplicationController
 
     def new
         @provider = Provider.new
+        redirect_to current_user, flash: {message: "You must log out to create a new provider account."} if logged_in?
     end
 
+    #create action is easily accessible for the sake of project demo,
+    #but live version would operate in a closed environment,
+    #only allowing creation of a provider account either on the backend
+    #or by requiring a key and/or some sort of additional layer of security
+    #to prevent patients or other parties from gaining access to private information
     def create
         provider = Provider.new(provider_params)
         if provider.save
