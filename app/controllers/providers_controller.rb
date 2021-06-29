@@ -1,6 +1,6 @@
 class ProvidersController < ApplicationController
     before_action :verify_if_logged_in, only: [:show, :destroy]
-    before_action :verify_provider, only: [:show, :destroy]
+    before_action :authorize_provider, only: [:show, :destroy]
 
     def new
         @provider = Provider.new

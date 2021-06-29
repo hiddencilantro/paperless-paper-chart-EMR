@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
-    before_action :verify_provider, only: [:index, :all, :search, :new, :destroy], unless: :path_exception
+    before_action :authorize_provider, only: [:index, :all, :search, :new, :destroy], unless: :path_exception
 
     def index
         @patients = current_user.patients.order(updated_at: :desc).limit(5)
