@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
-    before_action :verify_provider, only: [:index, :all, :search, :new], unless: :path_exception
+    before_action :verify_provider, only: [:index, :all, :search, :new, :destroy], unless: :path_exception
 
     def index
         @patients = current_user.patients.order(updated_at: :desc).limit(5)
@@ -94,6 +94,12 @@ class PatientsController < ApplicationController
         if !current_user.provider? && !current_user?(@patient)
             redirect_to current_user, flash: {message: "You do not have access to other patient files."}
         end
+    end
+
+    def destroy
+        @patient = Patient.find_by(id: params[:id])
+        @patient.destroy
+        redirect_to provider_patients_path(current_user)
     end
 
     private

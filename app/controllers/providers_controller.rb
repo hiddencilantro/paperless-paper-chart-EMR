@@ -1,6 +1,6 @@
 class ProvidersController < ApplicationController
-    before_action :verify_if_logged_in, only: [:show]
-    before_action :verify_provider, only: [:show]
+    before_action :verify_if_logged_in, only: [:show, :destroy]
+    before_action :verify_provider, only: [:show, :destroy]
 
     def new
         @provider = Provider.new
@@ -25,6 +25,12 @@ class ProvidersController < ApplicationController
     def show
         @provider = Provider.find_by(id: params[:id])
         redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot access another provider's account."} if !current_user?(@provider)
+    end
+
+    def destroy
+        @provider = Provider.find_by(id: params[:id])
+        @provider.destroy
+        redirect_to root_path
     end
 
     private

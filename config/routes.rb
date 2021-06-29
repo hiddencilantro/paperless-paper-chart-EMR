@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   post '/patients/login', to: 'sessions#patient_authenticate'
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
 
-  resources :patients, only: [:new, :create, :show, :edit, :update] do
+  resources :patients, except: [:index] do
     get 'search', on: :collection
     get 'all', on: :collection
   end
 
-  resources :providers, only: [:new, :create, :show] do
+  resources :providers, except: [:index, :edit, :update] do
     resources :patients, only: [:index, :new, :create]
   end
 
