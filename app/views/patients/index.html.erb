@@ -1,4 +1,4 @@
-<h2>Patient Info</h2>
+<h2>Patient Index</h2>
 
 <%= render 'layouts/flash' %>
 
@@ -15,10 +15,12 @@
     <%= f.submit "Search" %>
 <% end %>
 
-<p>Patient records recently updated by Dr. <%= full_name(current_user) %>:</p>
+<p>Recently updated patient records by Dr. <%= full_name(current_user) %>:</p>
 <ul>
-<% @patients.order(updated_at: :desc).limit(5).each do |patient| %>
-    <li><%= link_to "#{full_name(patient)} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
-<% end %>
-<%# if we wanted, utilize #touch with after_action callback in order to display recently "viewed" records instead %>
+    <% @patients.each do |patient| %>
+        <li><%= link_to "#{full_name(patient)} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
+    <% end %>
+    <%# if we wanted, utilize #touch with after_action callback in order to display recently "viewed" records instead %>
 </ul>
+
+<%= link_to "Click here to view entire patient directory", all_patients_path %>

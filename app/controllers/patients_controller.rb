@@ -3,7 +3,12 @@ class PatientsController < ApplicationController
     before_action :verify_provider, only: [:index, :search, :new], unless: :path_exception
 
     def index
-        @patients = current_user.patients
+        @patients = current_user.patients.order(updated_at: :desc).limit(5)
+    end
+
+    def all
+        @patients = Patient.order(:last_name, :first_name).group_by{|p| p.last_name[0]}
+        @alphabet_array = [*'A'..'Z']
     end
 
     def search

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :patients, only: [:new, :create, :show, :edit, :update] do
     get 'search', on: :collection
+    get 'all', on: :collection
   end
 
   resources :providers, only: [:new, :create, :show] do
