@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     def login
+        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You're already logged in! If you'd like to sign in with a different account, you must first log out."} if logged_in?
     end
 
     def provider_authenticate
