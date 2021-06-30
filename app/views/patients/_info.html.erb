@@ -1,0 +1,10 @@
+<h2><%= full_name(@patient) %></h3>
+<h3>Sex: <%= @patient.sex.titleize %></h6>
+<h3>Age: <%= age(@patient.dob) %></h6>
+<h3>Date of Birth: <%= @patient.dob %></h6>
+<h4>Primary Providers:</h4>
+<ul>
+    <% @patient.providers.each do |provider| %>
+        <li>Dr. <%= full_name(provider) %></li>
+    <% end %>
+</ul>
