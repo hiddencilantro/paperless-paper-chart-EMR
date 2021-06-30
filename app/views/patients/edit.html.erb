@@ -1,7 +1,10 @@
 <% if logged_in? && current_user.provider? %>
-    <%= render 'form', path: @patient, title: "Edit Patient File" %>
+    <% content_for :return do %>
+        <%= link_to "Patient Index", provider_patients_path(current_user) %> >> <%= link_to "Patient File", @patient %>
+    <% end %>
+    <%= render 'form', path: @patient, title: "Edit Patient File", submit: "Update Patient File" %>
 <% elsif logged_in? && current_user.patient? %>
-    <%= render 'form', path: @patient, title: "Edit Profile" %>
+    <%= render 'form', path: @patient, title: "Edit Profile", submit: "Update Profile" %>
 <% else %>
-    <%= render 'form', path: @patient, title: "Create a new patient account" %>
+    <%= render 'form', path: @patient, title: "Create A New Patient Account", submit: "Create Account!" %>
 <% end %>

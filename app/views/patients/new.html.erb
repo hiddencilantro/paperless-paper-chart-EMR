@@ -1,5 +1,7 @@
+<%= render 'layouts/return', text: "Patient Index", path: provider_patients_path(current_user) if logged_in?%>
+
 <% if logged_in? && current_user.provider? %>
-    <%= render 'form', path: provider_patients_path(current_user), title: "Create New Patient File" %>
+    <%= render 'form', path: provider_patients_path(current_user), title: "Create New Patient File", submit: "Create Patient File" %>
 <% else %>
-    <%= render 'form', path: patients_path, title: "Create a new patient account" %>
+    <%= render 'form', path: patients_path, title: "Create A New Patient Account", submit: "Create Account!" %>
 <% end %>

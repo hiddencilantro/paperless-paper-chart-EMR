@@ -28,5 +28,5 @@
     <%= f.label :dob, "Date of Birth" %>
     <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true %> 
     <br><br>
-    <%= f.submit %>
+    <%= f.submit submit %>
 <% end %>

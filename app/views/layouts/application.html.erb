@@ -12,12 +12,20 @@
 
   <body>
     <br>
-    <% if logged_in? %>
-      <%= link_to "Home", current_user %>
-      <%= link_to "Logout", logout_path, method: :delete %>
-    <% else %>
-      <%= link_to "Return to Main", root_path unless request.env['PATH_INFO'] == '/' %>
-    <% end %>
+    <div>
+      <% if logged_in? %>
+        <%= link_to "Home", current_user unless (request.env['PATH_INFO'] == provider_path(current_user)) || (request.env['PATH_INFO'] == patient_path(current_user)) %>
+        <%= link_to "Logout", logout_path, method: :delete %>
+      <% else %>
+        <%= link_to "Return to Main", root_path unless request.env['PATH_INFO'] == '/' %>
+      <% end %>
+    </div>
+    <br>
+    <div>
+      <%= yield :return %>
+    </div>
+
     <%= yield %>
+
   </body>
 </html>

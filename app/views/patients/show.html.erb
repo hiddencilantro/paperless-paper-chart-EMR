@@ -1,9 +1,11 @@
+<%= render 'layouts/return', text: "Patient Index", path: provider_patients_path(current_user) if current_user.provider? %>
+
 <%= render 'layouts/flash' %>
 
 <%= render 'info' %>
 
 <% if current_user.provider? %>
-    <%= button_to "Edit Patient Info", edit_patient_path(@patient), method: :get %>
+    <%= button_to "Edit Patient File", edit_patient_path(@patient), method: :get %>
     <br>
     <%= button_to "Delete Patient Record", patient_path(@patient), method: :delete, data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>
 <% else %>
