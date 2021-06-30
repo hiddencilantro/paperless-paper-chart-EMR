@@ -3,7 +3,7 @@ class Patient < ApplicationRecord
     has_secure_password validations: false
     enum sex: {unknown: 0, male: 1, female: 2, not_applicable: 9}
     has_many :encounters, dependent: :destroy
-    has_many :providers, through: :encounters
+    has_many :providers, through: :encounters, validate: false
     validates :first_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :sex, presence: true
