@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'static#main'
 
+  get '/providers/signup', to: 'providers#new'
   get '/providers/login', to: 'sessions#login'
   post '/providers/login', to: 'sessions#provider_authenticate'
+
+  get '/patients/signup', to: 'patients#new'
   get '/patients/login', to: 'sessions#login'
   post '/patients/login', to: 'sessions#patient_authenticate'
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
@@ -13,7 +16,7 @@ Rails.application.routes.draw do
     get 'all', on: :collection
   end
 
-  resources :providers, except: [:index, :edit, :update] do
+  resources :providers, only: [:create, :show, :destroy] do
     resources :patients, only: [:index, :new, :create]
   end
 

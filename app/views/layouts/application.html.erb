@@ -14,10 +14,10 @@
     <br>
     <div>
       <% if logged_in? %>
-        <%= link_to "Home", current_user unless (request.env['PATH_INFO'] == provider_path(current_user)) || (request.env['PATH_INFO'] == patient_path(current_user)) %>
+        <%= link_to "Home", current_user unless (current_path == provider_path(current_user)) || (current_path == patient_path(current_user)) %>
         <%= link_to "Logout", logout_path, method: :delete %>
       <% else %>
-        <%= link_to "Return to Main", root_path unless request.env['PATH_INFO'] == '/' %>
+        <%= link_to "Return to Main", root_path unless current_path == root_path %>
       <% end %>
     </div>
     <br>

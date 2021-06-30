@@ -1,9 +1,5 @@
-<h2>Login</h2>
-
-<%= render 'layouts/flash' %>
-
-<% if request.env['PATH_INFO'] == "/providers/login" %>
-    <%= render 'form', {path: '/providers/login'} %>
-<% elsif request.env['PATH_INFO'] == "/patients/login" %>
-    <%= render 'form', {path: '/patients/login'} %>
+<% if current_path == providers_login_path %>
+    <%= render 'form', path: providers_login_path, title: "Provider Login" %>
+<% elsif current_path == patients_login_path %>
+    <%= render 'form', path: patients_login_path, title: "Patient Login" %>
 <% end %>

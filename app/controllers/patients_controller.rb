@@ -120,7 +120,7 @@ class PatientsController < ApplicationController
     end
 
     def path_exception
-        request.env['PATH_INFO'] == "/patients/new"
+        current_path == patients_signup_path || current_path == new_patient_path
     end
 
     def parsed_date

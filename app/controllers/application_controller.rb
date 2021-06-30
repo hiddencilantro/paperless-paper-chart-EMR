@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    helper_method :current_user, :logged_in?, :current_user?
+    helper_method :current_user, :logged_in?, :current_user?, :current_path
 
     private
 
@@ -29,5 +29,9 @@ class ApplicationController < ActionController::Base
         unless current_user.provider?
             redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You must be a provider to access this page."}
         end
+    end
+
+    def current_path
+        request.env['PATH_INFO']
     end
 end
