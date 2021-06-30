@@ -12,9 +12,12 @@ class PatientsController < ApplicationController
     end
 
     def search
-        @patient = Patient.find_by(search_params) #use .where and .sole to retrieve multiple records
-        if @patient
-            render :show
+        @patient_search = Patient.where(search_params)
+        if @patient_search.length == 1
+            redirect_to @patient_search.first
+        elsif @patient_search.length > 1
+            @patients = current_user.patients.order(updated_at: :desc).limit(5)
+            render :index
         else
             redirect_to provider_patients_path(current_user), flash: {message: "Patient record not found!"}
         end

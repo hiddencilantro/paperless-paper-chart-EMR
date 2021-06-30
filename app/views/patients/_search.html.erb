@@ -7,3 +7,12 @@
     <br>
     <%= f.submit "Search" %>
 <% end %>
+
+<% if @patient_search %>
+    <p class="bold"><%= pluralize(@patient_search.length, 'record') %> found!</p>
+    <ul>
+        <% @patient_search.each do |record| %>
+            <li><%= link_to "#{full_name(record)} / #{record.sex.titleize} / #{age(record.dob)}", patient_path(record) %></li>
+        <% end %>
+    </ul>
+<% end %>
