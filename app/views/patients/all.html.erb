@@ -3,7 +3,7 @@
 <p class="italic">Sorted alphabetically by Last Name:</p>
 <br>
 <% @alphabet_array.each do |letter| %>
-    <%= link_to "#{letter}", id: letter %> /
+    <%= link_to "#{letter}", anchor: letter %> /
 <% end %>
 
 <% @patients.each do |letter, grouped_patients| %>
