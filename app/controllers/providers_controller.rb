@@ -14,10 +14,10 @@ class ProvidersController < ApplicationController
     #or by requiring a key and/or some sort of additional layer of security
     #to prevent patients or other parties from gaining access to private information
     def create
-        provider = Provider.new(provider_params)
-        if provider.save
+        @provider = Provider.new(provider_params)
+        if @provider.save
             log_in_provider
-            redirect_to provider
+            redirect_to @provider
         else
             render :new
         end
