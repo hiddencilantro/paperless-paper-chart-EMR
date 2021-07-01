@@ -1,6 +1,7 @@
 class ProvidersController < ApplicationController
     before_action :verify_if_logged_in, only: [:show, :destroy]
     before_action :authorize_provider, only: [:show, :destroy]
+    before_action :set_provider, only: [:show, :destroy]
 
     def new
         @provider = Provider.new
@@ -15,7 +16,7 @@ class ProvidersController < ApplicationController
     def create
         provider = Provider.new(provider_params)
         if provider.save
-            session[:provider_id] = provider.id
+            log_in_provider
             redirect_to provider
         else
             render :new
@@ -23,12 +24,13 @@ class ProvidersController < ApplicationController
     end
 
     def show
-        @provider = Provider.find_by(id: params[:id])
+        set_provider
         redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot access another provider's account."} if !current_user?(@provider)
     end
 
     def destroy
-        @provider = Provider.find_by(id: params[:id])
+        set_provider
+        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot delete another provider's account."} if !current_user?(@provider)
         @provider.destroy
         redirect_to root_path
     end
@@ -37,5 +39,9 @@ class ProvidersController < ApplicationController
 
     def provider_params
         params.require(:provider).permit(:first_name, :last_name, :username, :password, :password_confirmation)
+    end
+
+    def set_provider
+        @provider = Provider.find_by(id: params[:id])
     end
 end

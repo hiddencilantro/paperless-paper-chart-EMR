@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
         @provider = Provider.find_by(username: params[:username])
         if @provider
             if @provider.authenticate(params[:password])
-                session[:provider_id] = @provider.id
+                log_in_provider
                 redirect_to @provider
             else
                 redirect_to providers_login_path, flash: {message: "Incorrect password."}
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
         @patient = Patient.find_by(username: params[:username])
         if @patient
             if @patient.authenticate(params[:password])
-                session[:patient_id] = @patient.id
+                log_in_patient
                 redirect_to @patient
             else
                 redirect_to patients_login_path, flash: {message: "Incorrect password."}

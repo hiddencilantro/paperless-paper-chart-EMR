@@ -1,9 +1,10 @@
 class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
-    before_action :authorize_provider, only: [:index, :all, :search, :new, :destroy], unless: :path_exception
+    before_action :authorize_provider, only: [:index, :all, :search, :destroy]
+    before_action :set_patient, only: [:edit, :show, :destory]
 
     def index
-        @patients = current_user.patients.order(updated_at: :desc).limit(5)
+        @patients = recently_updated_patients(current_user)
     end
 
     def all
@@ -16,7 +17,7 @@ class PatientsController < ApplicationController
         if @patient_search.length == 1
             redirect_to @patient_search.first
         elsif @patient_search.length > 1
-            @patients = current_user.patients.order(updated_at: :desc).limit(5)
+            @patients = recently_updated_patients(current_user)
             render :index
         else
             redirect_to provider_patients_path(current_user), flash: {message: "Patient record not found!"}
@@ -25,15 +26,21 @@ class PatientsController < ApplicationController
     
     def new
         @patient = Patient.new
-        if logged_in? && current_user.provider?
-            redirect_to provider_patients_path(current_user), flash: {message: "You cannot create a patient file as another provider."} unless params[:provider_id].to_i == current_user.id || path_exception
-        elsif logged_in? && current_user.patient?
-            redirect_to current_user, flash: {message: "You must log out to create a new patient account."}
+        if logged_in_as_provider
+            unless params[:provider_id].to_i == current_user.id || path_exception
+                redirect_to provider_patients_path(current_user), flash: {message: "You cannot create a patient file as another provider."}
+            end
+        elsif logged_in_as_patient
+            if path_exception
+                redirect_to current_user, flash: {message: "You must log out to create a new patient account."}
+            else
+                redirect_to current_user, flash: {message: "You must be a provider to access this page."}
+            end
         end
     end
 
     def create
-        if logged_in? && current_user.provider?
+        if logged_in_as_provider
             @patient = Patient.new(patient_file_params)
             @patient.providers << current_user
             if @patient.save
@@ -46,7 +53,7 @@ class PatientsController < ApplicationController
             if @patient && @patient.username.blank?
                 @patient.assign_attributes(patient_account_params)
                 if @patient.save
-                    session[:patient_id] = @patient.id
+                    log_in_patient
                     redirect_to @patient
                 else
                     render :edit
@@ -56,7 +63,7 @@ class PatientsController < ApplicationController
             else
                 @patient = Patient.new(patient_account_params)
                 if @patient.save
-                    session[:patient_id] = @patient.id
+                    log_in_patient
                     redirect_to @patient
                 else
                     render :new
@@ -66,15 +73,11 @@ class PatientsController < ApplicationController
     end
 
     def edit
-        @patient = Patient.find_by(id: params[:id])
-        if !current_user.provider? && !current_user?(@patient)
-            redirect_to current_user, flash: {message: "You cannot edit other patients' information."}
-        end
+        redirect_to current_user, flash: {message: "You cannot edit other patients' information."} if not_authorized(@patient)
     end
 
     def update
-        @patient = Patient.find_by(id: params[:id])
-        if logged_in? && current_user.provider?
+        if logged_in_as_provider
             @patient.assign_attributes(patient_file_params)
             if @patient.save
                 redirect_to @patient
@@ -84,7 +87,7 @@ class PatientsController < ApplicationController
         else
             @patient.assign_attributes(patient_account_params)
             if @patient.save
-                session[:patient_id] = @patient.id if !logged_in?
+                log_in_patient if !logged_in?
                 redirect_to @patient
             else
                 render :edit
@@ -93,14 +96,10 @@ class PatientsController < ApplicationController
     end
 
     def show
-        @patient = Patient.find_by(id: params[:id])
-        if !current_user.provider? && !current_user?(@patient)
-            redirect_to current_user, flash: {message: "You do not have access to other patient files."}
-        end
+        redirect_to current_user, flash: {message: "You do not have access to other patient files."} if not_authorized(@patient)
     end
 
     def destroy
-        @patient = Patient.find_by(id: params[:id])
         @patient.destroy
         redirect_to provider_patients_path(current_user)
     end
@@ -127,5 +126,13 @@ class PatientsController < ApplicationController
         unless patient_account_params["dob(1i)"].blank? || patient_account_params["dob(2i)"].blank? || patient_account_params["dob(3i)"].blank?
             Date.new(patient_account_params["dob(1i)"].to_i, patient_account_params["dob(2i)"].to_i, patient_account_params["dob(3i)"].to_i)
         end
+    end
+
+    def recently_updated_patients(provider)
+        provider.patients.order(updated_at: :desc).limit(5)
+    end
+
+    def set_patient
+        @patient = Patient.find_by(id: params[:id])
     end
 end
