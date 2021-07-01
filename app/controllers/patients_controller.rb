@@ -1,7 +1,7 @@
 class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
     before_action :authorize_provider, only: [:index, :all, :search, :destroy]
-    before_action :set_patient, only: [:edit, :show, :destory]
+    before_action :set_patient, only: [:edit, :update, :show, :destroy]
 
     def index
         @patients = recently_updated_patients(current_user)
