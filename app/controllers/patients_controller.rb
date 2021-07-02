@@ -1,7 +1,7 @@
 class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
     before_action :authorize_provider, only: [:index, :all, :search, :destroy]
-    before_action :set_patient, only: [:edit, :update, :show, :destroy]
+    before_action :set_patient_by_id, only: [:edit, :show, :destroy]
 
     def index
         @patients = recently_updated_patients(current_user)
@@ -13,7 +13,7 @@ class PatientsController < ApplicationController
     end
 
     def search
-        @patient_search = Patient.where(search_params)
+        @patient_search = Patient.where(patient_search_params)
         if @patient_search.length == 1
             redirect_to @patient_search.first
         elsif @patient_search.length > 1
@@ -49,9 +49,9 @@ class PatientsController < ApplicationController
                 render :new
             end
         else
-            @patient = Patient.find_by(first_name: patient_account_params[:first_name], last_name: patient_account_params[:last_name], sex: patient_account_params[:sex], dob: parsed_date)
+            set_patient_by_attributes
             if @patient && @patient.username.blank?
-                @patient.assign_attributes(patient_account_params)
+                @patient.assign_attributes(patient_existing_params)
                 if @patient.save
                     log_in_patient
                     redirect_to @patient
@@ -61,7 +61,7 @@ class PatientsController < ApplicationController
             elsif @patient && @patient.username
                 redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
             else
-                @patient = Patient.new(patient_account_params)
+                @patient = Patient.new(patient_params)
                 if @patient.save
                     log_in_patient
                     redirect_to @patient
@@ -78,19 +78,41 @@ class PatientsController < ApplicationController
 
     def update
         if logged_in_as_provider
+            set_patient_by_id
             @patient.assign_attributes(patient_file_params)
             if @patient.save
                 redirect_to @patient
             else
                 render :edit
             end
-        else
-            @patient.assign_attributes(patient_account_params)
+        elsif logged_in_as_patient
+            set_patient_by_id
+            @patient.assign_attributes(patient_params)
             if @patient.save
-                log_in_patient if !logged_in?
                 redirect_to @patient
             else
                 render :edit
+            end
+        else
+            set_patient_by_attributes
+            if @patient && @patient.username.blank?
+                @patient.assign_attributes(patient_existing_params)
+                if @patient.save
+                    log_in_patient
+                    redirect_to @patient
+                else
+                    render :edit
+                end
+            elsif @patient && @patient.username
+                redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
+            else
+                @patient = Patient.new(patient_params)
+                if @patient.save
+                    log_in_patient
+                    redirect_to @patient
+                else
+                    render :new
+                end
             end
         end
     end
@@ -106,33 +128,41 @@ class PatientsController < ApplicationController
 
     private
 
+    def patient_params
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation)
+    end
+
     def patient_file_params
         params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :is_provider)
     end
 
-    def patient_account_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation).compact_blank
+    def patient_existing_params
+        params.require(:patient).permit(:username, :password, :password_confirmation)
     end
 
-    def search_params
+    def patient_search_params
         params.require(:patient).permit(:first_name, :last_name).compact_blank #Rails 6.1 -> remove blank values from params hash
+    end
+
+    def set_patient_by_id
+        @patient = Patient.find_by(id: params[:id])
+    end
+
+    def set_patient_by_attributes
+        @patient = Patient.find_by(first_name: patient_params[:first_name], last_name: patient_params[:last_name], sex: patient_params[:sex], dob: parsed_date)
+    end
+
+    def parsed_date
+        unless patient_params["dob(1i)"].blank? || patient_params["dob(2i)"].blank? || patient_params["dob(3i)"].blank?
+            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+        end
     end
 
     def path_exception
         current_path == patients_signup_path || current_path == new_patient_path
     end
 
-    def parsed_date
-        unless patient_account_params["dob(1i)"].blank? || patient_account_params["dob(2i)"].blank? || patient_account_params["dob(3i)"].blank?
-            Date.new(patient_account_params["dob(1i)"].to_i, patient_account_params["dob(2i)"].to_i, patient_account_params["dob(3i)"].to_i)
-        end
-    end
-
     def recently_updated_patients(provider)
         provider.patients.order(updated_at: :desc).limit(5)
-    end
-
-    def set_patient
-        @patient = Patient.find_by(id: params[:id])
     end
 end
