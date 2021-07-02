@@ -22,3 +22,23 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+<!-- 
+
+- change username to email
+- flash.now & re-render vs redirect
+    - success messages
+- Apppintment Class
+    - associations
+    - nested forms & attributes (choose provider from collection)
+- Encounter Class
+    - pre-populate from appointment data
+
+* breadcrumbs
+* css (bootstrap?)
+* prevent password params from being logged
+
+<%= f.submit, data: {confirm: "Does everything look accurate? You cannot change your information once your account has been created."} %>
+<%= f.submit, data: {confirm: "Are you sure you want to save these changes?"} %>
+
+ -->
