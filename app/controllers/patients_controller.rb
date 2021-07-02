@@ -49,26 +49,7 @@ class PatientsController < ApplicationController
                 render :new
             end
         else
-            set_patient_by_attributes
-            if @patient && @patient.username.blank?
-                @patient.assign_attributes(patient_existing_params)
-                if @patient.save
-                    log_in_patient
-                    redirect_to @patient
-                else
-                    render :edit
-                end
-            elsif @patient && @patient.username
-                redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
-            else
-                @patient = Patient.new(patient_params)
-                if @patient.save
-                    log_in_patient
-                    redirect_to @patient
-                else
-                    render :new
-                end
-            end
+            create_new_patient_account
         end
     end
 
@@ -94,26 +75,7 @@ class PatientsController < ApplicationController
                 render :edit
             end
         else
-            set_patient_by_attributes
-            if @patient && @patient.username.blank?
-                @patient.assign_attributes(patient_existing_params)
-                if @patient.save
-                    log_in_patient
-                    redirect_to @patient
-                else
-                    render :edit
-                end
-            elsif @patient && @patient.username
-                redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
-            else
-                @patient = Patient.new(patient_params)
-                if @patient.save
-                    log_in_patient
-                    redirect_to @patient
-                else
-                    render :new
-                end
-            end
+            create_new_patient_account
         end
     end
 
@@ -164,5 +126,28 @@ class PatientsController < ApplicationController
 
     def recently_updated_patients(provider)
         provider.patients.order(updated_at: :desc).limit(5)
+    end
+
+    def create_new_patient_account
+        set_patient_by_attributes
+        if @patient && @patient.username.blank?
+            @patient.assign_attributes(patient_existing_params)
+            if @patient.save
+                log_in_patient
+                redirect_to @patient
+            else
+                render :edit
+            end
+        elsif @patient && @patient.username
+            redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
+        else
+            @patient = Patient.new(patient_params)
+            if @patient.save
+                log_in_patient
+                redirect_to @patient
+            else
+                render :new
+            end
+        end
     end
 end
