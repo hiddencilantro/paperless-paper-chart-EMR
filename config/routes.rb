@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     get 'all', on: :collection
   end
+  get '/patients', to: 'patients#all'
 
   resources :providers, only: [:create, :show, :destroy] do
     resources :patients, only: [:index, :new, :create]
