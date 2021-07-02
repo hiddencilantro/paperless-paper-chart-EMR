@@ -9,5 +9,5 @@
     <br>
     <%= button_to "Delete Patient Record", patient_path(@patient), method: :delete, data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>
 <% else %>
-    <%= button_to "Edit My Profile", edit_patient_path(@patient), method: :get %>
+    <%= button_to "Change Username/Password", edit_patient_path(@patient), method: :get %>
 <% end %>

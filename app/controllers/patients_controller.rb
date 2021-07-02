@@ -68,7 +68,7 @@ class PatientsController < ApplicationController
             end
         elsif logged_in_as_patient
             set_patient_by_id
-            @patient.assign_attributes(patient_params)
+            @patient.assign_attributes(patient_edit_params)
             if @patient.save
                 redirect_to @patient
             else
@@ -98,7 +98,7 @@ class PatientsController < ApplicationController
         params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :is_provider)
     end
 
-    def patient_existing_params
+    def patient_edit_params
         params.require(:patient).permit(:username, :password, :password_confirmation)
     end
 
@@ -131,7 +131,7 @@ class PatientsController < ApplicationController
     def create_new_patient_account
         set_patient_by_attributes
         if @patient && @patient.username.blank?
-            @patient.assign_attributes(patient_existing_params)
+            @patient.assign_attributes(patient_edit_params)
             if @patient.save
                 log_in_patient
                 redirect_to @patient

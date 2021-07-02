@@ -6,5 +6,5 @@
 <% elsif logged_in_as_patient %>
     <%= render 'form', path: @patient, title: "Edit Profile", submit: "Update Profile" %>
 <% else %>
-    <%= render 'form', path: @patient, title: "Create A New Patient Account", submit: "Create Account!" %>
+    <%= render 'form', path: @patient, title: "Create A New Patient Account", submit: "Create Account" %>
 <% end %>
