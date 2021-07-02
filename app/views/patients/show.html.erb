@@ -1,10 +1,14 @@
-<%= render 'layouts/return', text: "Patient Index", path: provider_patients_path(current_user), text2: "Patient File", action: "show" if current_user.provider? %>
+<% if logged_in_as_provider %>
+    <% content_for :breadcrumbs do %>
+        <%= link_to "Patient Index", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", all_patients_path %> >> <%= link_to_unless_current "Patient File", action: "show" %>
+    <% end %>
+<% end %>
 
 <%= render 'layouts/flash' %>
 
 <%= render 'info' %>
 
-<% if current_user.provider? %>
+<% if logged_in_as_provider %>
     <%= button_to "Edit Patient File", edit_patient_path(@patient), method: :get %>
     <br>
     <%= button_to "Delete Patient Record", patient_path(@patient), method: :delete, data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>

@@ -1,5 +1,5 @@
 <% if logged_in_as_provider %>
-    <% content_for :return do %>
+    <% content_for :breadcrumbs do %>
         <%= link_to "Patient Index", provider_patients_path(current_user) %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Edit Patient File", action: "edit" %>
     <% end %>
     <%= render 'form', path: @patient, title: "Edit Patient File" %>
