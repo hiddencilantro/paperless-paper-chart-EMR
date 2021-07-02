@@ -11,10 +11,10 @@
 <% end %>
 
 <% @patients.each do |letter, grouped_patients| %>
-    <h3 id="<%= letter.capitalize %>"><%= letter.capitalize %></h3>
+    <h3 id="<%= letter %>"><%= letter %></h3>
     <ul>
         <% grouped_patients.each do |patient| %>
-            <li><%= link_to "#{patient.last_name}, #{patient.first_name}", patient %></li>
+            <li><%= link_to "#{patient.last_name.capitalize}, #{patient.first_name.capitalize}", patient %></li>
         <% end %>
     </ul>
 <% end %>

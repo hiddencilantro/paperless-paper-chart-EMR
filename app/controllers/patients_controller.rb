@@ -8,7 +8,7 @@ class PatientsController < ApplicationController
     end
 
     def all
-        @patients = Patient.order(:last_name, :first_name).group_by{|p| p.last_name[0]}
+        @patients = Patient.order(:last_name, :first_name).group_by{|p| p.last_name[0].capitalize}
         @alphabet_array = [*'A'..'Z']
     end
 
