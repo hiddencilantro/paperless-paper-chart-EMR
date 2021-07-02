@@ -1,4 +1,4 @@
-<%= render 'layouts/return', text: "Patient Index", path: provider_patients_path(current_user) if current_user.provider? %>
+<%= render 'layouts/return', text: "Patient Index", path: provider_patients_path(current_user), text2: "Patient File", action: "show" if current_user.provider? %>
 
 <%= render 'layouts/flash' %>
 
