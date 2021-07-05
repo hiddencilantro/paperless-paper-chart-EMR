@@ -4,8 +4,8 @@
 
 <%= form_with model: @patient, url: path do |f| %>
     <% if !logged_in? %>
-        <%= f.label :username %>
-        <%= f.text_field :username %>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
         <br><br>
         <%= f.label :password %>
         <%= f.password_field :password %>
@@ -27,8 +27,8 @@
     <% end %>
     <% if logged_in_as_provider %>
         <%= f.hidden_field :is_provider, value: true %>
-        <%= f.label :username %>
-        <%= f.text_field :username, disabled: true %>
+        <%= f.label :email if params[:id] %>
+        <%= f.text_field :email, disabled: true if params[:id] %>
         <br><br>
         <%= f.label :first_name, "First Name" %>
         <%= f.text_field :first_name %>
@@ -43,8 +43,8 @@
         <br><br>
     <% end %>
     <% if current_user?(@patient) %>
-        <%= f.label :username %>
-        <%= f.text_field :username %>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
         <br><br>
         <%= f.label :password %>
         <%= f.password_field :password %>

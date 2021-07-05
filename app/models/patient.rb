@@ -8,10 +8,11 @@ class Patient < ApplicationRecord
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :sex, presence: true
     validates :dob, presence: true
-    validates :username, presence: true, uniqueness: true, format: {with: /\A[0-9a-zA-Z_]+\z/, message: "only accepts letters and numbers"}, length: {in: 6..30}, unless: :is_provider
+    validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: :is_provider
     validates :password, presence: true, confirmation: true, unless: :is_provider
     validates :password_confirmation, presence: true, unless: :is_provider
     validate :password_requirements, unless: -> {password.blank?}
+    before_save { self.email = email.downcase }
 
     def password_requirements
         requirements = {

@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     end
 
     def provider_authenticate
-        @provider = Provider.find_by(username: params[:username])
+        @provider = Provider.find_by(email: params[:email].downcase)
         if @provider
             if @provider.authenticate(params[:password])
                 log_in_provider
@@ -13,12 +13,12 @@ class SessionsController < ApplicationController
                 redirect_to providers_login_path, flash: {message: "Incorrect password."}
             end
         else
-            redirect_to providers_login_path, flash: {message: "Username doesn't exist."}
+            redirect_to providers_login_path, flash: {message: "Email doesn't exist."}
         end
     end
 
     def patient_authenticate
-        @patient = Patient.find_by(username: params[:username])
+        @patient = Patient.find_by(email: params[:email].downcase)
         if @patient
             if @patient.authenticate(params[:password])
                 log_in_patient
@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
                 redirect_to patients_login_path, flash: {message: "Incorrect password."}
             end
         else
-            redirect_to patients_login_path, flash: {message: "Username doesn't exist."}
+            redirect_to patients_login_path, flash: {message: "Email doesn't exist."}
         end
     end
 

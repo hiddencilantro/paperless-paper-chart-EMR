@@ -83,7 +83,7 @@ class PatientsController < ApplicationController
     end
 
     def patient_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation).compact_blank #Rails 6.1 -> remove blank values from params hash
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :email, :password, :password_confirmation).compact_blank #Rails 6.1 -> remove blank values from params hash
     end
 
     def patient_file_params
@@ -91,7 +91,7 @@ class PatientsController < ApplicationController
     end
 
     def patient_edit_params
-        params.require(:patient).permit(:username, :password, :password_confirmation)
+        params.require(:patient).permit(:email, :password, :password_confirmation)
     end
 
     def patient_search_params
