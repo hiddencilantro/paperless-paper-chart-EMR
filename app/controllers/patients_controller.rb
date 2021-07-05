@@ -57,12 +57,7 @@ class PatientsController < ApplicationController
             update_as_provider
         elsif logged_in_as_patient
             set_patient_by_id
-            @patient.assign_attributes(patient_edit_params)
-            if @patient.save
-                redirect_to @patient
-            else
-                render :edit
-            end
+            update_as_patient
         else
             create_new_patient_account
         end
@@ -82,7 +77,7 @@ class PatientsController < ApplicationController
     def path_exception
         current_path == patients_signup_path || current_path == new_patient_path
     end
-    
+
     def recently_updated_patients(provider)
         provider.patients.order(updated_at: :desc).limit(5)
     end
@@ -118,27 +113,6 @@ class PatientsController < ApplicationController
             @patient.errors.add(:dob, "must be a valid date")
             @patient.dob = nil
             render :new
-        end
-    end
-
-    def set_patient_by_id
-        @patient = Patient.find_by(id: params[:id])
-    end
-
-    def update_as_provider
-        begin
-            @patient.assign_attributes(patient_file_params)
-            @patient.valid?
-            Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
-            if @patient.save
-                redirect_to @patient
-            else
-                render :edit
-            end
-        rescue ArgumentError
-            @patient.errors.add(:dob, "must be a valid date")
-            @patient.dob = nil
-            render :edit
         end
     end
 
@@ -188,6 +162,36 @@ class PatientsController < ApplicationController
             @patient.errors.add(:dob, "must be a valid date")
             @patient.dob = nil
             render :new
+        end
+    end
+
+    def set_patient_by_id
+        @patient = Patient.find_by(id: params[:id])
+    end
+
+    def update_as_provider
+        begin
+            @patient.assign_attributes(patient_file_params)
+            @patient.valid?
+            Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
+            if @patient.save
+                redirect_to @patient
+            else
+                render :edit
+            end
+        rescue ArgumentError
+            @patient.errors.add(:dob, "must be a valid date")
+            @patient.dob = nil
+            render :edit
+        end
+    end
+
+    def update_as_patient
+        @patient.assign_attributes(patient_edit_params)
+        if @patient.save
+            redirect_to @patient
+        else
+            render :edit
         end
     end
 end
