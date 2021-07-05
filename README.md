@@ -34,8 +34,8 @@ Things you may want to cover:
 - Encounter Class
     - pre-populate from appointment data
 
-* breadcrumbs
 * css (bootstrap?)
+* breadcrumbs
 * prevent password params from being logged
 
 <%= f.submit, data: {confirm: "Does everything look accurate? You cannot change your information once your account has been created."} %>

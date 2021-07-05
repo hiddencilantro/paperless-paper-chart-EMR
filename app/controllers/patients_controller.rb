@@ -41,13 +41,7 @@ class PatientsController < ApplicationController
 
     def create
         if logged_in_as_provider
-            @patient = Patient.new(patient_file_params)
-            @patient.providers << current_user
-            if @patient.save
-                redirect_to @patient
-            else
-                render :new
-            end
+            create_as_provider
         else
             create_new_patient_account
         end
@@ -60,12 +54,7 @@ class PatientsController < ApplicationController
     def update
         if logged_in_as_provider
             set_patient_by_id
-            @patient.assign_attributes(patient_file_params)
-            if @patient.save
-                redirect_to @patient
-            else
-                render :edit
-            end
+            update_as_provider
         elsif logged_in_as_patient
             set_patient_by_id
             @patient.assign_attributes(patient_edit_params)
@@ -89,9 +78,17 @@ class PatientsController < ApplicationController
     end
 
     private
+    
+    def path_exception
+        current_path == patients_signup_path || current_path == new_patient_path
+    end
+    
+    def recently_updated_patients(provider)
+        provider.patients.order(updated_at: :desc).limit(5)
+    end
 
     def patient_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation)
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :username, :password, :password_confirmation).compact_blank #Rails 6.1 -> remove blank values from params hash
     end
 
     def patient_file_params
@@ -103,29 +100,46 @@ class PatientsController < ApplicationController
     end
 
     def patient_search_params
-        params.require(:patient).permit(:first_name, :last_name).compact_blank #Rails 6.1 -> remove blank values from params hash
+        params.require(:patient).permit(:first_name, :last_name).compact_blank
+    end
+
+    def create_as_provider
+        begin
+            @patient = Patient.new(patient_file_params)
+            @patient.valid?
+            Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
+            @patient.providers << current_user
+            if @patient.save
+                redirect_to @patient
+            else
+                render :new
+            end
+        rescue ArgumentError
+            @patient.errors.add(:dob, "must be a valid date")
+            @patient.dob = nil
+            render :new
+        end
     end
 
     def set_patient_by_id
         @patient = Patient.find_by(id: params[:id])
     end
 
-    def set_patient_by_attributes
-        @patient = Patient.find_by(first_name: patient_params[:first_name], last_name: patient_params[:last_name], sex: patient_params[:sex], dob: parsed_date)
-    end
-
-    def parsed_date
-        unless patient_params["dob(1i)"].blank? || patient_params["dob(2i)"].blank? || patient_params["dob(3i)"].blank?
-            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+    def update_as_provider
+        begin
+            @patient.assign_attributes(patient_file_params)
+            @patient.valid?
+            Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
+            if @patient.save
+                redirect_to @patient
+            else
+                render :edit
+            end
+        rescue ArgumentError
+            @patient.errors.add(:dob, "must be a valid date")
+            @patient.dob = nil
+            render :edit
         end
-    end
-
-    def path_exception
-        current_path == patients_signup_path || current_path == new_patient_path
-    end
-
-    def recently_updated_patients(provider)
-        provider.patients.order(updated_at: :desc).limit(5)
     end
 
     def create_new_patient_account
@@ -141,13 +155,39 @@ class PatientsController < ApplicationController
         elsif @patient && @patient.username
             redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
         else
+            create_as_patient
+        end
+    end
+
+    def set_patient_by_attributes
+        @patient = Patient.find_by(first_name: patient_params[:first_name], last_name: patient_params[:last_name], sex: patient_params[:sex], dob: parsed_date)
+    end
+
+    def parsed_date
+        unless patient_params["dob(1i)"].blank? || patient_params["dob(2i)"].blank? || patient_params["dob(3i)"].blank?
+            begin
+                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+            rescue ArgumentError
+                nil
+            end
+        end
+    end
+
+    def create_as_patient
+        begin
             @patient = Patient.new(patient_params)
+            @patient.valid?
+            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
             if @patient.save
                 log_in_patient
                 redirect_to @patient
             else
                 render :new
             end
+        rescue ArgumentError
+            @patient.errors.add(:dob, "must be a valid date")
+            @patient.dob = nil
+            render :new
         end
     end
 end
