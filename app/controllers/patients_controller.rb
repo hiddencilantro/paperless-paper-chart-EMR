@@ -105,7 +105,7 @@ class PatientsController < ApplicationController
             Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
             @patient.providers << current_user
             if @patient.save
-                redirect_to @patient
+                redirect_to @patient, notice: "New patient file added!"
             else
                 render :new
             end
@@ -122,7 +122,7 @@ class PatientsController < ApplicationController
             @patient.assign_attributes(patient_edit_params)
             if @patient.save
                 log_in_patient
-                redirect_to @patient
+                redirect_to @patient, notice: "Account successfully created!"
             else
                 render :edit
             end
@@ -154,7 +154,7 @@ class PatientsController < ApplicationController
             Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
             if @patient.save
                 log_in_patient
-                redirect_to @patient
+                redirect_to @patient, notice: "Account successfully created!"
             else
                 render :new
             end
@@ -175,7 +175,7 @@ class PatientsController < ApplicationController
             @patient.valid?
             Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
             if @patient.save
-                redirect_to @patient
+                redirect_to @patient, notice: "Patient file successfully updated!"
             else
                 render :edit
             end
@@ -189,7 +189,7 @@ class PatientsController < ApplicationController
     def update_as_patient
         @patient.assign_attributes(patient_edit_params)
         if @patient.save
-            redirect_to @patient
+            redirect_to @patient, notice: "Account successfully updated!"
         else
             render :edit
         end

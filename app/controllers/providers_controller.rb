@@ -30,7 +30,7 @@ class ProvidersController < ApplicationController
     def destroy
         redirect_back fallback_location: current_user, allow_other_host: false, alert: "You cannot delete another provider's account." if !current_user?(@provider)
         @provider.destroy
-        redirect_to root_path
+        redirect_to root_path, notice: "Account was successfully deleted!"
     end
 
     private

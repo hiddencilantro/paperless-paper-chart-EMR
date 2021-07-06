@@ -9,7 +9,9 @@
 <% end %>
 
 <% if @patient_search %>
-    <p class="bold"><%= pluralize(@patient_search.length, 'record') %> found!</p>
+    <div id="flash-notice">
+        <p class="bold"><%= pluralize(@patient_search.length, 'record') %> found!</p>
+    </div>
     <ul>
         <% @patient_search.each do |record| %>
             <li><%= link_to "#{full_name(record)} / #{record.sex.titleize} / #{age(record.dob)}", patient_path(record) %></li>
