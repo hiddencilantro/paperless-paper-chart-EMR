@@ -5,7 +5,7 @@ class ProvidersController < ApplicationController
 
     def new
         @provider = Provider.new
-        redirect_to current_user, flash: {message: "You must log out to create a new account."} if logged_in?
+        redirect_to current_user, alert: "You must log out to create a new account." if logged_in?
     end
 
     #create action is easily accessible for the sake of project demo,
@@ -24,11 +24,11 @@ class ProvidersController < ApplicationController
     end
 
     def show
-        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot access another provider's account."} if !current_user?(@provider)
+        redirect_back fallback_location: current_user, allow_other_host: false, alert: "You cannot access another provider's account." if !current_user?(@provider)
     end
 
     def destroy
-        redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You cannot delete another provider's account."} if !current_user?(@provider)
+        redirect_back fallback_location: current_user, allow_other_host: false, alert: "You cannot delete another provider's account." if !current_user?(@provider)
         @provider.destroy
         redirect_to root_path
     end
