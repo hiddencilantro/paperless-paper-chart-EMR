@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/patients/signup', to: 'patients#new'
   get '/patients/login', to: 'sessions#login'
   post '/patients/login', to: 'sessions#patient_authenticate'
+
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
 
   resources :patients, except: [:index] do
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   end
   get '/patients', to: 'patients#all'
 
-  resources :providers, only: [:create, :show, :destroy] do
+  resources :providers, except: [:index, :edit, :update] do
     resources :patients, only: [:index, :new, :create]
   end
 

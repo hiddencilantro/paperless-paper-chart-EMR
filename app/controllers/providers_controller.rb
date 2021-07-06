@@ -4,15 +4,15 @@ class ProvidersController < ApplicationController
     before_action :set_provider, only: [:show, :destroy]
 
     def new
-        @provider = Provider.new
         redirect_to current_user, alert: "You must log out to create a new account." if logged_in?
+        @provider = Provider.new
     end
 
-    #create action is easily accessible for the sake of project demo,
-    #but live version would operate in a closed environment,
+    #providers#create is easily accessible for the sake of project demo,
+    #but production version would operate in a closed environment,
     #only allowing creation of a provider account either on the backend
     #or by requiring a key and/or some sort of additional layer of security
-    #to prevent patients or other parties from gaining access to private information
+    #in order to prevent patients or other parties from gaining access to private information
     def create
         @provider = Provider.new(provider_params)
         if @provider.save
