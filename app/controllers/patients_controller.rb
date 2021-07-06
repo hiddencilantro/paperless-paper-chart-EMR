@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
             @patients = recently_updated_patients(current_user)
             render :index
         else
-            redirect_to provider_patients_path(current_user), flash: {message: "Patient record not found!"}
+            redirect_to provider_patients_path(current_user), alert: "Patient record not found!"
         end
     end
     
@@ -28,13 +28,13 @@ class PatientsController < ApplicationController
         @patient = Patient.new
         if logged_in_as_provider
             unless params[:provider_id].to_i == current_user.id || path_exception
-                redirect_to provider_patients_path(current_user), flash: {message: "You cannot create a patient file as another provider."}
+                redirect_to provider_patients_path(current_user), alert: "You cannot create a patient file as another provider."
             end
         elsif logged_in_as_patient
             if path_exception
-                redirect_to current_user, flash: {message: "You must log out to create a new patient account."}
+                redirect_to current_user, alert: "Please log out to create a new patient account."
             else
-                redirect_to current_user, flash: {message: "You must be a provider to access this page."}
+                redirect_to current_user, alert: "You must be a provider to access this page."
             end
         end
     end
@@ -48,7 +48,7 @@ class PatientsController < ApplicationController
     end
 
     def edit
-        redirect_to current_user, flash: {message: "You cannot edit other patients' information."} if not_authorized(@patient)
+        redirect_to current_user, alert: "You can't edit another patient's information." if not_authorized(@patient)
     end
 
     def update
@@ -64,7 +64,7 @@ class PatientsController < ApplicationController
     end
 
     def show
-        redirect_to current_user, flash: {message: "You do not have access to other patient files."} if not_authorized(@patient)
+        redirect_to current_user, alert: "You do not have access to other patient files." if not_authorized(@patient)
     end
 
     def destroy
@@ -127,7 +127,7 @@ class PatientsController < ApplicationController
                 render :edit
             end
         elsif @patient && @patient.username
-            redirect_to patients_login_path, flash: {message: "Looks like you already have an account! Please sign in to continue."}
+            redirect_to patients_login_path, alert: "Looks like you already have an account! Please sign in to continue."
         else
             create_as_patient
         end

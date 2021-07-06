@@ -2,7 +2,7 @@
 
 <%= render 'layouts/flash' %>
 
-<%= form_with url: path do |f| %>
+<%= form_with model: model, url: path do |f| %>
     <%= f.label :email %>
     <%= f.text_field :email %>
     <br>

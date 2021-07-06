@@ -29,13 +29,13 @@ class ApplicationController < ActionController::Base
 
     def verify_if_logged_in
         unless logged_in?
-            redirect_to root_path, flash: {message: "You must log in."}
+            redirect_to root_path, alert: "Please log in."
         end
     end
 
     def authorize_provider
         unless current_user.provider?
-            redirect_back fallback_location: current_user, allow_other_host: false, flash: {message: "You must be a provider to access this page."}
+            redirect_back fallback_location: current_user, allow_other_host: false, alert: "You must be a provider to access this page."
         end
     end
 

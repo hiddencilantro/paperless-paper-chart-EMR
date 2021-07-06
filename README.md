@@ -25,7 +25,6 @@ Things you may want to cover:
 
 <!-- 
 
-- change username to email
 - flash.now & re-render vs redirect
     - success messages
 - Apppintment Class
@@ -33,6 +32,7 @@ Things you may want to cover:
     - nested forms & attributes (choose provider from collection)
 - Encounter Class
     - pre-populate from appointment data
+- OAuth
 
 * css (bootstrap?)
 * breadcrumbs

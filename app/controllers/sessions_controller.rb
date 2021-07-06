@@ -10,10 +10,11 @@ class SessionsController < ApplicationController
                 log_in_provider
                 redirect_to @provider
             else
-                redirect_to providers_login_path, flash: {message: "Incorrect password."}
+                flash.now[:alert] = "Incorrect password."
+                render :login
             end
         else
-            redirect_to providers_login_path, flash: {message: "Email doesn't exist."}
+            flash.now[:alert] = "Email doesn't exist."
         end
     end
 
@@ -24,10 +25,11 @@ class SessionsController < ApplicationController
                 log_in_patient
                 redirect_to @patient
             else
-                redirect_to patients_login_path, flash: {message: "Incorrect password."}
+                flash.now[:alert] = "Incorrect password."
+                render :login
             end
         else
-            redirect_to patients_login_path, flash: {message: "Email doesn't exist."}
+            flash.now[:alert] = "Email doesn't exist."
         end
     end
 
