@@ -1,5 +1,5 @@
 <% content_for :breadcrumbs do %>
-    <%= link_to "Patient Index", provider_patients_path(current_user) %> >> <%= link_to_unless_current "Patient Directory", action: "all" %>
+    <%= link_to "Patient Archive", provider_patients_path(current_user) %> >> <%= link_to_unless_current "Patient Directory", action: "all" %>
 <% end %>
 
 <h2>Patient Directory</h2>
