@@ -1,10 +1,12 @@
 <% if logged_in_as_provider %>
     <% content_for :breadcrumbs do %>
-        <%= link_to "Patient Index", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", all_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Edit Patient File", action: "edit" %>
+        <%= link_to "Patient Archive", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", all_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Edit Patient File", action: "edit" %>
     <% end %>
     <%= render 'form', path: @patient, title: "Edit Patient File", submit: "Save changes" %>
 <% elsif logged_in_as_patient %>
     <%= render 'form', path: @patient, title: "Edit Profile", submit: "Save changes" %>
+    <br>
+    <%= button_to "<< Return to Main", @patient, method: :get %>
 <% else %>
     <%= render 'form', path: @patient, title: "Create A New Patient Account", submit: "Create Account" %>
 <% end %>
