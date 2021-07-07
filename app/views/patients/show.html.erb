@@ -1,6 +1,6 @@
 <% if logged_in_as_provider %>
     <% content_for :breadcrumbs do %>
-        <%= link_to "Patient Index", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", all_patients_path %> >> <%= link_to_unless_current "Patient File", action: "show" %>
+        <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to_unless_current "Patient File", action: "show" %>
     <% end %>
 <% end %>
 
@@ -9,8 +9,14 @@
 <%= render 'info' %>
 
 <% if logged_in_as_provider %>
-    <%= button_to "Edit Patient File", edit_patient_path(@patient), method: :get %>
+    <%= button_to "Edit Patient Info", edit_patient_path(@patient), method: :get %>
     <br>
+    <%= link_to "Encounters", patient_encounters_path(@patient) %>
+    <p>Vitals</p>
+    <p>Medications</p>
+    <p>Labs/Imaging/Other Documents</p>
+    <p>Medical & Family History</p>
+    <p>Social & Personal History</p>
     <%= button_to "Delete Patient Record", patient_path(@patient), method: :delete, data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>
 <% else %>
     <%= button_to "Change Username/Password", edit_patient_path(@patient), method: :get %>
