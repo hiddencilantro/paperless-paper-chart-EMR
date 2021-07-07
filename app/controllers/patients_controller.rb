@@ -7,7 +7,7 @@ class PatientsController < ApplicationController
         @patients = recently_updated_patients(current_user)
     end
 
-    def all
+    def directory
         @patients = Patient.order(:last_name, :first_name).group_by{|p| p.last_name[0].capitalize}
         @alphabet_array = [*'A'..'Z']
     end

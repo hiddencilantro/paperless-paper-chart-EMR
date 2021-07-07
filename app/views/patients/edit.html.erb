@@ -1,6 +1,6 @@
 <% if logged_in_as_provider %>
     <% content_for :breadcrumbs do %>
-        <%= link_to "Patient Archive", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", all_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Edit Patient Info", action: "edit" %>
+        <%= link_to "Patient Archive", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Edit Patient Info", action: "edit" %>
     <% end %>
     <%= render 'form', path: @patient, title: "Edit Patient Info", submit: "Save changes" %>
 <% elsif logged_in_as_patient %>

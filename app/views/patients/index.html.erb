@@ -4,7 +4,7 @@
 
 <%= button_to "Create New Patient File", new_provider_patient_path(current_user), method: :get %>
 <br>
-<%= button_to "View Entire Patient Directory", all_patients_path, method: :get %>
+<%= button_to "View Entire Patient Directory", directory_patients_path, method: :get %>
 <br>
 
 <%= render 'search' %>
