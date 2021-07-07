@@ -40,6 +40,6 @@ class SessionsController < ApplicationController
             session.delete(:patient_id)
         end
         @current_user = nil
-        redirect_to root_path, notice: "You have been logged out successfully!"
+        redirect_to root_path, notice: "You have successfully logged out."
     end
 end
