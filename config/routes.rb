@@ -14,9 +14,12 @@ Rails.application.routes.draw do
 
   resources :patients, except: [:index] do
     get 'search', on: :collection
-    get 'all', on: :collection
+    get 'directory', on: :collection
+    resources :encounters, only: [:index, :create] do
+      resources :soaps, only: [:new, :create]
+    end
   end
-  get '/patients', to: 'patients#all'
+  get '/patients', to: 'patients#directory'
 
   resources :providers, except: [:index, :edit, :update] do
     resources :patients, only: [:index, :new, :create]

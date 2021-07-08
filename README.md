@@ -25,8 +25,6 @@ Things you may want to cover:
 
 <!-- 
 
-- flash.now & re-render vs redirect
-    - success messages
 - Apppintment Class
     - associations
     - nested forms & attributes (choose provider from collection)

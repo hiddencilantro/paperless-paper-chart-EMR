@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_184929) do
+ActiveRecord::Schema.define(version: 2021_07_07_210549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,12 +18,10 @@ ActiveRecord::Schema.define(version: 2021_07_05_184929) do
   create_table "encounters", force: :cascade do |t|
     t.bigint "provider_id", null: false
     t.bigint "patient_id", null: false
-    t.text "chief_complaint"
-    t.text "subjective"
-    t.text "objective"
-    t.text "assessment_and_plan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "encounter_type", limit: 2
+    t.index ["encounter_type"], name: "index_encounters_on_encounter_type"
     t.index ["patient_id"], name: "index_encounters_on_patient_id"
     t.index ["provider_id"], name: "index_encounters_on_provider_id"
   end
@@ -51,6 +49,18 @@ ActiveRecord::Schema.define(version: 2021_07_05_184929) do
     t.index ["email"], name: "index_providers_on_email", unique: true
   end
 
+  create_table "soaps", force: :cascade do |t|
+    t.bigint "encounter_id", null: false
+    t.text "chief_complaint"
+    t.text "subjective"
+    t.text "objective"
+    t.text "assessment_and_plan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["encounter_id"], name: "index_soaps_on_encounter_id"
+  end
+
   add_foreign_key "encounters", "patients"
   add_foreign_key "encounters", "providers"
+  add_foreign_key "soaps", "encounters"
 end

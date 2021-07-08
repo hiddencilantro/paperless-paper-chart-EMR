@@ -2,6 +2,7 @@ class Provider < ApplicationRecord
     has_secure_password validations: false
     has_many :encounters, dependent: :destroy
     has_many :patients, through: :encounters
+    has_many :soaps, through: :encounters
     validates :first_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}
