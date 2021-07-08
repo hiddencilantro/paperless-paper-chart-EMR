@@ -1,8 +1,8 @@
 <%= render 'layouts/errors', object: @encounter %>
 
 <%= form_with model: @encounter, url: path do |f| %>
-    <%= f.label :encounter_type, "Create New Encounter:" %>
+    <%= f.label :encounter_type, "New Encounter:" %>
     <%= f.select :encounter_type, [["SOAP", "soap"], ["Physical", "physical"], ["Well Child", "well_child"]], include_blank: "Select type" %>
     <br>
-    <%= f.submit "Submit" %>
+    <%= f.submit "Create" %>
 <% end %>

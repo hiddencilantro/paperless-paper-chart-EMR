@@ -2,4 +2,4 @@
     <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to "Encounters", patient_encounters_path(@patient) %> >> <%= link_to_unless_current "Create SOAP", action: "new" %>
 <% end %>
 
-<%= render 'form', path: patient_encounter_soaps_path(@patient, @encounter), title: "SOAP" submit: "Submit"%>
+<%= render 'form', path: patient_encounter_soaps_path(@patient, @encounter), title: "SOAP", submit: "Submit" %>

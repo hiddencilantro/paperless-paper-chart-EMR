@@ -1,5 +1,0 @@
-<% content_for :breadcrumbs do %>
-    <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to "Encounters", patient_encounters_path(@patient) %> >> <%= link_to_unless_current "Create New Encounter", action: "new" %>
-<% end %>
-
-<%= render 'form', path: patient_encounters_path(@patient), title: "Create New Encounter", submit: "Create Encounter" %>

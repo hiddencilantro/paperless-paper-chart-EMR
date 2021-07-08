@@ -8,6 +8,10 @@ class SoapsController < ApplicationController
         @soap = SOAP.new
     end
 
+    def create
+
+    end
+
     private
 
     def set_patient_by_id
