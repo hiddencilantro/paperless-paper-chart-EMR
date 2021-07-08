@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_07_210549) do
+ActiveRecord::Schema.define(version: 2021_07_08_214551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,15 @@ ActiveRecord::Schema.define(version: 2021_07_07_210549) do
     t.index ["sex"], name: "index_patients_on_sex"
   end
 
+  create_table "patients_providers", force: :cascade do |t|
+    t.bigint "patient_id", null: false
+    t.bigint "provider_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["patient_id"], name: "index_patients_providers_on_patient_id"
+    t.index ["provider_id"], name: "index_patients_providers_on_provider_id"
+  end
+
   create_table "providers", force: :cascade do |t|
     t.string "first_name"
     t.string "email"
@@ -62,5 +71,7 @@ ActiveRecord::Schema.define(version: 2021_07_07_210549) do
 
   add_foreign_key "encounters", "patients"
   add_foreign_key "encounters", "providers"
+  add_foreign_key "patients_providers", "patients"
+  add_foreign_key "patients_providers", "providers"
   add_foreign_key "soaps", "encounters"
 end
