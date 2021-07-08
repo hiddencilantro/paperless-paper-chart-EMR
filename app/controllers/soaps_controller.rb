@@ -1,8 +1,5 @@
 class SoapsController < ApplicationController
-    before_action :verify_if_logged_in
-    before_action :authorize_provider
-    before_action :set_patient_by_id
-    before_action :set_encounter_by_id
+    before_action :verify_if_logged_in, :authorize_provider, :set_patient_by_id, :set_encounter_by_id
 
     def new
         @soap = SOAP.new

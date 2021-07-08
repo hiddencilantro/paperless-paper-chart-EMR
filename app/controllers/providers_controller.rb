@@ -1,7 +1,5 @@
 class ProvidersController < ApplicationController
-    before_action :verify_if_logged_in, only: [:show, :destroy]
-    before_action :authorize_provider, only: [:show, :destroy]
-    before_action :set_provider, only: [:show, :destroy]
+    before_action :verify_if_logged_in, :authorize_provider, :set_provider, only: [:show, :destroy]
 
     def new
         redirect_to current_user, alert: "You must log out to create a new account." if logged_in?
