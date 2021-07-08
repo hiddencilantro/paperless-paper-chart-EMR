@@ -105,7 +105,7 @@ class PatientsController < ApplicationController
             Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
             @patient.providers << current_user
             if @patient.save
-                redirect_to @patient, notice: "New patient file added!"
+                redirect_to @patient, notice: "New patient file created!"
             else
                 render :new
             end
