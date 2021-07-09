@@ -25,8 +25,9 @@ Things you may want to cover:
 
 <!-- 
 
+- Patient can only be created by Provider
 - Apppintment Class
-    - associations
+    - allowed before registered as Patient
     - nested forms & attributes (choose provider from collection)
 - Encounter Class
     - pre-populate from appointment data
