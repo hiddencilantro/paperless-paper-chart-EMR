@@ -7,7 +7,7 @@ class ProvidersController < ApplicationController
     end
 
     #providers#create is easily accessible for the sake of project demo,
-    #but production version would operate in a closed environment,
+    #but in production it would operate in a closed environment,
     #only allowing creation of a provider account either on the backend
     #or by requiring a key and/or some sort of additional layer of security
     #in order to prevent patients or other parties from gaining access to private information

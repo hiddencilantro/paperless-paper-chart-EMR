@@ -1,5 +1,6 @@
 <h2><%= title %></h2>
 
+<%= render 'layouts/flash' %>
 <%= render 'layouts/errors', object: @patient %>
 
 <%= form_with model: @patient, url: path do |f| %>

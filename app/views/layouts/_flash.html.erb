@@ -1,6 +1,6 @@
 <% if flash[:alert] %>
     <div id="flash-alert">
-        <p><%= flash[:alert] %></p>
+        <p><%= flash[:alert].html_safe %></p>
     </div>
 <% end %>
 
