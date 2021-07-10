@@ -1,7 +1,7 @@
 class Provider < ApplicationRecord
     has_secure_password validations: false
-    has_many :encounters
     has_and_belongs_to_many :patients
+    has_many :encounters
     has_many :soaps, through: :encounters
     validates :first_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}

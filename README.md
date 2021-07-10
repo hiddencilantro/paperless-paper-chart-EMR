@@ -32,7 +32,9 @@ Things you may want to cover:
     - pre-populate from Appointment class
 - Patient#create (as Provider)
     - pre-populate from Appointment class
+- scope method
 - OAuth
+- has_many :through
 
 * css (bootstrap?)
 * breadcrumbs
