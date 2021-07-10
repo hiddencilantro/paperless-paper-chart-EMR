@@ -13,7 +13,8 @@ class Patient < ApplicationRecord
     validates :password, presence: true, confirmation: true, unless: :is_provider
     validates :password_confirmation, presence: true, unless: :is_provider
     validate :password_requirements, unless: -> {password.blank?}
-    before_save self.email = email.downcase unless :is_provider
+    before_save :downcase_email, unless: :is_provider
+    before_save :capitalize_name
 
     def password_requirements
         requirements = {
@@ -27,5 +28,14 @@ class Patient < ApplicationRecord
         requirements.each do |message, regex|
             errors.add(:password, message) unless password.match(regex)
         end
+    end
+
+    def downcase_email
+        self.email = email.downcase
+    end
+
+    def capitalize_name
+        self.first_name = first_name.capitalize
+        self.last_name = last_name.capitalize
     end
 end
