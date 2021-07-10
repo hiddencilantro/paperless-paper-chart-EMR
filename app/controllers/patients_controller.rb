@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
-    before_action :authorize_provider, only: [:index, :all, :search, :destroy]
+    before_action :authorize_provider, only: [:index, :directory, :search, :destroy]
     before_action :set_patient_by_id, only: [:edit, :show, :destroy]
 
     def index
@@ -13,7 +13,7 @@ class PatientsController < ApplicationController
     end
 
     def search
-        @patient_search = Patient.where(patient_search_params)
+        @patient_search = Patient.where(patient_search_params.transform_values(&:capitalize))
         if @patient_search.length == 1
             redirect_to @patient_search.first
         elsif @patient_search.length > 1
@@ -43,7 +43,9 @@ class PatientsController < ApplicationController
         if logged_in_as_provider
             create_as_provider
         else
-            create_new_patient_account
+            create_new_account
+            #in production phase: require additional key (provided by physician) for initial signup
+            #when setting up e-mail/password
         end
     end
 
@@ -59,7 +61,7 @@ class PatientsController < ApplicationController
             set_patient_by_id
             update_as_patient
         else
-            create_new_patient_account
+            create_new_account
         end
     end
 
@@ -75,7 +77,7 @@ class PatientsController < ApplicationController
     private
     
     def path_exception
-        current_path == patients_signup_path || current_path == new_patient_path
+        current_path == new_patient_path
     end
 
     def recently_updated_patients(provider)
@@ -116,9 +118,9 @@ class PatientsController < ApplicationController
         end
     end
 
-    def create_new_patient_account
-        set_patient_by_attributes
-        if @patient && @patient.username.blank?
+    def create_new_account
+        find_patient_by_attributes
+        if @patient && @patient.email.blank?
             @patient.assign_attributes(patient_edit_params)
             if @patient.save
                 log_in_patient
@@ -126,15 +128,37 @@ class PatientsController < ApplicationController
             else
                 render :edit
             end
-        elsif @patient && @patient.username
+        elsif @patient && @patient.email
             redirect_to patients_login_path, alert: "Looks like you already have an account! Please sign in to continue."
         else
-            create_as_patient
+            begin
+                @patient = Patient.new(patient_params)
+                @patient.valid?
+                Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
+                if @patient.errors.any?
+                    render :new
+                else
+                    flash.now[:alert] = "We couldn't find your record in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call."
+                    render :new
+                end
+            rescue ArgumentError
+                @patient.errors.add(:dob, "must be a valid date")
+                @patient.dob = nil
+                render :new
+            end
         end
     end
 
-    def set_patient_by_attributes
-        @patient = Patient.find_by(first_name: patient_params[:first_name], last_name: patient_params[:last_name], sex: patient_params[:sex], dob: parsed_date)
+    def find_patient_by_attributes
+        @patient = Patient.find_by(first_name: capitalized_first_name, last_name: capitalized_last_name, sex: patient_params[:sex], dob: parsed_date)
+    end
+
+    def capitalized_first_name
+        patient_params[:first_name].capitalize unless patient_params[:first_name].blank?
+    end
+
+    def capitalized_last_name
+        patient_params[:last_name].capitalize unless patient_params[:last_name].blank?
     end
 
     def parsed_date
@@ -144,24 +168,6 @@ class PatientsController < ApplicationController
             rescue ArgumentError
                 nil
             end
-        end
-    end
-
-    def create_as_patient
-        begin
-            @patient = Patient.new(patient_params)
-            @patient.valid?
-            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
-            if @patient.save
-                log_in_patient
-                redirect_to @patient, notice: "Account successfully created!"
-            else
-                render :new
-            end
-        rescue ArgumentError
-            @patient.errors.add(:dob, "must be a valid date")
-            @patient.dob = nil
-            render :new
         end
     end
 
@@ -175,7 +181,7 @@ class PatientsController < ApplicationController
             @patient.valid?
             Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
             if @patient.save
-                redirect_to @patient, notice: "Patient file successfully updated!"
+                redirect_to @patient, notice: "Patient info successfully updated!"
             else
                 render :edit
             end
