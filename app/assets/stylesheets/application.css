@@ -30,3 +30,10 @@
 .italic {
     font-style: italic;
 }
+
+.field_with_errors {
+    width: 200px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+}

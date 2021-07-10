@@ -25,12 +25,13 @@ Things you may want to cover:
 
 <!-- 
 
-- Patient can only be created by Provider
-- Apppintment Class
+- Apppintment class
     - allowed before registered as Patient
     - nested forms & attributes (choose provider from collection)
-- Encounter Class
-    - pre-populate from appointment data
+- SOAP#create
+    - pre-populate from Appointment class
+- Patient#create (as Provider)
+    - pre-populate from Appointment class
 - OAuth
 
 * css (bootstrap?)
