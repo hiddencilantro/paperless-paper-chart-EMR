@@ -28,8 +28,8 @@
     <% end %>
     <% if logged_in_as_provider %>
         <%= f.hidden_field :is_provider, value: true %>
-        <%= f.label :email if params[:id] %>
-        <%= f.text_field :email, disabled: true if params[:id] %>
+        <%= f.label :email %>
+        <%= f.text_field :email, disabled: true %>
         <br><br>
         <%= f.label :first_name, "First Name" %>
         <%= f.text_field :first_name %>
