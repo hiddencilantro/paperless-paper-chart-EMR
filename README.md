@@ -25,9 +25,6 @@ Things you may want to cover:
 
 <!-- 
 
-- partial for type of encounter in encounter#show
-- partial within form partial?
-- patient#search reject if params.blank?
 - Apppintment class
     - allowed before registered as Patient
     - nested forms & attributes (choose provider from collection)
@@ -37,7 +34,6 @@ Things you may want to cover:
     - pre-populate from Appointment class
 - scope method
 - OAuth
-- has_many :through
 
 * css (bootstrap?)
 * breadcrumbs

@@ -14,7 +14,7 @@
     <h3 id="<%= letter %>"><%= letter %></h3>
     <ul>
         <% grouped_patients.each do |patient| %>
-            <li><%= link_to "#{patient.last_name.capitalize}, #{patient.first_name.capitalize}", patient %></li>
+            <li><%= link_to "#{patient.last_name.upcase}, #{patient.first_name.capitalize}", patient %></li>
         <% end %>
     </ul>
 <% end %>
