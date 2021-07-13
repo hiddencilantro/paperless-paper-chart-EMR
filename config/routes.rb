@@ -4,23 +4,19 @@ Rails.application.routes.draw do
 
   get '/providers/login', to: 'sessions#login'
   post '/providers/login', to: 'sessions#provider_authenticate'
-
   get '/patients/login', to: 'sessions#login'
   post '/patients/login', to: 'sessions#patient_authenticate'
-
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
-
-  resources :patients, except: [:index] do
-    get 'search', on: :collection
-    get 'directory', on: :collection
-    resources :encounters, only: [:index, :create] do
-      resources :soaps, only: [:new, :create]
-    end
-  end
-  get '/patients', to: 'patients#directory'
 
   resources :providers, except: [:index, :edit, :update] do
     resources :patients, only: [:index, :new, :create]
+  end
+
+  get '/patients', to: 'patients#directory'
+  resources :patients, except: [:index] do
+    get 'search', on: :collection
+    get 'directory', on: :collection
+    resources :encounters
   end
 
 end

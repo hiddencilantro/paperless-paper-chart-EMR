@@ -1,8 +1,18 @@
+<% if params[:encounter_type] == "soap" %>
+    <h2>New SOAP</h2>
+<% elsif @encounter.encounter_type == "soap" %>
+    <h2>Edit SOAP</h2>
+<% end %>
+
 <%= render 'layouts/errors', object: @encounter %>
 
-<%= form_with model: @encounter, url: path do |f| %>
-    <%= f.label :encounter_type, "New Encounter:" %>
-    <%= f.select :encounter_type, [["SOAP", "soap"], ["Physical", "physical"], ["Well Child", "well_child"]], include_blank: "Select type" %>
-    <br>
-    <%= f.submit "Create" %>
+<%= form_with model: @encounter, url: url do |f| %>
+    <%= f.hidden_field :encounter_type, value: params[:encounter_type] unless @encounter.encounter_type %>
+
+    <% if params[:encounter_type] == "soap" || @encounter.encounter_type == "soap" %>
+        <%= render 'form_soap', f: f %>
+    <% end %>
+
+    <br><br>
+    <%= f.submit "Submit" %>
 <% end %>

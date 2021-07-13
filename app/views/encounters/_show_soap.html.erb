@@ -1,0 +1,13 @@
+<h4>Chief Complaint:</h4>
+<p><%= @encounter.soap.chief_complaint %></p>
+
+<h4>Subjective:</h4>
+<p><%= @encounter.soap.subjective %></p>
+
+<h4>Objective:</h4>
+<p><%= @encounter.soap.objective %></p>
+
+<h4>Assessment & Plan:</h4>
+<p><%= @encounter.soap.assessment_and_plan %></p>
+
+<%= button_to "Edit SOAP", edit_patient_encounter_path(@patient, @encounter), method: :get %>

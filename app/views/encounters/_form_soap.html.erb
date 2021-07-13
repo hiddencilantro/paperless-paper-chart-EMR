@@ -1,0 +1,17 @@
+<%= f.fields_for :soap do |sf| %>
+    <%= sf.label :chief_complaint, "Chief Complaint:" %>
+    <br>
+    <%= sf.text_area :chief_complaint, size: "50x3" %>
+    <br><br>
+    <%= sf.label :subjective, "Subjective:" %>
+    <br>
+    <%= sf.text_area :subjective, size: "50x6" %>
+    <br><br>
+    <%= sf.label :objective, "Objective:" %>
+    <br>
+    <%= sf.text_area :objective, size: "50x6" %>
+    <br><br>
+    <%= sf.label :assessment_and_plan, "Assessment & Plan:" %>
+    <br>
+    <%= sf.text_area :assessment_and_plan, size: "50x6" %>
+<% end %>

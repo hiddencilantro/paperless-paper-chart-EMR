@@ -25,6 +25,9 @@ Things you may want to cover:
 
 <!-- 
 
+- partial for type of encounter in encounter#show
+- partial within form partial?
+- patient#search reject if params.blank?
 - Apppintment class
     - allowed before registered as Patient
     - nested forms & attributes (choose provider from collection)

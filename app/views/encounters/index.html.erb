@@ -4,10 +4,11 @@
 
 <h2>Encounters (<%= full_name(@patient) %>)</h2>
 
-<%= render 'form', path: patient_encounters_path(@patient)%>
+<%= render 'layouts/flash' %>
+<%= render 'new_encounter' %>
 
 <ul>
     <% @encounters.each do |encounter| %>
-        <li><%= encounter.created_at.to_date %> [<%= encounter.encounter_type %>]</li>
+        <li><%= link_to "#{encounter.created_at.to_date} [#{encounter.encounter_type.titleize}]", patient_encounter_path(@patient, encounter) %></li>
     <% end %>
 </ul>

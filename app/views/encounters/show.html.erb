@@ -1,0 +1,14 @@
+<% content_for :breadcrumbs do %>
+    <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to "Encounters", patient_encounters_path(@patient) %> >> <%= link_to_unless_current "#{@encounter.created_at.to_date} [#{@encounter.encounter_type.titleize}]", action: "show" %>
+<% end %>
+
+<h2><%= @encounter.encounter_type.titleize %> / <%= @encounter.created_at.to_date %></h2>
+
+<%= render 'layouts/flash' %>
+
+<% if @encounter.encounter_type == "soap" %>
+    <%= render 'show_soap' %>
+<% end %>
+
+<br>
+<%= button_to "Delete Record", patient_encounter_path(@patient, @encounter), method: :delete, data: {confirm: "Are you sure you want to delete this record from the database? You can't undo this action."} %>
