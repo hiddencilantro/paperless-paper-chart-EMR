@@ -3,7 +3,7 @@ class EncountersController < ApplicationController
     before_action :set_encounter_by_id, except: [:index, :new, :create]
     
     def index
-        @encounters = @patient.encounters.order(updated_at: :desc)
+        @encounters = @patient.encounters.ordered_by_most_recent
     end
 
     def new

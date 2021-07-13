@@ -4,7 +4,7 @@ class PatientsController < ApplicationController
     before_action :set_patient_by_id, only: [:edit, :show, :destroy]
 
     def index
-        @patients = recently_updated_patients(current_user)
+        @patients = current_user.patients.five_most_recent
     end
 
     def directory
@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
             if @patient_search.length == 1
                 redirect_to @patient_search.first
             elsif @patient_search.length > 1
-                @patients = recently_updated_patients(current_user)
+                @patients = current_user.patients.five_most_recent
                 render :index
             else
                 redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, alert: "Patient record not found"
@@ -82,10 +82,6 @@ class PatientsController < ApplicationController
     
     def path_exception
         current_path == new_patient_path
-    end
-
-    def recently_updated_patients(provider)
-        provider.patients.order(updated_at: :desc).limit(5)
     end
 
     def patient_params

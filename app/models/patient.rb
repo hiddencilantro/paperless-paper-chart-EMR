@@ -15,6 +15,7 @@ class Patient < ApplicationRecord
     validate :password_requirements, unless: -> {password.blank?}
     before_save :downcase_email, unless: :is_provider
     before_save :capitalize_name
+    scope :five_most_recent, -> {order(updated_at: :desc).limit(5)}
 
     def password_requirements
         requirements = {
