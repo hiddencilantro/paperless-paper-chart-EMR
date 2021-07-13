@@ -13,14 +13,18 @@ class PatientsController < ApplicationController
     end
 
     def search
-        @patient_search = Patient.where(patient_search_params.transform_values(&:capitalize))
-        if @patient_search.length == 1
-            redirect_to @patient_search.first
-        elsif @patient_search.length > 1
-            @patients = recently_updated_patients(current_user)
-            render :index
+        if patient_search_params.blank?
+            redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, alert: "Search fields are empty"
         else
-            redirect_to provider_patients_path(current_user), alert: "Patient record not found!"
+            @patient_search = Patient.where(patient_search_params.transform_values(&:capitalize))
+            if @patient_search.length == 1
+                redirect_to @patient_search.first
+            elsif @patient_search.length > 1
+                @patients = recently_updated_patients(current_user)
+                render :index
+            else
+                redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, alert: "Patient record not found"
+            end
         end
     end
     
