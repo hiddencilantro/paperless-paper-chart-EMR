@@ -5,65 +5,13 @@
 
 <%= form_with model: @patient, url: path do |f| %>
     <% if !logged_in? %>
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-        <br><br>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-        <br>
-        <%= f.label :password_confirmation, "Confirm Password" %>
-        <%= f.password_field :password_confirmation %>
-        <br><br>
-        <%= f.label :first_name, "First Name" %>
-        <%= f.text_field :first_name %>
-        <%= f.label :last_name, "Last Name" %>
-        <%= f.text_field :last_name %>
-        <br><br>
-        <%= f.label :sex %>
-        <%= f.select :sex, [["Male", "male"], ["Female", "female"], ["Unknown", "unknown"], ["Not Applicable", "not_applicable"]], include_blank: "Please select" %>
-        <br><br>
-        <%= f.label :dob, "Date of Birth" %>
-        <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true %> 
-        <br><br>
+        <%= render 'form_create', f: f %>
     <% end %>
     <% if logged_in_as_provider %>
-        <%= f.hidden_field :is_provider, value: true %>
-        <%= f.label :email %>
-        <%= f.text_field :email, disabled: true %>
-        <br><br>
-        <%= f.label :first_name, "First Name" %>
-        <%= f.text_field :first_name %>
-        <%= f.label :last_name, "Last Name" %>
-        <%= f.text_field :last_name %>
-        <br><br>
-        <%= f.label :sex %>
-        <%= f.select :sex, [["Male", "male"], ["Female", "female"], ["Unknown", "unknown"], ["Not Applicable", "not_applicable"]], include_blank: "Please select" %>
-        <br><br>
-        <%= f.label :dob, "Date of Birth" %>
-        <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true %> 
-        <br><br>
+        <%= render 'form_provider', f: f %>
     <% end %>
     <% if current_user?(@patient) %>
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-        <br><br>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-        <br>
-        <%= f.label :password_confirmation, "Confirm Password" %>
-        <%= f.password_field :password_confirmation %>
-        <br><br>
-        <%= f.label :first_name, "First Name" %>
-        <%= f.text_field :first_name, disabled: true %>
-        <%= f.label :last_name, "Last Name" %>
-        <%= f.text_field :last_name, disabled: true %>
-        <br><br>
-        <%= f.label :sex %>
-        <%= f.select :sex, [["Male", "male"], ["Female", "female"], ["Unknown", "unknown"], ["Not Applicable", "not_applicable"]], {include_blank: "Please select"}, disabled: true %>
-        <br><br>
-        <%= f.label :dob, "Date of Birth" %>
-        <%= f.date_select :dob, start_year: Date.today.year - 120, end_year: Date.today.year, order: [:month, :day, :year], prompt: true, disabled: true %> 
-        <br><br>
+        <%= render 'form_patient', f: f %>
     <% end %>
     <%= f.submit submit %>
 <% end %>
