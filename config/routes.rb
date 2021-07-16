@@ -3,10 +3,13 @@ Rails.application.routes.draw do
   root 'static#main'
 
   get '/providers/login', to: 'sessions#login'
-  post '/providers/login', to: 'sessions#provider_authenticate'
+  post '/providers/login', to: 'sessions#provider_auth'
   get '/patients/login', to: 'sessions#login'
-  post '/patients/login', to: 'sessions#patient_authenticate'
+  post '/patients/login', to: 'sessions#patient_auth'
   match '/logout', to: 'sessions#logout', via: [:get, :delete]
+
+  get 'auth/:provider/callback', to: 'sessions#google_auth'
+  get 'auth/failure', to: redirect('/')
 
   resources :providers, except: [:index, :edit, :update] do
     resources :patients, only: [:index, :new, :create]

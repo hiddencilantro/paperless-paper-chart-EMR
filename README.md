@@ -32,9 +32,10 @@ Things you may want to cover:
     - pre-populate from Appointment class
 - Patient#create (as Provider)
     - pre-populate from Appointment class
-- OAuth
 
-* css (bootstrap?)
+* bootstrap?
+* pull birthday and gender from Google OAuth
+* prevent OAuth users from intercepting other patients' accounts
 * breadcrumbs
 * prevent password params from being logged
 

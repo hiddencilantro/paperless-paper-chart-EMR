@@ -11,3 +11,4 @@
 <p>If this is your first visit, click here to make an appointment!</p>
 <p>If you are a returning patient, <%= link_to "click here to create an account", new_patient_path %>.</p>
 <p>Already have an account? <%= link_to "Log in here", patients_login_path %>!</p>
+<p>Or log in using your <%= link_to "Google account", '/auth/google_oauth2', method: :post %>.</p>

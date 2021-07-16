@@ -1,5 +1,5 @@
 class Patient < ApplicationRecord
-    attr_accessor :is_provider
+    attr_accessor :is_provider_or_using_oauth
     has_secure_password validations: false
     enum sex: {unknown: 0, male: 1, female: 2, not_applicable: 9}
     has_and_belongs_to_many :providers, validate: false
@@ -9,11 +9,11 @@ class Patient < ApplicationRecord
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :sex, presence: true
     validates :dob, presence: true
-    validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: :is_provider
-    validates :password, presence: true, confirmation: true, unless: :is_provider
-    validates :password_confirmation, presence: true, unless: :is_provider
+    validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: :is_provider_or_using_oauth
+    validates :password, presence: true, confirmation: true, unless: :is_provider_or_using_oauth
+    validates :password_confirmation, presence: true, unless: :is_provider_or_using_oauth
     validate :password_requirements, unless: -> {password.blank?}
-    before_save :downcase_email, unless: :is_provider
+    before_save :downcase_email, unless: :is_provider_or_using_oauth
     before_save :capitalize_name
     scope :five_most_recent, -> {order(updated_at: :desc).limit(5)}
 
@@ -38,5 +38,9 @@ class Patient < ApplicationRecord
     def capitalize_name
         self.first_name = first_name.capitalize
         self.last_name = last_name.capitalize
+    end
+
+    def self.set_from_omniauth(auth)
+        find_by(first_name: auth.info.first_name, last_name: auth.info.last_name) #include sex and dob in query
     end
 end
