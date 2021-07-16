@@ -54,7 +54,11 @@ class PatientsController < ApplicationController
     end
 
     def edit
-        redirect_to current_user, alert: "You can't edit another patient's information." if not_authorized(@patient)
+        if not_authorized(@patient)
+            redirect_to current_user, alert: "You can't edit another patient's information."
+        elsif session[:oauth_user]
+            redirect_to current_user, alert: "You can't edit your email and/or password when logged in using third-party credentials."
+        end
     end
 
     def update
