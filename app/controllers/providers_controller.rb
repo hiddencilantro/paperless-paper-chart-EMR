@@ -14,7 +14,7 @@ class ProvidersController < ApplicationController
     def create
         @provider = Provider.new(provider_params)
         if @provider.save
-            log_in_provider
+            log_in(@provider)
             redirect_to @provider
         else
             render :new

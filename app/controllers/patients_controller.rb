@@ -89,7 +89,7 @@ class PatientsController < ApplicationController
     end
 
     def patient_file_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :is_provider)
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :is_provider_or_using_oauth)
     end
 
     def patient_edit_params
@@ -107,7 +107,7 @@ class PatientsController < ApplicationController
             Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
             @patient.providers << current_user
             if @patient.save
-                redirect_to @patient, notice: "New patient file was successfully created!"
+                redirect_to @patient, notice: "Patient record was successfully created!"
             else
                 render :new
             end
@@ -123,7 +123,7 @@ class PatientsController < ApplicationController
         if @patient && @patient.email.blank?
             @patient.assign_attributes(patient_edit_params)
             if @patient.save
-                log_in_patient
+                log_in(@patient)
                 redirect_to @patient, notice: "Account was successfully created!"
             else
                 render :edit
@@ -138,7 +138,7 @@ class PatientsController < ApplicationController
                 if @patient.errors.any?
                     render :new
                 else
-                    flash.now[:alert] = "We couldn't find your record in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call."
+                    flash.now[:alert] = "We couldn't find you in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call."
                     render :new
                 end
             rescue ArgumentError

@@ -3,12 +3,12 @@ class ApplicationController < ActionController::Base
 
     private
 
-    def log_in_provider
-        session[:provider_id] = @provider.id
-    end
-
-    def log_in_patient
-        session[:patient_id] = @patient.id
+    def log_in(user)
+        if user.provider?
+            session[:provider_id] = user.id
+        elsif user.patient?
+            session[:patient_id] = user.id
+        end
     end
 
     def current_user
