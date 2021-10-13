@@ -17,7 +17,7 @@ class EncountersController < ApplicationController
         @encounter.provider = current_user
         @encounter.patient = @patient
         if @encounter.save
-            redirect_to patient_encounter_path(@patient, @encounter), notice: "New record was successfully created!"
+            redirect_to patient_encounter_path(@patient, @encounter), notice: "New record created!"
         else
             render :new
         end
@@ -32,7 +32,7 @@ class EncountersController < ApplicationController
     def update
         @encounter.assign_attributes(encounter_params)
         if @encounter.save
-            redirect_to patient_encounter_path(@patient, @encounter), notice: "Record was successfully updated!"
+            redirect_to patient_encounter_path(@patient, @encounter), notice: "Record was successfully updated"
         else
             render :edit
         end

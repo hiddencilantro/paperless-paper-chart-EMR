@@ -26,18 +26,19 @@ Things you may want to cover:
 <!-- 
 
 - Apppintment class
-    - allowed before registered as Patient
-    - nested forms & attributes (choose provider from collection)
-- SOAP#create
-    - pre-populate from Appointment class
+    - permitted before being registered as a Patient
+    - choose Provider from collection
 - Patient#create (as Provider)
-    - pre-populate from Appointment class
+    - pre-populate from Appointment
+- SOAP#create
+    - pre-populate from Appointment
 
 * bootstrap?
 * pull birthday and gender from Google OAuth
 * prevent OAuth users from intercepting other patients' accounts
 * breadcrumbs
 * prevent password params from being logged
+* refactor to limit logic in controllers
 
 <%= f.submit, data: {confirm: "Does everything look accurate? You cannot change your information once your account has been created."} %>
 <%= f.submit, data: {confirm: "Are you sure you want to save these changes?"} %>
