@@ -19,5 +19,5 @@
     <p>Social & Personal History</p>
     <%= button_to "Delete Patient Record", patient_path(@patient), method: :delete, data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>
 <% else %>
-    <%= button_to "Change Email/Password", edit_patient_path(@patient), method: :get unless session[:oauth_user] %>
+    <%= button_to "Change Email/Password", edit_patient_path(@patient), method: :get unless current_user.is_using_oauth %>
 <% end %>
