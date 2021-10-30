@@ -35,8 +35,7 @@ class SessionsController < ApplicationController
         auth = request.env["omniauth.auth"]
         user = Patient.set_from_omniauth(auth)
         if user.present?
-            user.is_provider_or_using_oauth = true
-            session[:oauth_user] = true
+            user.is_using_oauth = true
             user.email = auth.info.email
             user.save
             log_in(user)
