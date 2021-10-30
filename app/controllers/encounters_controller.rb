@@ -9,15 +9,18 @@ class EncountersController < ApplicationController
     def new
         redirect_back fallback_location: patient_encounters_path(@patient), allow_other_host: false, alert: "Choose a type of encounter" if params[:encounter_type].blank?
         @encounter = Encounter.new
-        @encounter.build_soap
+        if params[:encounter_type] == "soap"
+            @encounter.build_soap
+        end
     end
 
     def create
-        @encounter = Encounter.new(encounter_params)
+        @encounter = Encounter.new(encounter_params(:encounter_type, soap_attributes: [:chief_complaint, :subjective, :objective, :assessment_and_plan]))
         @encounter.provider = current_user
         @encounter.patient = @patient
         if @encounter.save
-            redirect_to patient_encounter_path(@patient, @encounter), notice: "New record created!"
+            @encounter.patient.providers << current_user if !@encounter.patient.providers.include?(current_user)
+            redirect_to patient_encounter_path(@patient, @encounter), notice: "New #{@encounter.encounter_type.titleize} record created!"
         else
             render :new
         end
@@ -30,9 +33,9 @@ class EncountersController < ApplicationController
     end
 
     def update
-        @encounter.assign_attributes(encounter_params)
+        @encounter.assign_attributes(encounter_params(:encounter_type, soap_attributes: [:chief_complaint, :subjective, :objective, :assessment_and_plan]))
         if @encounter.save
-            redirect_to patient_encounter_path(@patient, @encounter), notice: "Record was successfully updated"
+            redirect_to patient_encounter_path(@patient, @encounter), notice: "Record successfully updated"
         else
             render :edit
         end
@@ -49,8 +52,8 @@ class EncountersController < ApplicationController
         @patient = Patient.find_by(id: params[:patient_id])
     end
 
-    def encounter_params
-        params.require(:encounter).permit(:encounter_type, soap_attributes: [:chief_complaint, :subjective, :objective, :assessment_and_plan])
+    def encounter_params(*args)
+        params.require(:encounter).permit(*args)
     end
 
     def set_encounter_by_id
