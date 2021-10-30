@@ -2,11 +2,12 @@
     <% content_for :breadcrumbs do %>
         <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Edit Patient Info", action: "edit" %>
     <% end %>
-    <%= render 'form', path: @patient, title: "Edit Patient Info", submit: "Save changes" %>
+    <%= render 'form', url: @patient, title: "Edit Patient Info", submit: "Save changes" %>
 <% elsif logged_in_as_patient %>
-    <%= render 'form', path: @patient, title: "Edit Profile", submit: "Save changes" %>
-    <br>
-    <%= button_to "<< Return to Main", @patient, method: :get %>
+    <% content_for :breadcrumbs do %>
+        <%= link_to "Main", @patient %> >> <%= link_to_unless_current "Edit Profile", action: "edit" %>
+    <% end %>
+    <%= render 'form', url: @patient, title: "Edit Profile", submit: "Save changes" %>
 <% else %>
-    <%= render 'form', path: @patient, title: "Create A New Patient Account", submit: "Create Account" %>
+    <%= render 'form', url: @patient, title: "Create A New Patient Account", submit: "Create Account" %>
 <% end %>

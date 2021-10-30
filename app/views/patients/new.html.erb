@@ -2,7 +2,7 @@
     <% content_for :breadcrumbs do %>
         <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to_unless_current "Create New Patient File", action: "new" %>
     <% end %>
-    <%= render 'form', path: provider_patients_path(current_user), title: "Create New Patient File", submit: "Create Patient File" %>
+    <%= render 'form', url: provider_patients_path(current_user), title: "Create New Patient File", submit: "Create Patient File" %>
 <% else %>
-    <%= render 'form', path: patients_path, title: "Create A New Patient Account", submit: "Create Account" %>
+    <%= render 'form', url: patients_path, title: "Create A New Patient Account", submit: "Create Account" %>
 <% end %>
