@@ -102,20 +102,28 @@ class PatientsController < ApplicationController
     end
 
     def create_as_provider
-        begin
-            @patient = Patient.new(patient_file_params)
-            @patient.valid?
-            Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
-            @patient.providers << current_user
-            if @patient.save
-                redirect_to @patient, notice: "Patient record created!"
-            else
+        find_patient_by_attributes
+        if @patient
+            @patient_suggestion = @patient
+            @patient = Patient.new
+            flash.now[:alert] = "There is already a patient that matches this information."
+            render :new
+        else
+            begin
+                @patient = Patient.new(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
+                @patient.valid?
+                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+                @patient.providers << current_user
+                if @patient.save
+                    redirect_to @patient, notice: "Patient record created!"
+                else
+                    render :new
+                end
+            rescue ArgumentError
+                @patient.errors.add(:dob, "must be a valid date")
+                @patient.dob = nil
                 render :new
             end
-        rescue ArgumentError
-            @patient.errors.add(:dob, "must be a valid date")
-            @patient.dob = nil
-            render :new
         end
     end
 

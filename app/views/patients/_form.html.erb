@@ -3,7 +3,11 @@
 <%= render 'layouts/flash' %>
 <%= render 'layouts/errors', object: @patient %>
 
-<%= form_with model: @patient, url: path do |f| %>
+<% if @patient_suggestion %>
+    <p class="italic">Did you mean <%= link_to "#{full_name(@patient_suggestion)} / #{@patient_suggestion.sex.titleize} / #{age(@patient_suggestion.dob)}", patient_path(@patient_suggestion) %>?</p>
+<% end %>
+
+<%= form_with model: @patient, url: url do |f| %>
     <% if !logged_in? %>
         <%= render 'form_create', f: f %>
     <% end %>
