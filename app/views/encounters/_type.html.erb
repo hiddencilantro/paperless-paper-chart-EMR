@@ -1,6 +1,6 @@
 <%= form_with url: new_patient_encounter_path(@patient), method: :get do |f| %>
     <%= f.label :encounter_type, "New Encounter:" %>
-    <%= f.select :encounter_type, [["SOAP", "soap"], ["Physical", "physical"], ["Well Child", "well_child"]], include_blank: "Select type" %>
+    <%= f.select :encounter_type, options_for_select(encounter_options), include_blank: "Select type" %>
     <br>
     <%= f.submit "Create" %>
 <% end %>

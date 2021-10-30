@@ -10,7 +10,7 @@
     <%= f.hidden_field :encounter_type, value: params[:encounter_type] unless @encounter.encounter_type %>
 
     <% if params[:encounter_type] == "soap" || @encounter.encounter_type == "soap" %>
-        <%= render 'form_soap', f: f %>
+        <%= render 'soaps/form', f: f %>
     <% end %>
 
     <br><br>

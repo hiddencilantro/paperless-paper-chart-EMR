@@ -1,13 +1,15 @@
 <% content_for :breadcrumbs do %>
-    <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to "Encounters", patient_encounters_path(@patient) %> >> <%= link_to_unless_current "#{@encounter.created_at.to_date} [#{@encounter.encounter_type.titleize}]", action: "show" %>
+    <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to "Encounters", patient_encounters_path(@patient) %> >> <%= link_to_unless_current "#{formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]", action: "show" %>
 <% end %>
 
-<h2><%= @encounter.encounter_type.titleize %> / <%= @encounter.created_at.to_date %></h2>
-
+<h2><%= @encounter.encounter_type.titleize %></h2>
 <%= render 'layouts/flash' %>
+<p class="bold italic">Date: <%= formatted_date(@encounter.created_at) %></p>
+<p class="bold italic">Time: <%= formatted_time(@encounter.created_at) %></p>
+<p class="bold italic">Physician: <%= full_name(@encounter.provider) %></p>
 
 <% if @encounter.encounter_type == "soap" %>
-    <%= render 'show_soap' %>
+    <%= render 'soaps/show' %>
 <% end %>
 
 <br>
