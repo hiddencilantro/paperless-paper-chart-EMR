@@ -9,11 +9,13 @@ class Patient < ApplicationRecord
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :sex, presence: true
     validates :dob, presence: true
-    validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: :is_provider_or_using_oauth
-    validates :password, presence: true, confirmation: true, unless: :is_provider_or_using_oauth
-    validates :password_confirmation, presence: true, unless: :is_provider_or_using_oauth
+    with_options unless: [:as_provider, :is_using_oauth] do |user|
+        user.validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}
+        user.validates :password, presence: true, confirmation: true
+        user.validates :password_confirmation, presence: true
+    end
     validate :password_requirements, unless: -> {password.blank?}
-    before_save :downcase_email, unless: :is_provider_or_using_oauth
+    before_save :downcase_email, unless: -> {email.blank?}
     before_save :capitalize_name
     scope :five_most_recent, -> {order(updated_at: :desc).limit(5)}
     scope :ordered_and_grouped_by_last_name, -> {order(:last_name, :first_name).group_by{|p| p.last_name[0].capitalize}}
@@ -43,6 +45,6 @@ class Patient < ApplicationRecord
     end
 
     def self.set_from_omniauth(auth)
-        find_by(first_name: auth.info.first_name, last_name: auth.info.last_name) #include sex and dob in query
+        find_by(first_name: auth.info.first_name.capitalize, last_name: auth.info.last_name.capitalize) #include sex and dob in query
     end
 end
