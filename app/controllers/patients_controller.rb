@@ -5,11 +5,12 @@ class PatientsController < ApplicationController
     add_flash_types :search_alert
 
     def index
+        redirect_to provider_patients_path(current_user), alert: "You cannot access another provider's account." unless params[:provider_id].to_i == current_user.id
         @patients = current_user.patients.five_most_recent
     end
 
     def directory
-        @patients = Patient.order(:last_name, :first_name).group_by{|p| p.last_name[0].capitalize}
+        @patients = Patient.ordered_and_grouped_by_last_name
         @alphabet_array = [*'A'..'Z']
     end
 
@@ -48,16 +49,15 @@ class PatientsController < ApplicationController
         if logged_in_as_provider
             create_as_provider
         else
-            create_new_account
-            #in production phase: require additional key (provided by physician) for initial signup
-            #when setting up e-mail/password
+            create_as_patient
+            #in production phase: require additional key (provided by physician) for initial signup when setting up e-mail/password
         end
     end
 
     def edit
         if not_authorized(@patient)
             redirect_to current_user, alert: "You can't edit another patient's information."
-        elsif session[:oauth_user]
+        elsif current_user.patient? && current_user.is_using_oauth
             redirect_to current_user, alert: "You can't edit your email and/or password when logged in using third-party credentials."
         end
     end
@@ -70,17 +70,17 @@ class PatientsController < ApplicationController
             set_patient_by_id
             update_as_patient
         else
-            create_new_account
+            create_as_patient
         end
     end
 
     def show
-        redirect_to current_user, alert: "You do not have access to other patient files." if not_authorized(@patient)
+        redirect_to current_user, alert: "You do not have access to view other patient files." if not_authorized(@patient)
     end
 
     def destroy
         @patient.destroy
-        redirect_to provider_patients_path(current_user)
+        redirect_to provider_patients_path(current_user), notice: "Patient file was deleted"
     end
 
     private
@@ -89,20 +89,16 @@ class PatientsController < ApplicationController
         current_path == new_patient_path
     end
 
+    def set_patient_by_id
+        @patient = Patient.find_by(id: params[:id])
+    end
+
     def patient_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :email, :password, :password_confirmation).compact_blank #Rails 6.1 -> remove blank values from params hash
+        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :email, :password, :password_confirmation).compact_blank #Rails 6.1: remove blank values from params hash (needed in order to sanitize for query)
     end
 
-    def patient_file_params
-        params.require(:patient).permit(:first_name, :last_name, :sex, :dob, :is_provider_or_using_oauth)
-    end
-
-    def patient_edit_params
-        params.require(:patient).permit(:email, :password, :password_confirmation)
-    end
-
-    def patient_search_params
-        params.require(:patient).permit(:first_name, :last_name).compact_blank
+    def patient_params_splat(*args)
+        params.require(:patient).permit(*args)
     end
 
     def create_as_provider
@@ -123,10 +119,10 @@ class PatientsController < ApplicationController
         end
     end
 
-    def create_new_account
+    def create_as_patient
         find_patient_by_attributes
         if @patient && @patient.email.blank?
-            @patient.assign_attributes(patient_edit_params)
+            @patient.assign_attributes(patient_params_splat(:email, :password, :password_confirmation))
             if @patient.save
                 log_in(@patient)
                 redirect_to @patient, notice: "Account successfully created!"
@@ -139,7 +135,7 @@ class PatientsController < ApplicationController
             begin
                 @patient = Patient.new(patient_params)
                 @patient.valid?
-                Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
+                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
                 if @patient.errors.any?
                     render :new
                 else
@@ -155,18 +151,14 @@ class PatientsController < ApplicationController
     end
 
     def find_patient_by_attributes
-        @patient = Patient.find_by(first_name: capitalized_first_name, last_name: capitalized_last_name, sex: patient_params[:sex], dob: parsed_date)
+        @patient = Patient.find_by(first_name: capitalized(patient_params[:first_name]), last_name: capitalized(patient_params[:last_name]), sex: patient_params[:sex], dob: parsed_dob)
     end
 
-    def capitalized_first_name
-        patient_params[:first_name].capitalize unless patient_params[:first_name].blank?
+    def capitalized(name)
+        name.capitalize unless name.blank?
     end
 
-    def capitalized_last_name
-        patient_params[:last_name].capitalize unless patient_params[:last_name].blank?
-    end
-
-    def parsed_date
+    def parsed_dob
         unless patient_params["dob(1i)"].blank? || patient_params["dob(2i)"].blank? || patient_params["dob(3i)"].blank?
             begin
                 Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
@@ -176,15 +168,11 @@ class PatientsController < ApplicationController
         end
     end
 
-    def set_patient_by_id
-        @patient = Patient.find_by(id: params[:id])
-    end
-
     def update_as_provider
         begin
-            @patient.assign_attributes(patient_file_params)
+            @patient.assign_attributes(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
             @patient.valid?
-            Date.new(patient_file_params["dob(1i)"].to_i, patient_file_params["dob(2i)"].to_i, patient_file_params["dob(3i)"].to_i)
+            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
             if @patient.save
                 redirect_to @patient, notice: "Patient info was successfully updated"
             else
@@ -198,7 +186,7 @@ class PatientsController < ApplicationController
     end
 
     def update_as_patient
-        @patient.assign_attributes(patient_edit_params)
+        @patient.assign_attributes(patient_params_splat(:email, :password, :password_confirmation))
         if @patient.save
             redirect_to @patient, notice: "Account was successfully updated"
         else

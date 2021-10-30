@@ -1,5 +1,5 @@
 class Patient < ApplicationRecord
-    attr_accessor :is_provider_or_using_oauth
+    attr_accessor :as_provider, :is_using_oauth
     has_secure_password validations: false
     enum sex: {unknown: 0, male: 1, female: 2, not_applicable: 9}
     has_and_belongs_to_many :providers, validate: false
@@ -16,6 +16,8 @@ class Patient < ApplicationRecord
     before_save :downcase_email, unless: :is_provider_or_using_oauth
     before_save :capitalize_name
     scope :five_most_recent, -> {order(updated_at: :desc).limit(5)}
+    scope :ordered_and_grouped_by_last_name, -> {order(:last_name, :first_name).group_by{|p| p.last_name[0].capitalize}}
+    scope :search_records, -> (search) {where(search.transform_values(&:capitalize))}
 
     def password_requirements
         requirements = {
