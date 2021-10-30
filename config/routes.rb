@@ -11,14 +11,16 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#google_auth'
   get 'auth/failure', to: redirect('/')
 
-  resources :providers, except: [:index, :edit, :update] do
+  resources :providers, only: [:new, :create, :show] do
     resources :patients, only: [:index, :new, :create]
   end
 
   get '/patients', to: 'patients#directory'
   resources :patients, except: [:index] do
-    get 'search', on: :collection
-    get 'directory', on: :collection
+    collection do
+      get :search
+      get :directory
+    end
     resources :encounters
   end
 
