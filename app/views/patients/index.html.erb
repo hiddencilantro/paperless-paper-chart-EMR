@@ -4,15 +4,13 @@
 
 <%= button_to "Create New Patient File", new_provider_patient_path(current_user), method: :get %>
 <br>
-<%= button_to "View Entire Patient Directory", directory_patients_path, method: :get %>
+<%= button_to "View Patient Directory", directory_patients_path, method: :get %>
 <br>
 
 <%= render 'search' %>
 
 <p class="italic">Recently updated records by Dr. <%= full_name(current_user) %>:</p>
 <ul>
-    <% @patients.each do |patient| %>
-        <li><%= link_to "#{full_name(patient)} / #{patient.sex.titleize} / #{age(patient.dob)}", patient_path(patient) %></li>
-    <% end %>
+    <%= render @patients %>
     <%# could utilize #touch with after_action callback in order to display recently "viewed" records instead %>
 </ul>
