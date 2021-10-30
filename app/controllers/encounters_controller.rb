@@ -30,6 +30,7 @@ class EncountersController < ApplicationController
     end
 
     def edit
+        redirect_back fallback_location: patient_encounter_path(@patient, @encounter), allow_other_host: false, alert: "You can't edit another provider's encounter record." if @encounter.provider != current_user
     end
 
     def update
@@ -42,8 +43,12 @@ class EncountersController < ApplicationController
     end
 
     def destroy
-        @encounter.destroy
-        redirect_to patient_encounters_path(@patient)
+        if @encounter.provider != current_user
+            redirect_back fallback_location: patient_encounter_path(@patient, @encounter), allow_other_host: false, alert: "You can't delete another provider's encounter record."
+        else
+            @encounter.destroy
+            redirect_to patient_encounters_path(@patient, @encounter), notice: "#{@encounter.encounter_type.titleize} successfully deleted"
+        end
     end
 
     private
