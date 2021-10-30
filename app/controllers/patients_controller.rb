@@ -2,6 +2,7 @@ class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
     before_action :authorize_provider, only: [:index, :directory, :search, :destroy]
     before_action :set_patient_by_id, only: [:edit, :show, :destroy]
+    add_flash_types :search_alert
 
     def index
         @patients = current_user.patients.five_most_recent
@@ -13,17 +14,17 @@ class PatientsController < ApplicationController
     end
 
     def search
-        if patient_search_params.blank?
-            redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, alert: "Search fields are empty"
+        if patient_params_splat(:first_name, :last_name).compact_blank.blank?
+            redirect_to provider_patients_path(current_user), search_alert: "Search fields are empty"
         else
-            @patient_search = Patient.where(patient_search_params.transform_values(&:capitalize))
-            if @patient_search.length == 1
-                redirect_to @patient_search.first
-            elsif @patient_search.length > 1
+            @search = Patient.search_records(patient_params_splat(:first_name, :last_name).compact_blank)
+            if @search.length == 1
+                redirect_to @search.first
+            elsif @search.length > 1
                 @patients = current_user.patients.five_most_recent
                 render :index
             else
-                redirect_back fallback_location: provider_patients_path(current_user), allow_other_host: false, alert: "Patient record not found"
+                redirect_to provider_patients_path(current_user), search_alert: "Patient record not found"
             end
         end
     end

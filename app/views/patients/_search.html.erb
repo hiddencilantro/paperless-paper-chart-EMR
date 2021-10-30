@@ -8,13 +8,17 @@
     <%= f.submit "Search" %>
 <% end %>
 
-<% if @patient_search %>
+<% if @search %>
     <div id="flash-notice">
-        <p class="bold"><%= pluralize(@patient_search.length, 'record') %> found!</p>
+        <p><%= pluralize(@search.length, 'record') %> found!</p>
     </div>
     <ul>
-        <% @patient_search.each do |record| %>
+        <% @search.each do |record| %>
             <li><%= link_to "#{full_name(record)} / #{record.sex.titleize} / #{age(record.dob)}", patient_path(record) %></li>
         <% end %>
     </ul>
+<% elsif flash[:search_alert] %>
+    <div id="flash-alert">
+        <p><%= flash[:search_alert] %></p>
+    </div>
 <% end %>
