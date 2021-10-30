@@ -9,13 +9,12 @@
 
 <%= form_with model: @patient, url: url do |f| %>
     <% if !logged_in? %>
-        <%= render 'form_create', f: f %>
-    <% end %>
-    <% if logged_in_as_provider %>
+        <%= render 'form_new', f: f %>
+    <% elsif logged_in_as_provider %>
         <%= render 'form_provider', f: f %>
-    <% end %>
-    <% if current_user?(@patient) %>
+    <% elsif current_user?(@patient) %>
         <%= render 'form_patient', f: f %>
     <% end %>
+
     <%= f.submit submit %>
 <% end %>
