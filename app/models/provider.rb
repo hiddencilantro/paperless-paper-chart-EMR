@@ -1,14 +1,12 @@
 class Provider < ApplicationRecord
-    has_secure_password validations: false
+    has_secure_password
     has_and_belongs_to_many :patients
-    has_many :encounters
+    has_many :encounters #edge case: how should encounters be handled if Provider is destroyed?
     has_many :soaps, through: :encounters
     validates :first_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
     validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}
-    validates :password, presence: true, confirmation: true
-    validates :password_confirmation, presence: true
-    validate :password_requirements
+    validate :password_requirements, unless: -> {password.blank?}
     before_save { self.email = email.downcase }
 
     def password_requirements
@@ -25,3 +23,4 @@ class Provider < ApplicationRecord
         end
     end
 end
+21
