@@ -1,8 +1,4 @@
-<% if params[:encounter_type] == "soap" %>
-    <h2>SOAP</h2>
-<% elsif @encounter.encounter_type == "soap" %>
-    <h2>Edit SOAP</h2>
-<% end %>
+<%= title %>
 
 <%= render 'layouts/errors', object: @encounter %>
 
