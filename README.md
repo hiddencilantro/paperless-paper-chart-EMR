@@ -26,10 +26,11 @@ Things you may want to cover:
 <!-- 
 
 ///to do or fix:
+* remove GET route to /logout?
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
 * make dynamic breadcrumbs
 * make seed file
-* make sanitize and validation methods private?
+* make custom sanitize and custom validation methods private?
 
 ///to implement next:
 * Apppintment class
