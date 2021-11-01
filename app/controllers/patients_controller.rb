@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
     add_flash_types :search_alert
 
     def index
-        redirect_to provider_patients_path(current_user), alert: "You cannot access another provider's account." unless params[:provider_id].to_i == current_user.id
+        redirect_to provider_patients_path(current_user), alert: "You cannot access another provider's account." unless verified_provider(params[:provider_id])
         @patients = current_user.patients.five_most_recent
     end
 
@@ -33,7 +33,7 @@ class PatientsController < ApplicationController
     def new
         @patient = Patient.new
         if logged_in_as_provider
-            unless params[:provider_id].to_i == current_user.id || path_exception
+            unless verified_provider(params[:provider_id]) || path_exception
                 redirect_to provider_patients_path(current_user), alert: "You cannot create a patient file as another provider."
             end
         elsif logged_in_as_patient
@@ -91,6 +91,10 @@ class PatientsController < ApplicationController
 
     def set_patient_by_id
         @patient = Patient.find_by(id: params[:id])
+    end
+
+    def verified_provider(provider_id)
+        provider_id.to_i == current_user.id
     end
 
     def patient_params
