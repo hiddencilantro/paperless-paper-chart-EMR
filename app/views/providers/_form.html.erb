@@ -15,5 +15,8 @@
     <%= f.label :password_confirmation, "Confirm Password" %>
     <%= f.password_field :password_confirmation %>
     <br><br>
+    <%= f.label :authorization_key, "Authorization Key" %>
+    <%= f.password_field :authorization_key, disabled: true %>
+    <br><br>
     <%= f.submit "Create Account" %>
 <% end %>
