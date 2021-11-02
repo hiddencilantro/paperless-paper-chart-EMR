@@ -1,27 +1,42 @@
-# README
+# Paperless Paper Chart (Beta)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Paperless Paper Chart is an EMR (Electronic Medical Record) system that allows both providers and patients to easily communicate, manage appointments, keep track of health records, and upload imaging or other documents. Its primary purpose is to seamlessly connect physicians with their patients using a straightforward and clutter-free platform that's easy to implement in any medical setting.
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+Before you begin, ensure you have met the following requirements:
 
-* System dependencies
+* You have installed `ruby 2.6.1`, `rails 6.1.3`, `PostgreSQL` and all other dependencies.
 
-* Configuration
+## Installing Paperless Paper Chart
 
-* Database creation
+To install PPC, follow these steps:
 
-* Database initialization
+1. Fork and clone the repository
+2. Run `bundle install` to require dependencies in the Gemfile
+3. Run `rake db:setup`
+4. Run `rake db:migrate`
+5. (Optional) Run `rake db:seed` if you'd like to seed some dummy data.
 
-* How to run the test suite
+## Using Paperless Paper Chart (locally)
 
-* Services (job queues, cache servers, search engines, etc.)
+This project is currently still in development and will not be hosted live until production. But to try out the beta version, follow these steps:
 
-* Deployment instructions
+1. Run `rails s` to start up the server on your local machine
+2. Navigate to http://localhost:3000/ (default port) in your web browser
 
-* ...
+## Contact
+
+If you want to contact me you can reach me at <thehiddencilantro@gmail.com>.
+
+## Copyright Notice and Statement
+
+This project is under exclusive copyright and is currently not offering any license for open-source contributions. Nobody shall copy, distribute, or modify this project unless specified otherwise.
+
+## Links
+[Video demo]()
+
+[Blog]()
 
 <!-- 
 
