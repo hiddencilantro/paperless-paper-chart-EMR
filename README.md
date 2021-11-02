@@ -26,6 +26,7 @@ Things you may want to cover:
 <!-- 
 
 ///to do or fix:
+* application.rb -> config.force_ssl = true
 * remove GET route to /logout?
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
 * make dynamic breadcrumbs
