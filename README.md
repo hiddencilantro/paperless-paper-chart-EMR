@@ -47,9 +47,9 @@ Things you may want to cover:
     - session hijacking
     - injections
     - prevent password params from being logged
+* implement additional OAuth providers
 * password entry for destroying records instead of just confirmation pop-ups
 * have user select time zone or use JS to get local time on client side?
-* refactor to limit logic in controllers?
 
 ///
 <%= button_to "Delete Account", current_user, method: :delete, data: {confirm: "You are about to permanently delete a provider account. ALL of your data will be lost. Are you sure?"} %>

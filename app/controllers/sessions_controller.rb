@@ -36,7 +36,8 @@ class SessionsController < ApplicationController
         user = Patient.set_from_omniauth(auth)
         if user.present?
             user.is_using_oauth = true
-            user.email = auth.info.email
+            session[:oauth_user] = true #is there a better way to track this 'virtual attribute' without using the sessions hash?
+            user.email = auth.info.email if !user.email
             user.save
             log_in(user)
             redirect_to user
