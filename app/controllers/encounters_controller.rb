@@ -15,7 +15,7 @@ class EncountersController < ApplicationController
     end
 
     def create
-        @encounter = Encounter.new(encounter_params(:encounter_type, soap_attributes: [:chief_complaint, :subjective, :objective, :assessment_and_plan]))
+        @encounter = Encounter.new(encounter_params)
         @encounter.provider = current_user
         @encounter.patient = @patient
         if @encounter.save
@@ -34,7 +34,7 @@ class EncountersController < ApplicationController
     end
 
     def update
-        @encounter.assign_attributes(encounter_params(:encounter_type, soap_attributes: [:chief_complaint, :subjective, :objective, :assessment_and_plan]))
+        @encounter.assign_attributes(encounter_params)
         if @encounter.save
             redirect_to patient_encounter_path(@patient, @encounter), notice: "Record successfully updated"
         else
@@ -57,8 +57,8 @@ class EncountersController < ApplicationController
         @patient = Patient.find_by(id: params[:patient_id])
     end
 
-    def encounter_params(*args)
-        params.require(:encounter).permit(*args)
+    def encounter_params
+        params.require(:encounter).permit(:encounter_type, soap_attributes: [:chief_complaint, :subjective, :objective, :assessment_and_plan])
     end
 
     def set_encounter_by_id
