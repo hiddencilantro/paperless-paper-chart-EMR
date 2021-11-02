@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
 
     def patient_auth
         if session_params[:email].blank? || session_params[:password].blank?
-            redirect_to patients_login_path, alert: "Fields cannot be empty."
+            redirect_to patients_login_path, alert: "You must enter both fields."
         else
             user = Patient.find_by(email: session_params[:email].downcase)
             if user
