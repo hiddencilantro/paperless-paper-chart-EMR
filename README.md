@@ -1,6 +1,6 @@
 # Paperless Paper Chart (Beta)
 
-Paperless Paper Chart is an EMR (Electronic Medical Record) system that allows both providers and patients to easily communicate, manage appointments, keep track of health records, and upload imaging or other documents. Its primary purpose is to seamlessly connect physicians with their patients using a straightforward and clutter-free platform that's easy to implement in any medical setting.
+Paperless Paper Chart is an Electronic Medical Record (EMR) system that allows both providers and patients to easily communicate, manage appointments, keep track of health records, and upload imaging or other documents. Its primary purpose is to seamlessly connect physicians with their patients using a straightforward and clutter-free platform that's convenient in any medical setting.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ Before you begin, ensure you have met the following requirements:
 To install PPC, follow these steps:
 
 1. Fork and clone the repository
-2. Run `bundle install` to require dependencies in the Gemfile
+2. Run `bundle install` to require all dependencies from the Gemfile
 3. Run `rake db:setup`
 4. Run `rake db:migrate`
 5. (Optional) Run `rake db:seed` if you'd like to seed some dummy data.
