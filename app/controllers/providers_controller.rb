@@ -27,7 +27,7 @@ class ProvidersController < ApplicationController
 
     # # set an active/inactive attribute for Provider to handle former employees
     # # but in the rare occassion that we must completely remove a Provider from the system:
-    # # potential solution: create an Admin and restrict access to all but
+    # # potential solution: create an Admin and restrict access to everyone else
     # # create a separate action to display a form allowing the admin to select Providers from a list
     # def destroy
     #     redirect_back fallback_location: current_user, allow_other_host: false, alert: "Only the administrator can delete a provider's account." if !current_user?(@admin)

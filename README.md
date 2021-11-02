@@ -31,6 +31,7 @@ Things you may want to cover:
 * make dynamic breadcrumbs
 * make seed file
 * make custom sanitize and custom validation methods private?
+* write README file, write blog, make video demo, apply CSS
 
 ///to implement next:
 * Apppintment class
