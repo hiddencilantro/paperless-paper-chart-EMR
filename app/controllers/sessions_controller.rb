@@ -4,30 +4,38 @@ class SessionsController < ApplicationController
     end
 
     def provider_auth
-        user = Provider.find_by(email: params[:email].downcase)
-        if user
-            if user.authenticate(params[:password])
-                log_in(user)
-                redirect_to user
-            else
-                redirect_to providers_login_path, alert: "Incorrect password."
-            end
+        if session_params[:email].blank? || session_params[:password].blank?
+            redirect_to providers_login_path, alert: "You must enter both fields."
         else
-            redirect_to providers_login_path, alert: "Email doesn't exist."
+            user = Provider.find_by(email: session_params[:email].downcase)
+            if user
+                if user.authenticate(session_params[:password])
+                    log_in(user)
+                    redirect_to user
+                else
+                    redirect_to providers_login_path, alert: "Incorrect password."
+                end
+            else
+                redirect_to providers_login_path, alert: "Provider email doesn't exist."
+            end
         end
     end
 
     def patient_auth
-        user = Patient.find_by(email: params[:email].downcase)
-        if user
-            if user.authenticate(params[:password])
-                log_in(user)
-                redirect_to user
-            else
-                redirect_to patients_login_path, alert: "Incorrect password."
-            end
+        if session_params[:email].blank? || session_params[:password].blank?
+            redirect_to patients_login_path, alert: "Fields cannot be empty."
         else
-            redirect_to patients_login_path, alert: "Email doesn't exist."
+            user = Patient.find_by(email: session_params[:email].downcase)
+            if user
+                if user.authenticate(session_params[:password])
+                    log_in(user)
+                    redirect_to user
+                else
+                    redirect_to patients_login_path, alert: "Incorrect password."
+                end
+            else
+                redirect_to patients_login_path, alert: "Patient email doesn't exist."
+            end
         end
     end
 
@@ -55,5 +63,11 @@ class SessionsController < ApplicationController
         end
         @current_user = nil
         redirect_to root_path, notice: "You have successfully logged out."
+    end
+
+    private
+
+    def session_params
+        params.require(:login).permit(:email, :password)
     end
 end

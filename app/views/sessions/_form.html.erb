@@ -2,12 +2,14 @@
 
 <%= render 'layouts/flash' %>
 
-<%= form_with model: model, url: path do |f| %>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-    <br>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-    <br>
+<%= form_with url: path do |f| %>
+    <%= f.fields_for :login do |sf| %>
+        <%= sf.label :email %>
+        <%= sf.text_field :email %>
+        <br>
+        <%= sf.label :password %>
+        <%= sf.password_field :password %>
+        <br>
+    <% end %>
     <%= f.submit "Login" %>
 <% end %>
