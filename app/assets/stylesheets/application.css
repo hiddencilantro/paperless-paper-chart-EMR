@@ -13,6 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Regular.ttf');
+}
+
+body {
+    background-color: #f6f6f6;
+    font-family: Roboto;
+}
+
 #flash-alert {
     color: red;
     font-weight: bold;
