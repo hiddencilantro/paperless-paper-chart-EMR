@@ -34,9 +34,9 @@ If you want to contact me you can reach me at <thehiddencilantro@gmail.com>.
 This project is under exclusive copyright and is currently not offering any license for open-source contributions. Nobody shall copy, distribute, or modify this project unless specified otherwise.
 
 ## Links
-[Video demo]()
+[Video demo](https://vimeo.com/643082291)
 
-[Blog]()
+[Blog](https://dev.to/hiddencilantro/the-quick-and-dirty-to-february-31-3p9p)
 
 <!-- 
 
@@ -45,9 +45,8 @@ This project is under exclusive copyright and is currently not offering any lice
 * remove GET route to /logout?
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
 * make dynamic breadcrumbs
-* make seed file
 * make custom sanitize and custom validation methods private?
-* write README file, write blog, make video demo, apply CSS
+* CSS
 
 ///to implement next:
 * Apppintment class
