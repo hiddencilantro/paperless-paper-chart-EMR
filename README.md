@@ -46,7 +46,8 @@ This project is under exclusive copyright and is currently not offering any lice
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
 * make dynamic breadcrumbs
 * make custom sanitize and custom validation methods private?
-* CSS
+* make encounters index & show available to patients
+* add search/filter for encounters (by type, date, or physician)
 
 ///to implement next:
 * Apppintment class
@@ -65,6 +66,9 @@ This project is under exclusive copyright and is currently not offering any lice
 * implement additional OAuth providers
 * password entry for destroying records instead of just confirmation pop-ups
 * have user select time zone or use JS to get local time on client side?
+* encounters index (limit # of displayed records per page)
+    - links to page numbers
+    - allow user to select how many records to display
 
 ///
 <%= button_to "Delete Account", current_user, method: :delete, data: {confirm: "You are about to permanently delete a provider account. ALL of your data will be lost. Are you sure?"} %>
