@@ -48,6 +48,7 @@ This project is under exclusive copyright and is currently not offering any lice
 * make custom sanitize and custom validation methods private?
 * make encounters index & show available to patients
 * add search/filter for encounters (by type, date, or physician)
+* encounter -> accepts_nested_attributes_for -> reject_if: :all_blank -> validate to prevent persisting encounter when nested attributes are rejected
 
 ///to implement next:
 * Apppintment class
