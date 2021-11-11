@@ -19,6 +19,7 @@ class EncountersController < ApplicationController
         @encounter.provider = current_user
         @encounter.patient = @patient
         if @encounter.save
+            @patient.touch
             @encounter.patient.providers << current_user if !@encounter.patient.providers.include?(current_user)
             redirect_to patient_encounter_path(@patient, @encounter), notice: "New #{@encounter.encounter_type.titleize} record created!"
         else
@@ -36,6 +37,7 @@ class EncountersController < ApplicationController
     def update
         @encounter.assign_attributes(encounter_params)
         if @encounter.save
+            @patient.touch
             redirect_to patient_encounter_path(@patient, @encounter), notice: "Record successfully updated"
         else
             render :edit
@@ -47,6 +49,7 @@ class EncountersController < ApplicationController
             redirect_back fallback_location: patient_encounter_path(@patient, @encounter), allow_other_host: false, alert: "You can't delete another provider's encounter record."
         else
             @encounter.destroy
+            @patient.touch
             redirect_to patient_encounters_path(@patient, @encounter), notice: "#{@encounter.encounter_type.titleize} successfully deleted"
         end
     end
