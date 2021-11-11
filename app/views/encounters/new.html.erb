@@ -1,5 +1,5 @@
 <% content_for :breadcrumbs do %>
-    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to "Patient Record", @patient %> > <%= link_to "Encounters", patient_encounters_path(@patient) %> > <%= link_to_unless_current new_encounter_breadcrumb, action: "new" %>
+    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to full_name(@patient), @patient %> > <%= link_to "Encounters", patient_encounters_path(@patient) %> > <%= link_to_unless_current new_encounter_breadcrumb, action: "new" %>
 <% end %>
 
 <%= render 'form', url: patient_encounters_path(@patient), title: new_encounter %>
