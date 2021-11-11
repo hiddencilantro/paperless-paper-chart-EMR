@@ -1,1 +1,2 @@
 <li><%= link_to "#{formatted_date(encounter.created_at)} [#{encounter.encounter_type.titleize}]", patient_encounter_path(@patient, encounter) %> <span class="italic">(Dr. <%= full_name(encounter.provider) %>)</span></li>
+<hr>

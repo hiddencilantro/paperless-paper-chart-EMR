@@ -1,16 +1,26 @@
-<h2>Patient Main</h2>
+<div class="subcontainer-col">
+    <h1 id="temp">My Patients</h1>
+    <%= render 'layouts/flash' %>
+</div>
 
-<%= render 'layouts/flash' %>
+<div class="subcontainer-row">
+    <div class="wrapper-row-btn">
+        <%= button_to "View patient directory", patients_path, method: :get, class: "basic-btn" %>
+    </div>
+    <div class="wrapper-row-btn">
+        <%= button_to "+ Create new patient record", new_provider_patient_path(current_user), method: :get, class: "empty-btn" %>
+    </div>
+</div>
 
-<%= button_to "Create New Patient File", new_provider_patient_path(current_user), method: :get %>
-<br>
-<%= button_to "View Patient Directory", directory_patients_path, method: :get %>
-<br>
-
-<%= render 'search' %>
-
-<p class="italic">Recently updated records by Dr. <%= full_name(current_user) %>:</p>
-<ul>
-    <%= render @patients %>
-    <%# could utilize #touch with after_action callback in order to display recently "viewed" records instead %>
-</ul>
+<div class="subcontainer-col">
+    <div class="wrapper-col">
+        <%= render 'search' %>
+        <br>
+        <p class="subheader">Recently updated records:</p>
+        <hr>
+        <ul class="list-records">
+            <%= render @patients %>
+            <%# could utilize #touch with after_action callback in order to display recently "viewed" records instead %>
+        </ul>
+    </div>
+</div>

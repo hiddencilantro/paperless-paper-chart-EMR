@@ -1,5 +1,5 @@
 <% if current_path == providers_login_path %>
-    <%= render 'form', path: providers_login_path, title: "Provider Login" %>
+    <%= render 'form', path: providers_login_path, title: "Provider Login", button: "basic-btn add-top-margin" %>
 <% elsif current_path == patients_login_path %>
-    <%= render 'form', path: patients_login_path, title: "Patient Login" %>
+    <%= render 'form', path: patients_login_path, title: "Patient Login", button: "patient-btn" %>
 <% end %>

@@ -1,10 +1,17 @@
-<h2><%= full_name(@patient) %></h4>
-<h4>Sex: <%= @patient.sex.titleize %></h4>
-<h4>Age: <%= age(@patient.dob) %></h4>
-<h4>Date of Birth: <%= @patient.dob %></h4>
-<h4>Primary Physicians:</h4>
-<ul>
-    <% @patient.providers.each do |provider| %>
-        <li>Dr. <%= full_name(provider) %></li>
-    <% end %>
-</ul>
+<div class="info">
+    <p class="subheader">Sex:</p>
+    <p class="text"><%= @patient.sex.titleize %></p>
+
+    <p class="subheader">Age:</p>
+    <p class="text"><%= age(@patient.dob) %></p>
+
+    <p class="subheader">Date of Birth:</p>
+    <p class="text"><%= @patient.dob %></p>
+
+    <p class="subheader">Primary Physicians:</p>
+    <ul class="list-physicians">
+        <% @patient.providers.each do |provider| %>
+            <li>Dr. <%= full_name(provider) %></li>
+        <% end %>
+    </ul>
+</div>

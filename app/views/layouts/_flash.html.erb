@@ -1,11 +1,11 @@
 <% if flash[:alert] %>
-    <div id="flash-alert">
-        <p><%= flash[:alert].html_safe %></p>
+    <div>
+        <p id="flash-alert"><%= flash[:alert].html_safe %></p>
     </div>
 <% end %>
 
 <% if flash[:notice] %>
-    <div id="flash-notice">
-        <p><%= flash[:notice] %></p>
+    <div>
+        <p id="flash-notice"><%= flash[:notice] %></p>
     </div>
 <% end %>

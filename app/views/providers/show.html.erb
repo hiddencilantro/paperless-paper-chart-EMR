@@ -1,8 +1,19 @@
-<%= render 'layouts/flash' %>
+<div class="subcontainer-col">
+    <h1 id="temp">Welcome, Dr. <%= full_name(@provider) %></h1>
+    <%= render 'layouts/flash' %>
+</div>
 
-<h2>Welcome, Dr. <%= full_name(@provider) %></h2>
-
-<p>Reminders/Sticky Note</p>
-<p>Inbox/Messaging</p>
-<%= link_to "Create/Search Patient", provider_patients_path(@provider) %>
-<p>Schedule</p>
+<div class="subcontainer-row">
+    <div class="wrapper-row-links first-link">
+        <p>Reminders/Sticky Note</p>
+    </div>
+    <div class="wrapper-row-links">
+        <p>Inbox/Messaging</p>
+    </div>
+    <div class="wrapper-row-links">
+        <%= link_to "Create/Search Patient", provider_patients_path(@provider) %>
+    </div>
+    <div class="wrapper-row-links last-link">
+        <p>Schedule</p>
+    </div>
+</div>

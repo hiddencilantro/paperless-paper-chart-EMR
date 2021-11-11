@@ -1,14 +1,17 @@
-<%= title %>
+<div class="subcontainer-col">
+    <%= title %>
 
-<%= render 'layouts/errors', object: @encounter %>
+    <div class="encounter-form">
+        <%= render 'layouts/errors', object: @encounter %>
 
-<%= form_with model: @encounter, url: url do |f| %>
-    <%= f.hidden_field :encounter_type, value: params[:encounter_type] unless @encounter.encounter_type %>
+        <%= form_with model: @encounter, url: url do |f| %>
+            <%= f.hidden_field :encounter_type, value: params[:encounter_type] unless @encounter.encounter_type %>
 
-    <% if params[:encounter_type] == "soap" || @encounter.encounter_type == "soap" %>
-        <%= render 'soaps/form', f: f %>
-    <% end %>
+            <% if params[:encounter_type] == "soap" || @encounter.encounter_type == "soap" %>
+                <%= render 'soaps/form', f: f %>
+            <% end %>
 
-    <br><br>
-    <%= f.submit "Submit" %>
-<% end %>
+            <%= f.submit "Submit", class: "basic-btn add-top-margin add-left-margin" %>
+        <% end %>
+    </div>
+</div>

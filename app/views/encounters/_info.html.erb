@@ -1,0 +1,16 @@
+<div class="info">
+    <p class="subheader">Date:</p>
+    <p class="text"><%= formatted_date(@encounter.created_at) %></p>
+
+    <p class="subheader">Time:</p>
+    <p class="text"><%= formatted_time(@encounter.created_at) %></p>
+
+    <p class="subheader">Physician:</p>
+    <p class="text"><%= full_name(@encounter.provider) %></p>
+</div>
+<br>
+<div class="info">
+    <% if @encounter.encounter_type == "soap" %>
+        <%= render 'soaps/show' %>
+    <% end %>
+</div>

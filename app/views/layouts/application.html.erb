@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PaperlessPaperChartEmr</title>
+    <title>Paperless Paper Chart</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,21 +11,29 @@
   </head>
 
   <body>
-    <br>
-    <div>
-      <% if logged_in? %>
-        <%= link_to "Home", current_user %>
-        <%= link_to "Logout", logout_path, method: :delete %>
-      <% else %>
-        <%= link_to "Return to Main", root_path unless current_path == root_path %>
-      <% end %>
+    <div class="main-container">
+      <div class="nav-container">
+        <% if logged_in? %>
+          <div class="nav-wrapper">
+            <%= link_to "Home", current_user %>
+          </div>
+          <div class="nav-wrapper logout">
+            <%= link_to "Logout", logout_path, method: :delete %>
+          </div>
+        <% else %>
+          <div class="nav-wrapper">
+            <%= link_to "Return to main", root_path unless current_path == root_path %>
+          </div>
+        <% end %>
+      </div>
+      <div class="nav-container">
+        <div class="nav-wrapper">
+          <%= yield :breadcrumbs %>
+        </div>
+      </div>
+      <div class="content-container">
+        <%= yield %>
+      </div>
     </div>
-    <br>
-    <div>
-      <%= yield :breadcrumbs %>
-    </div>
-
-    <%= yield %>
-
   </body>
 </html>

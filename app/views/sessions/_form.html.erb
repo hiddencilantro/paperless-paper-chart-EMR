@@ -1,15 +1,18 @@
-<h2><%= title %></h2>
+<div class="subcontainer-col">
+    <h1 id="temp"><%= title %></h1>
+    <%= render 'layouts/flash' %>
 
-<%= render 'layouts/flash' %>
+    <div class="basic-form">
+        <%= form_with url: path do |f| %>
+            <%= f.fields_for :login do |sf| %>
+                <%= sf.label :email %>
+                <%= sf.text_field :email %>
+                
+                <%= sf.label :password %>
+                <%= sf.password_field :password %>
+            <% end %>
+            <%= f.submit "Log in", class: button %>
+        <% end %>
+    </div>
+</div>
 
-<%= form_with url: path do |f| %>
-    <%= f.fields_for :login do |sf| %>
-        <%= sf.label :email %>
-        <%= sf.text_field :email %>
-        <br>
-        <%= sf.label :password %>
-        <%= sf.password_field :password %>
-        <br>
-    <% end %>
-    <%= f.submit "Login" %>
-<% end %>

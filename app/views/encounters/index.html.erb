@@ -1,13 +1,24 @@
 <% content_for :breadcrumbs do %>
-    <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to "Patient File", @patient %> >> <%= link_to_unless_current "Encounters", action: "index" %>
+    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to "Patient Record", @patient %> > <%= link_to_unless_current "Encounters", action: "index" %>
 <% end %>
 
-<h2>Encounters (<%= full_name(@patient) %>)</h2>
+<div class="subcontainer-col">
+    <h1 id="temp">Encounters (<%= full_name(@patient) %>)</h1>
+    <%= render 'layouts/flash' %>
 
-<%= render 'layouts/flash' %>
-
-<%= render 'type' %>
-
-<ul>
-    <%= render @encounters %>
-</ul>
+    <% if logged_in_as_provider %>
+        <%= render 'type' %>
+    <% end %>
+    
+    <div class="wrapper-col info">
+        <p class="subheader">Previous encounters:</p>
+        <hr>
+        <ul class="list-records">
+            <% if !@encounters.blank? %>
+                <%= render @encounters %>
+            <% else %>
+                <p class="italic">No records found</p>
+            <% end %>
+        </ul>
+    </div>
+</div>

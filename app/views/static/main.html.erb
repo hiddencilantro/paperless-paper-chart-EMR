@@ -1,14 +1,25 @@
-<h1>Paperless Paper Chart</h1>
-<p>Welcome to Paperless Paper Chart, the nation's most versatile and clutter-free EMR system.</p>
+<div class="subcontainer-col static-header">
+    <h3>Welcome to</h3>
+    <h1>Paperless Paper Chart</h1>
+    <p>The nation's most versatile and clutter-free EMR system.</p>
+    <%= render 'layouts/flash' %>
+</div>
 
-<%= render 'layouts/flash' %>
+<div class="subcontainer-row">
+    <div class="wrapper-row-static static-providers">
+        <h3>Providers:</h3>
+        <p>New to PPC?</p>
+        <p>Create an account to get started!</p>
+        <%= button_to "Create an account", new_provider_path, method: :get%> 
+        <p>Already have an account? <%= link_to "Log in", providers_login_path %></p>
+    </div>
 
-<h3>Providers:</h3>
-<p>New to PPC? <%= link_to "Create an account", new_provider_path %> to get started!</p>
-<p>Or if you have an account, <%= link_to "click here to log in", providers_login_path %>.</p>
-
-<h3>Patients:</h3>
-<p>If this is your first visit, click here to make an appointment!</p>
-<p>If you are a returning patient, <%= link_to "click here to create an account", new_patient_path %>.</p>
-<p>Already have an account? <%= link_to "Log in here", patients_login_path %>!</p>
-<p>Or log in using your <%= link_to "Google account", '/auth/google_oauth2', method: :post %>.</p>
+    <div class="wrapper-row-static static-patients">
+        <h3>Patients:</h3>
+        <p>If this is your first visit,</p>
+        <p>click here to make an appointment!</p>
+        <%= button_to "Create an account", new_patient_path, method: :get %>
+        <p>Already have an account? <%= link_to "Log in", patients_login_path %></p>
+        <p>Or log in with your <%= link_to "Google account", '/auth/google_oauth2', method: :post %></p>
+    </div>
+</div>

@@ -1,23 +1,54 @@
 <% if logged_in_as_provider %>
     <% content_for :breadcrumbs do %>
-        <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to "Patient Directory", directory_patients_path %> >> <%= link_to_unless_current "Patient File", action: "show" %>
+        <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to_unless_current full_name(@patient), action: "show" %>
     <% end %>
 <% end %>
 
-<%= render 'layouts/flash' %>
-
-<%= render 'info' %>
+<div class="subcontainer-col">
+    <h1 id="temp"><%= full_name(@patient) %></h1>
+    <%= render 'layouts/flash' %>
+</div>
 
 <% if logged_in_as_provider %>
-    <%= button_to "Edit Patient Info", edit_patient_path(@patient), method: :get %>
-    <br>
-    <%= link_to "Encounters", patient_encounters_path(@patient) %>
-    <p>Vitals</p>
-    <p>Medications</p>
-    <p>Labs/Imaging/Other Documents</p>
-    <p>Medical & Family History</p>
-    <p>Social & Personal History</p>
-    <%= button_to "Delete Patient Record", patient_path(@patient), method: :delete, data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>
-<% else %>
-    <%= button_to "Change Email/Password", edit_patient_path(@patient), method: :get unless current_user.is_using_oauth %>
+    <div class="subcontainer-row">
+        <div class="wrapper-row-btn">
+            <%= button_to "Edit patient info", edit_patient_path(@patient), method: :get, class: "basic-btn" %>
+        </div>
+        <div class="wrapper-row-btn">
+            <%= button_to "Delete patient record", patient_path(@patient), method: :delete, class: "empty-btn", data: {confirm: "Are you sure you want to permanently delete a patient record from the database? You can't undo this action."} %>
+        </div>
+    </div>
+<% elsif current_user?(@patient) && !session[:oauth_user] %>
+    <div class="subcontainer-col">
+        <%= button_to "Change Email/Password", edit_patient_path(@patient), method: :get, class: "patient-btn" %>
+    </div>
 <% end %>
+
+<div class="subcontainer-col">
+    <div class="wrapper-col">
+        <%= render 'info' %>
+    </div>
+</div>
+
+<div class="subcontainer-row">
+    <div class="wrapper-row-links first-link">
+        <%= link_to "Encounters", patient_encounters_path(@patient) %>
+    </div>
+    <div class="wrapper-row-links">
+        <p>Vitals</p>
+    </div>
+    <div class="wrapper-row-links last-link">
+        <p>Medications</p>
+    </div>
+</div>
+<div class="subcontainer-row">
+    <div class="wrapper-row-links first-link">
+        <p>Labs/Imaging/Other Docs</p>
+    </div>
+    <div class="wrapper-row-links">
+        <p>Medical & Family History</p>
+    </div>
+    <div class="wrapper-row-links last-link">
+        <p>Social & Personal History</p>
+    </div>
+</div>

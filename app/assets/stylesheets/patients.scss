@@ -1,3 +1,114 @@
 // Place all the styles related to the Patients controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.patient-btn {
+    width: 300px;
+    height: 50px;
+    border: 0;
+    background: none;
+    margin-top: 20px;
+    padding: 13px 0px 13px 0px;
+    border-radius: 8px;
+    background-color: #2cb977;
+    cursor: pointer;
+}
+
+.wrapper-row-btn {
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-basis: 100vw;
+    text-align: center;
+    // border: solid;
+}
+
+.wrapper-row-btn:nth-of-type(1) {
+    margin-left: 192px;
+}
+
+.wrapper-row-btn:nth-of-type(2) {
+    margin-right: 192px;
+}
+
+.empty-btn {
+    width: 300px;
+    height: 50px;
+    border: solid 2px #3d5bf1;
+    background: none;
+    padding: 13px 0px 13px 0px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+input[value="+ Create new patient record"], input[value="Delete patient record"], input[value="Delete record"] {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.33;
+    color: #3d5bf1;
+}
+
+.wrapper-col {
+    width: 940px;
+}
+
+.wrapper-col input[type="text"] {
+    margin-right: 20px;
+}
+
+.search-btn {
+    width: 251px;
+    height: 50px;
+    border: 0;
+    background: none;
+    padding: 13px 0px 13px 0px;
+    border-radius: 8px;
+    background-color: #3d5bf1;
+    cursor: pointer;
+}
+
+ul.list-records {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-records li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+ul.list-physicians {
+    list-style: square;
+    padding-left: 30px;
+}
+
+.list-physicians li {
+    padding-top: 5px;
+}
+
+.info {
+    border: solid 1px #d8d8d8;
+    padding: 20px;
+}
+
+.info p, .info ul {
+    margin: 0;
+}
+
+.info p.text {
+    margin-bottom: 20px;
+    word-break: break-word;
+}
+
+.directory-subheader {
+    font-style: italic;
+    margin: 0;
+}
+
+.justify {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}

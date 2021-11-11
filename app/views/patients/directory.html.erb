@@ -1,20 +1,26 @@
 <% content_for :breadcrumbs do %>
-    <%= link_to "Patient Main", provider_patients_path(current_user) %> >> <%= link_to_unless_current "Patient Directory", action: "directory" %>
+    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to_unless_current "Patient Directory", action: "directory" %>
 <% end %>
 
-<h2>Patient Directory</h2>
-
-<p class="italic">Sorted alphabetically by Last Name:</p>
-<br>
-<% @alphabet_array.each do |letter| %>
-    <%= link_to "#{letter}", anchor: letter %> /
-<% end %>
-
-<% @patients.each do |letter, grouped_patients| %>
-    <h3 id="<%= letter %>"><%= letter %></h3>
-    <ul>
-        <% grouped_patients.each do |patient| %>
-            <li><%= link_to "#{patient.last_name.upcase}, #{patient.first_name.capitalize}", patient %></li>
+<div class="subcontainer-col">
+    <h1 id="temp" style="margin-bottom: 5px;">Patient Directory</h1>
+    <p class="directory-subheader">(Sorted alphabetically by last name)</p>
+    <div class="wrapper-col justify">
+        <% @alphabet_array.each do |letter| %>
+            <%= link_to "#{letter}", anchor: letter %> /
         <% end %>
-    </ul>
-<% end %>
+    </div>
+    <div class="wrapper-col">
+        <% @patients.each do |letter, grouped_patients| %>
+            <p class="subheader" id="<%= letter %>"><%= letter %></p>
+            <hr>
+            <ul class="list-records">
+                <% grouped_patients.each do |patient| %>
+                    <li><%= link_to "#{patient.last_name.upcase}, #{patient.first_name.capitalize}", patient %></li>
+                    <hr>
+                <% end %>
+            </ul>
+            <br>
+        <% end %>
+    </div>
+</div>

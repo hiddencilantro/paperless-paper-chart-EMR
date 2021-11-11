@@ -1,24 +1,25 @@
+<p class="subheader">Search patient:</p>
 <%= form_with url: search_patients_path, method: :get do |f| %>
-    <%= f.label :name, "Patient Name:" %>
     <%= f.fields_for :patient do |attribute| %>
         <%= attribute.text_field :first_name, placeholder: "First Name" %>
         <%= attribute.text_field :last_name, placeholder: "Last Name" %>
     <% end %>
-    <br>
-    <%= f.submit "Search" %>
+    <%= f.submit "Search", class: "search-btn" %>
 <% end %>
 
 <% if @search %>
-    <div id="flash-notice">
-        <p><%= pluralize(@search.length, 'record') %> found!</p>
+    <div>
+        <p id="flash-notice"><%= pluralize(@search.length, 'record') %> found!</p>
     </div>
-    <ul>
+    <hr>
+    <ul class="list-records">
         <% @search.each do |record| %>
             <li><%= link_to "#{full_name(record)} / #{record.sex.titleize} / #{age(record.dob)}", patient_path(record) %></li>
+            <hr>
         <% end %>
     </ul>
 <% elsif flash[:search_alert] %>
-    <div id="flash-alert">
-        <p><%= flash[:search_alert] %></p>
+    <div>
+        <p id="flash-alert"><%= flash[:search_alert] %></p>
     </div>
 <% end %>

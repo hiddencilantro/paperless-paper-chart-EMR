@@ -1,3 +1,92 @@
 // Place all the styles related to the Static controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.static-header h3 {
+    font-family: Roboto-Bold;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.static-header h1 {
+    margin: 0px;
+}
+
+.static-header p {
+    font-family: Roboto-Light;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.wrapper-row-static {
+    height: 354px;
+    flex-basis: 100vw;
+    text-align: center;
+    background-color: #fff;
+    // border: solid;
+}
+
+.wrapper-row-static p {
+    margin: 0px;
+    line-height: 1.33;
+}
+
+.static-providers {
+    margin-left: 42px;
+    margin-right: 10px;
+}
+
+.static-patients {
+    margin-left: 10px;
+    margin-right: 42px;
+}
+
+.static-providers h3 {
+    margin: 0px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    color: #3d5bf1;
+    font-family: Roboto-Bold;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.static-patients h3 {
+    margin: 0px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    color: #2cb977;
+    font-family: Roboto-Bold;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.static-providers input[type="submit"] {
+    width: 300px;
+    height: 50px;
+    border: 0;
+    background: none;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 13px 0px 13px 0px;
+    border-radius: 8px;
+    background-color: #3d5bf1;
+    cursor: pointer;
+}
+
+.static-patients input[type="submit"] {
+    width: 300px;
+    height: 50px;
+    border: 0;
+    background: none;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 13px 0px 13px 0px;
+    border-radius: 8px;
+    background-color: #2cb977;
+    cursor: pointer;
+}
+
+.static-patients a {
+    color: #2cb977;
+}

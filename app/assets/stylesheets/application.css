@@ -18,28 +18,59 @@
     font-family: 'Roboto';
     src: url('Roboto-Regular.ttf');
 }
+@font-face {
+    font-family: 'Roboto-Bold';
+    src: url('Roboto-Bold.ttf');
+}
+@font-face {
+    font-family: 'Roboto-Italic';
+    src: url('Roboto-Italic.ttf');
+}
+@font-face {
+    font-family: 'Roboto-Light';
+    src: url('Roboto-Light.ttf');
+}
 
 body {
     background-color: #f6f6f6;
     font-family: Roboto;
+    font-size: 18px;
+    color: #303030;
+}
+
+a {
+    font-family: Roboto;
+    font-size: 18px;
+    line-height: 1.33;
+    color: #3d5bf1;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #727cbb;
+}
+
+.italic {
+    font-style: italic;
 }
 
 #flash-alert {
     color: red;
     font-weight: bold;
+    font-size: 16px;
 }
 
 #flash-notice {
     color: green;
     font-weight: bold;
+    font-size: 16px;
 }
 
-.bold {
+#suggestion {
+    margin: 0;
     font-weight: bold;
-}
-
-.italic {
     font-style: italic;
+    font-size: 16px;
 }
 
 .field_with_errors {
@@ -47,4 +78,162 @@ body {
     border-style: solid;
     border-width: 1px;
     border-color: red;
+}
+
+h1 {
+    font-family: Roboto-Bold;
+    font-size: 48px;
+    font-weight: bold;
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+#temp {
+    margin-top: 40px;
+}
+
+.subheader {
+    font-family: Roboto-Bold;
+    line-height: 1.33;
+}
+
+.main-container {
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: solid; */
+}
+
+.nav-container {
+    width: 1024px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* border: solid; */
+}
+
+.nav-wrapper {
+    flex-basis: 100vw;
+    margin-left: 42px;
+    margin-top: 20px;
+    /* border: solid; */
+}
+
+.logout {
+    text-align: right;
+    margin-right: 42px;
+}
+
+.content-container {
+    width: 1024px;
+    padding: 10px 0px 10px 0px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 30px;
+    /* border: solid; */
+}
+
+.subcontainer-col {
+    width: 1024px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /* border: solid; */
+}
+
+.subcontainer-row {
+    width: 1024px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* border: solid; */
+}
+
+.wrapper-row-links {
+    height: 122px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-basis: 100vw;
+    text-align: center;
+    background-color: #fff;
+    /* border: solid; */
+}
+
+.first-link {
+    margin-left: 42px;
+}
+
+.last-link {
+    margin-right: 42px;
+}
+
+.wrapper-row-links a, .wrapper-row-links p {
+    display: block;
+    padding: 50px 0px 50px 0px;
+    margin: 0;
+}
+
+.basic-form {
+    width: 300px;
+    margin-top: 30px;
+    margin-bottom: 75px;
+}
+
+.basic-btn {
+    width: 300px;
+    height: 50px;
+    border: 0;
+    background: none;
+    padding: 13px 0px 13px 0px;
+    border-radius: 8px;
+    background-color: #3d5bf1;
+    cursor: pointer;
+}
+
+.add-top-margin {
+    margin-top: 20px;
+}
+
+.add-left-margin {
+    margin-left: 160px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 280px;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 0;
+    padding: 0px 20px 0px 20px;
+}
+
+input[type="text"]:disabled, input[type="password"]:disabled {
+    background-color: rgba(255, 255, 255, 0.753);
+    color: rgb(167, 167, 167);
+}
+
+select {
+    width: 303px;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 0;
+    padding-left: 16px;
+}
+
+input[value="Create an account"], input[value="Create account"], input[value="Log in"], input[value="View patient directory"], input[value="Search"], input[value="Create patient record"], input[value="Edit patient info"], input[value="Save changes"], input[value="Change Email/Password"], input[value="Create new encounter"], input[value="Submit"], input[value="Edit SOAP"] {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.33;
+    color: #fff;
+}
+
+hr {
+    opacity: 0.4;
 }

@@ -1,22 +1,25 @@
-<%= render 'layouts/errors', object: @provider %>
+<div class="basic-form">
+    <%= render 'layouts/errors', object: @provider %>
 
-<%= form_with model: @provider do |f| %>
-    <%= f.label :first_name, "First Name" %>
-    <%= f.text_field :first_name %>
-    <%= f.label :last_name, "Last Name" %>
-    <%= f.text_field :last_name %>
-    <br><br>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-    <br><br>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-    <br>
-    <%= f.label :password_confirmation, "Confirm Password" %>
-    <%= f.password_field :password_confirmation %>
-    <br><br>
-    <%= f.label :authorization_key, "Authorization Key" %>
-    <%= f.password_field :authorization_key, disabled: true %>
-    <br><br>
-    <%= f.submit "Create Account" %>
-<% end %>
+    <%= form_with model: @provider do |f| %>
+        <%= f.label :first_name, "First Name" %>
+        <%= f.text_field :first_name %>
+
+        <%= f.label :last_name, "Last Name" %>
+        <%= f.text_field :last_name %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.password_field :password_confirmation %>
+
+        <%= f.label :authorization_key, "Authorization Key" %>
+        <%= f.password_field :authorization_key, disabled: true %>
+
+        <%= f.submit "Create account", class: "basic-btn add-top-margin" %>
+    <% end %>
+</div>
