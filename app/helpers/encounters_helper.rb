@@ -15,21 +15,21 @@ module EncountersHelper
 
     def new_encounter
         if params[:encounter_type] == "soap"
-            content_tag(:h1, "New SOAP", class: "temp")
+            content_tag(:h1, "New SOAP", id: "temp")
         elsif params[:encounter_type] == "physical"
-            content_tag(:h1, "New Physical", class: "temp")
+            content_tag(:h1, "New Physical", id: "temp")
         elsif params[:encounter_type] == "well_child"
-            content_tag(:h1, "New Well Child", class: "temp")
+            content_tag(:h1, "New Well Child", id: "temp")
         end
     end
 
     def edit_encounter
         if @encounter.encounter_type == "soap"
-            content_tag(:h1, "Edit SOAP", class: "temp")
+            content_tag(:h1, "Edit SOAP", id: "temp")
         elsif @encounter.encounter_type == "physical"
-            content_tag(:h1, "Edit Physical", class: "temp")
+            content_tag(:h1, "Edit Physical", id: "temp")
         elsif @encounter.encounter_type == "well_child"
-            content_tag(:h1, "Edit Well Child", class: "temp")
+            content_tag(:h1, "Edit Well Child", id: "temp")
         end
     end
 
