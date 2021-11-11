@@ -34,7 +34,7 @@ class PatientsController < ApplicationController
         @patient = Patient.new
         if logged_in_as_provider
             unless verified_provider(params[:provider_id]) || path_exception
-                redirect_to provider_patients_path(current_user), alert: "You cannot create a patient file as another provider."
+                redirect_to provider_patients_path(current_user), alert: "You cannot create a patient record as another provider."
             end
         elsif logged_in_as_patient
             if path_exception
@@ -75,12 +75,16 @@ class PatientsController < ApplicationController
     end
 
     def show
-        redirect_to current_user, alert: "You do not have access to view other patient files." if not_authorized(@patient)
+        if not_authorized(@patient)
+            redirect_to current_user, alert: "You do not have access to another patient's record."
+        elsif !@patient
+            redirect_to provider_patients_path(current_user), alert: "Patient record not found"
+        end
     end
 
     def destroy
         @patient.destroy
-        redirect_to provider_patients_path(current_user), notice: "Patient file was deleted"
+        redirect_to provider_patients_path(current_user), notice: "Patient record was deleted"
     end
 
     private
