@@ -24,4 +24,6 @@ Rails.application.routes.draw do
     resources :encounters
   end
 
+  match "*missing", to: redirect('/'), via: :get
+
 end
