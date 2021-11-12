@@ -46,6 +46,7 @@ This project is under exclusive copyright and is currently not offering any lice
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
 * add search/filter for encounters (by type, date, or physician)
 * encounter -> accepts_nested_attributes_for -> reject_if: :all_blank -> validate to prevent persisting encounter when nested attributes are rejected
+* modify #add_all_breadcrumbs to use render/view filename instead of controller/action
 
 ///to implement next:
 * Apppintment class
