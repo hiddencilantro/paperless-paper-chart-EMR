@@ -11,8 +11,7 @@ class Patient < ApplicationRecord
     validates :dob, presence: true
     with_options unless: [:as_provider, :is_using_oauth] do |user|
         user.validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}
-        user.validates :password, presence: true, confirmation: true
-        user.validates :password_confirmation, presence: true
+        user.validates :password, presence: true, confirmation: { message: "doesn't match" }
     end
     validate :password_requirements, unless: -> {password.blank?}
     before_save :downcase_email, unless: -> {email.blank?}
