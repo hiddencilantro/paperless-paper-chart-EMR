@@ -91,7 +91,7 @@ class PatientsController < ApplicationController
         elsif !@patient
             redirect_to provider_patients_path(current_user), alert: "Patient record not found"
         end
-        add_breadcrumb(helpers.full_name(@patient)) if logged_in_as_provider
+        add_breadcrumb(helpers.full_name(@patient)) if logged_in_as_provider && @patient
     end
 
     def destroy
