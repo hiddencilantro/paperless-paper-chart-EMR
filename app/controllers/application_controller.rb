@@ -67,16 +67,115 @@ class ApplicationController < ActionController::Base
         }
     end
 
-    def add_patient_index_bc
+    # #initial breadcrumbs implementation -> multiple before_action
+
+    # def add_patient_index_bc
+    #     add_breadcrumb("My Patients", provider_patients_path(current_user)) if logged_in_as_provider
+    # end
+
+    # def add_patient_directory_bc
+    #     add_breadcrumb("Patient Directory", patients_path) if logged_in_as_provider
+    # end
+
+    # def add_patient_show_bc
+    #     add_breadcrumb(helpers.full_name(@patient), @patient) if logged_in_as_provider && @patient # needed when requests are made to nonexistant patient ids
+    #     add_breadcrumb("Main", current_user) if logged_in_as_patient
+    # end
+
+    # #alternative breadcrumbs implementation -> one before_action
+
+    def add_bc_patients_directory
+        add_breadcrumb("My Patients", provider_patients_path(current_user))
+        add_breadcrumb("Patient Directory")
+    end
+
+    def add_bc_patients_new
         add_breadcrumb("My Patients", provider_patients_path(current_user)) if logged_in_as_provider
-    end
-
-    def add_patient_directory_bc
         add_breadcrumb("Patient Directory", patients_path) if logged_in_as_provider
+        add_breadcrumb("Create New Patient Record") if logged_in_as_provider
     end
 
-    def add_patient_show_bc
-        add_breadcrumb(helpers.full_name(@patient), @patient) if logged_in_as_provider && @patient # needed when requests are made to nonexistant patient ids
-        add_breadcrumb("Main", current_user) if logged_in_as_patient
+    def add_bc_patients_show
+        add_breadcrumb("My Patients", provider_patients_path(current_user)) if logged_in_as_provider
+        add_breadcrumb("Patient Directory", patients_path) if logged_in_as_provider
+        add_breadcrumb(helpers.full_name(@patient)) if logged_in_as_provider && @patient
+    end
+
+    def add_bc_patients_edit
+        if logged_in_as_provider
+            add_breadcrumb("My Patients", provider_patients_path(current_user))
+            add_breadcrumb("Patient Directory", patients_path)
+            add_breadcrumb(helpers.full_name(@patient), @patient) if @patient
+            add_breadcrumb("Edit Patient Info")
+        elsif logged_in_as_patient
+            add_breadcrumb("Main", current_user)
+            add_breadcrumb("Edit Profile")
+        end
+    end
+
+    def add_bc_encounters_index
+        if logged_in_as_provider
+            add_breadcrumb("My Patients", provider_patients_path(current_user))
+            add_breadcrumb("Patient Directory", patients_path)
+            add_breadcrumb(helpers.full_name(@patient), @patient) if @patient
+        elsif logged_in_as_patient
+            add_breadcrumb("Main", current_user)
+        end
+            add_breadcrumb("Encounters")
+    end
+
+    def add_bc_encounters_new
+        add_breadcrumb("My Patients", provider_patients_path(current_user))
+        add_breadcrumb("Patient Directory", patients_path)
+        add_breadcrumb(helpers.full_name(@patient), @patient) if @patient
+        add_breadcrumb("Encounters", patient_encounters_path(@patient)) if @patient
+        add_breadcrumb(helpers.new_encounter_text)
+    end
+
+    def add_bc_encounters_show
+        if logged_in_as_provider
+            add_breadcrumb("My Patients", provider_patients_path(current_user))
+            add_breadcrumb("Patient Directory", patients_path)
+            add_breadcrumb(helpers.full_name(@patient), @patient) if @patient
+        elsif logged_in_as_patient
+            add_breadcrumb("Main", current_user)
+        end
+        add_breadcrumb("Encounters", patient_encounters_path(@patient)) if @patient
+        add_breadcrumb("#{helpers.formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]") if @encounter
+    end
+
+    def add_bc_encounters_edit
+        add_breadcrumb("My Patients", provider_patients_path(current_user))
+        add_breadcrumb("Patient Directory", patients_path)
+        add_breadcrumb(helpers.full_name(@patient), @patient) if @patient
+        add_breadcrumb("Encounters", patient_encounters_path(@patient)) if @patient
+        add_breadcrumb("#{helpers.formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]", patient_encounter_path(@patient, @encounter)) if @patient && @encounter
+        add_breadcrumb(helpers.edit_encounter_text) if @encounter
+    end
+
+    def add_all_breadcrumbs
+        if params[:controller] == "patients"
+            case params[:action]
+            when "directory"
+                add_bc_patients_directory
+            when "new"
+                add_bc_patients_new
+            when "show"
+                add_bc_patients_show
+            when "edit"
+                add_bc_patients_edit
+            end
+        elsif params[:controller] == "encounters"
+            case params[:action]
+            when "index"
+                add_bc_encounters_index
+            when "new"
+                add_bc_encounters_new
+            when "show"
+                add_bc_encounters_show
+            when "edit"
+                add_bc_encounters_edit
+            end
+        end
     end
 end

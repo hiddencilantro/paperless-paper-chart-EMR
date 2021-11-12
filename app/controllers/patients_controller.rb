@@ -2,9 +2,10 @@ class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
     before_action :authorize_provider, only: [:index, :directory, :search, :destroy]
     before_action :set_patient_by_id, only: [:edit, :show, :destroy]
-    before_action :add_patient_index_bc, only: [:directory, :new, :edit, :show]
-    before_action :add_patient_directory_bc, only: [:edit, :show]
-    before_action :add_patient_show_bc, only: :edit
+    # before_action :add_patient_index_bc, only: [:directory, :new, :edit, :show]
+    # before_action :add_patient_directory_bc, only: [:edit, :show]
+    # before_action :add_patient_show_bc, only: :edit
+    before_action :add_all_breadcrumbs, only: [:directory, :new, :show, :edit]
     add_flash_types :search_alert
 
     def index
@@ -15,7 +16,7 @@ class PatientsController < ApplicationController
     def directory
         @patients = Patient.ordered_and_grouped_by_last_name
         @alphabet_array = [*'A'..'Z']
-        add_breadcrumb("Patient Directory")
+        # add_breadcrumb("Patient Directory")
     end
 
     def search
@@ -40,7 +41,7 @@ class PatientsController < ApplicationController
             unless verified_provider(params[:provider_id]) || path_exception
                 redirect_to provider_patients_path(current_user), alert: "You cannot create a patient record as another provider."
             end
-            add_breadcrumb("Create New Patient Record")
+            # add_breadcrumb("Create New Patient Record")
         elsif logged_in_as_patient
             if path_exception
                 redirect_to current_user, alert: "Please log out to create a new patient account."
@@ -66,10 +67,10 @@ class PatientsController < ApplicationController
             redirect_to current_user, alert: "You can't edit your email and/or password when logged in with third-party credentials."
         elsif !@patient
             redirect_to provider_patients_path(current_user), alert: "Patient record not found"
-        elsif logged_in_as_provider
-            add_breadcrumb("Edit Patient Info")
-        elsif logged_in_as_patient
-            add_breadcrumb("Edit Profile")
+        # elsif logged_in_as_provider
+        #     add_breadcrumb("Edit Patient Info")
+        # elsif logged_in_as_patient
+        #     add_breadcrumb("Edit Profile")
         end
     end
 
@@ -91,7 +92,7 @@ class PatientsController < ApplicationController
         elsif !@patient
             redirect_to provider_patients_path(current_user), alert: "Patient record not found"
         end
-        add_breadcrumb(helpers.full_name(@patient)) if logged_in_as_provider && @patient
+        # add_breadcrumb(helpers.full_name(@patient)) if logged_in_as_provider && @patient
     end
 
     def destroy

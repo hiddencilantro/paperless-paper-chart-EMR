@@ -2,8 +2,9 @@ class EncountersController < ApplicationController
     before_action :verify_if_logged_in, :set_patient_by_id
     before_action :authorize_provider, except: [:index, :show]
     before_action :set_encounter_by_id, except: [:index, :new, :create]
-    before_action :add_patient_index_bc, :add_patient_directory_bc, :add_patient_show_bc, except: [:create, :update, :destroy]
-    before_action :add_encounters_index_bc, only: [:new, :show, :edit]
+    # before_action :add_patient_index_bc, :add_patient_directory_bc, :add_patient_show_bc, except: [:create, :update, :destroy]
+    # before_action :add_encounters_index_bc, only: [:new, :show, :edit]
+    before_action :add_all_breadcrumbs, except: [:create, :update, :destroy]
     
     def index
         if not_authorized(@patient)
@@ -12,7 +13,7 @@ class EncountersController < ApplicationController
             redirect_to provider_patients_path(current_user), alert: "Patient record not found"
         end
         @encounters = @patient.encounters.ordered_by_most_recent if @patient
-        add_breadcrumb("Encounters")
+        # add_breadcrumb("Encounters")
     end
 
     def new
@@ -21,7 +22,7 @@ class EncountersController < ApplicationController
         if params[:encounter_type] == "soap"
             @encounter.build_soap
         end
-        add_breadcrumb(helpers.new_encounter_text)
+        # add_breadcrumb(helpers.new_encounter_text)
     end
 
     def create
@@ -47,7 +48,7 @@ class EncountersController < ApplicationController
         elsif !@encounter && logged_in_as_patient
             redirect_to patient_encounters_path(@patient), alert: "You do not have an encounter record by that id"
         end
-        add_breadcrumb("#{helpers.formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]") if @encounter
+        # add_breadcrumb("#{helpers.formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]") if @encounter
     end
 
     def edit
@@ -58,8 +59,8 @@ class EncountersController < ApplicationController
         elsif @encounter.provider != current_user
             redirect_back fallback_location: patient_encounter_path(@patient, @encounter), allow_other_host: false, alert: "You can't edit another provider's encounter record."
         end
-        add_breadcrumb("#{helpers.formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]", patient_encounter_path(@patient, @encounter)) if @patient && @encounter
-        add_breadcrumb(helpers.edit_encounter_text) if @encounter
+        # add_breadcrumb("#{helpers.formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]", patient_encounter_path(@patient, @encounter)) if @patient && @encounter
+        # add_breadcrumb(helpers.edit_encounter_text) if @encounter
     end
 
     def update
@@ -96,7 +97,7 @@ class EncountersController < ApplicationController
         @encounter = Encounter.find_by(id: params[:id])
     end
 
-    def add_encounters_index_bc
-        add_breadcrumb("Encounters", patient_encounters_path(@patient)) if @patient
-    end
+    # def add_encounters_index_bc
+    #     add_breadcrumb("Encounters", patient_encounters_path(@patient)) if @patient
+    # end
 end
