@@ -14,7 +14,7 @@ class Patient < ApplicationRecord
     with_options unless: [:as_provider, :is_using_oauth] do |user|
         user.validates :email, presence: true
         user.validates :email, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: -> {email.blank?}
-        user.validates :password, presence: true, confirmation: { message: "doesn't match" }
+        user.validates :password, presence: true, confirmation: { message: "doesn't match" } #how does it know to skip confirmation if presence fails (same doesn't work for Provider; must be a subtle difference between #save and #valid?)
     end
     validate :password_requirements, unless: -> {password.blank?}
     before_save :downcase_email, unless: -> {email.blank?}
