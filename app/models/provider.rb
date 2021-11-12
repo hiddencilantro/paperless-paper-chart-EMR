@@ -14,6 +14,8 @@ class Provider < ApplicationRecord
     validate :password_requirements, unless: -> {password.blank?}
     before_save { self.email = email.downcase }
 
+    private
+
     def password_requirements
         requirements = {
             " must be least 8 characters long" => /.{8,}/,

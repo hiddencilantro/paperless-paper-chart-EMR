@@ -23,6 +23,8 @@ class Patient < ApplicationRecord
     scope :ordered_and_grouped_by_last_name, -> {order(:last_name, :first_name).group_by{|p| p.last_name[0].capitalize}}
     scope :search_records, -> (search) {where(search.transform_values(&:capitalize))}
 
+    private
+
     def password_requirements
         requirements = {
             " must be least 8 characters long" => /.{8,}/,
