@@ -55,13 +55,13 @@ a:hover {
 }
 
 #flash-alert {
-    color: red;
+    color: #dc3545;
     font-weight: bold;
     font-size: 16px;
 }
 
 #flash-notice {
-    color: green;
+    color: #28a745;
     font-weight: bold;
     font-size: 16px;
 }
@@ -73,11 +73,17 @@ a:hover {
     font-size: 16px;
 }
 
-.field_with_errors {
-    width: 200px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: red;
+.field_with_errors label::after {
+    content: " *";
+    color: #dc3545;
+}
+
+.field_with_errors input[type="text"], .field_with_errors input[type="password"], .field_with_errors select {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.field_with_errors select {
+    color: #dc3545;
 }
 
 h1 {
@@ -205,7 +211,7 @@ h1 {
 }
 
 input[type="text"], input[type="password"] {
-    width: 280px;
+    width: 260px;
     height: 50px;
     margin-top: 10px;
     margin-bottom: 20px;
@@ -219,7 +225,7 @@ input[type="text"]:disabled, input[type="password"]:disabled {
 }
 
 select {
-    width: 303px;
+    width: 300px;
     height: 50px;
     margin-top: 10px;
     margin-bottom: 20px;
