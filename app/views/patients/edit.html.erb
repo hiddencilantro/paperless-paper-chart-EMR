@@ -1,12 +1,6 @@
 <% if logged_in_as_provider %>
-    <% content_for :breadcrumbs do %>
-        <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to full_name(@patient), @patient %> > <%= link_to_unless_current "Edit Patient Info", action: "edit" %>
-    <% end %>
     <%= render 'form', url: @patient, title: "Edit Patient Info", submit: "Save changes", button: "basic-btn add-top-margin" %>
 <% elsif logged_in_as_patient %>
-    <% content_for :breadcrumbs do %>
-        <%= link_to "Main", @patient %> > <%= link_to_unless_current "Edit Profile", action: "edit" %>
-    <% end %>
     <%= render 'form', url: @patient, title: "Edit Profile", submit: "Save changes", button: "patient-btn" %>
 <% else %>
     <%= render 'form', url: @patient, title: "Create a New Patient Account", submit: "Create account", button: "patient-btn" %>

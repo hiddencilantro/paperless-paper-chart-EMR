@@ -1,7 +1,3 @@
-<% content_for :breadcrumbs do %>
-    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to full_name(@patient), @patient %> > <%= link_to "Encounters", patient_encounters_path(@patient) %> > <%= link_to_unless_current "#{formatted_date(@encounter.created_at)} [#{@encounter.encounter_type.titleize}]", action: "show" %>
-<% end %>
-
 <div class="subcontainer-col">
     <h1 id="temp"><%= @encounter.encounter_type.titleize %></h1>
     <%= render 'layouts/flash' %>

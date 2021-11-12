@@ -1,7 +1,3 @@
-<% content_for :breadcrumbs do %>
-    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to_unless_current "Patient Directory", action: "directory" %>
-<% end %>
-
 <div class="subcontainer-col">
     <h1 id="temp" style="margin-bottom: 5px;">Patient Directory</h1>
     <p class="directory-subheader">(Sorted alphabetically by last name)</p>

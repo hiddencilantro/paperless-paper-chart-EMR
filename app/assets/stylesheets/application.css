@@ -116,13 +116,13 @@ h1 {
 .nav-wrapper {
     flex-basis: 100vw;
     margin-left: 42px;
+    margin-right: 42px;
     margin-top: 20px;
     /* border: solid; */
 }
 
 .logout {
     text-align: right;
-    margin-right: 42px;
 }
 
 .content-container {
@@ -236,4 +236,22 @@ input[value="Create an account"], input[value="Create account"], input[value="Lo
 
 hr {
     opacity: 0.4;
+}
+
+ul.breadcrumb {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+  
+/* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+}
+
+/* Add a before each list item */
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: #303030;
+    content: "\276F";
 }

@@ -1,5 +1,1 @@
-<% content_for :breadcrumbs do %>
-    <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to "Patient Directory", patients_path %> > <%= link_to full_name(@patient), @patient %> > <%= link_to "Encounters", patient_encounters_path(@patient) %> > <%= link_to "#{@encounter.created_at.to_date} [#{@encounter.encounter_type.titleize}]", patient_encounter_path(@patient, @encounter) %> > <%= link_to_unless_current "Edit #{@encounter.created_at.to_date} [#{@encounter.encounter_type.titleize}]", action: "edit" %>
-<% end %>
-
 <%= render 'form', url: patient_encounter_path(@patient, @encounter), title: edit_encounter_header %>

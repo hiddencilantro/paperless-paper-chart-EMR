@@ -1,7 +1,4 @@
 <% if logged_in_as_provider %>
-    <% content_for :breadcrumbs do %>
-        <%= link_to "My Patients", provider_patients_path(current_user) %> > <%= link_to_unless_current "Create New Patient Record", action: "new" %>
-    <% end %>
     <%= render 'form', url: provider_patients_path(current_user), title: "Create New Patient Record", submit: "Create patient record", button: "basic-btn add-top-margin" %>
 <% else %>
     <%= render 'form', url: patients_path, title: "Create a New Patient Account", submit: "Create account", button: "patient-btn" %>
