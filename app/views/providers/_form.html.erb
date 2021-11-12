@@ -1,6 +1,4 @@
 <div class="basic-form">
-    <%= render 'layouts/errors', object: @provider %>
-
     <%= form_with model: @provider do |f| %>
         <%= f.label :first_name, "First Name" %>
         <%= f.text_field :first_name %>

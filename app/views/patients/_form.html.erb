@@ -1,13 +1,12 @@
 <div class="subcontainer-col">
     <h1 id="temp"><%= title %></h1>
     <%= render 'layouts/flash' %>
+    <%= render 'layouts/errors', object: @patient %>
     <% if @patient_suggestion %>
-            <p id="suggestion">Were you looking for <%= link_to "#{full_name(@patient_suggestion)} / #{@patient_suggestion.sex.titleize} / #{age(@patient_suggestion.dob)}", patient_path(@patient_suggestion) %>?</p>
+        <p id="suggestion">Were you looking for <%= link_to "#{full_name(@patient_suggestion)} / #{@patient_suggestion.sex.titleize} / #{age(@patient_suggestion.dob)}", patient_path(@patient_suggestion) %>?</p>
     <% end %>
 
     <div class="basic-form">
-        <%= render 'layouts/errors', object: @patient %>
-
         <%= form_with model: @patient, url: url do |f| %>
             <% if !logged_in? %>
                 <%= render 'form_new', f: f %>
