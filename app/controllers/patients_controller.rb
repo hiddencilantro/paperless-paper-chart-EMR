@@ -132,7 +132,7 @@ class PatientsController < ApplicationController
             begin
                 @patient = Patient.new(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
                 @patient.valid?
-                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i) unless @patient.errors[:dob].any?
                 @patient.providers << current_user
                 if @patient.save
                     redirect_to @patient, notice: "Patient record created!"
@@ -163,7 +163,7 @@ class PatientsController < ApplicationController
             begin
                 @patient = Patient.new(patient_params)
                 @patient.valid?
-                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i) unless @patient.errors[:dob].any?
                 if @patient.errors.any?
                     render :new
                 else
@@ -200,7 +200,7 @@ class PatientsController < ApplicationController
         begin
             @patient.assign_attributes(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
             @patient.valid?
-            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i)
+            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i) unless @patient.errors[:dob].any?
             if @patient.save
                 redirect_to @patient, notice: "Patient info was successfully updated"
             else

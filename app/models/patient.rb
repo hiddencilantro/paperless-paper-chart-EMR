@@ -5,12 +5,15 @@ class Patient < ApplicationRecord
     has_and_belongs_to_many :providers, validate: false
     has_many :encounters, dependent: :destroy
     has_many :soaps, through: :encounters
-    validates :first_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
-    validates :last_name, presence: true, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}
+    validates :first_name, presence: true
+    validates :first_name, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}, unless: -> {first_name.blank?}
+    validates :last_name, presence: true
+    validates :last_name, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}, unless: -> {last_name.blank?}
     validates :sex, presence: true
     validates :dob, presence: true
     with_options unless: [:as_provider, :is_using_oauth] do |user|
-        user.validates :email, presence: true, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}
+        user.validates :email, presence: true
+        user.validates :email, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: -> {email.blank?}
         user.validates :password, presence: true, confirmation: { message: "doesn't match" }
     end
     validate :password_requirements, unless: -> {password.blank?}
