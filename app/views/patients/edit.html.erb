@@ -1,3 +1,5 @@
+<% add_bc_patients_edit %>
+
 <% if logged_in_as_provider %>
     <%= render 'form', url: @patient, title: "Edit Patient Info", submit: "Save changes", button: "basic-btn add-top-margin" %>
 <% elsif logged_in_as_patient %>

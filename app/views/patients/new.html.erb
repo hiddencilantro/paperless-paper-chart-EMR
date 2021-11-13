@@ -1,3 +1,5 @@
+<% add_bc_patients_new %>
+
 <% if logged_in_as_provider %>
     <%= render 'form', url: provider_patients_path(current_user), title: "Create New Patient Record", submit: "Create patient record", button: "basic-btn add-top-margin" %>
 <% else %>

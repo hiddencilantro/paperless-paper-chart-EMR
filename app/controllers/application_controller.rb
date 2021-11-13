@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    helper_method :current_user, :logged_in?, :current_user?, :current_path, :logged_in_as_provider, :logged_in_as_patient
+    helper_method :current_user, :logged_in?, :current_user?, :current_path, :logged_in_as_provider, :logged_in_as_patient, :add_bc_patients_new, :add_bc_patients_edit
     before_action :set_breadcrumbs
 
     private
@@ -66,23 +66,6 @@ class ApplicationController < ActionController::Base
             path: path
         }
     end
-
-    # #initial breadcrumbs implementation -> multiple before_action
-
-    # def add_patient_index_bc
-    #     add_breadcrumb("My Patients", provider_patients_path(current_user)) if logged_in_as_provider
-    # end
-
-    # def add_patient_directory_bc
-    #     add_breadcrumb("Patient Directory", patients_path) if logged_in_as_provider
-    # end
-
-    # def add_patient_show_bc
-    #     add_breadcrumb(helpers.full_name(@patient), @patient) if logged_in_as_provider && @patient # needed when requests are made to nonexistant patient ids
-    #     add_breadcrumb("Main", current_user) if logged_in_as_patient
-    # end
-
-    # #alternative breadcrumbs implementation -> one before_action
 
     def add_bc_patients_directory
         add_breadcrumb("My Patients", provider_patients_path(current_user))
@@ -153,17 +136,13 @@ class ApplicationController < ActionController::Base
         add_breadcrumb(helpers.edit_encounter_text) if @encounter
     end
 
-    def add_all_breadcrumbs
+    def load_breadcrumbs
         if params[:controller] == "patients"
             case params[:action]
             when "directory"
                 add_bc_patients_directory
-            when "new"
-                add_bc_patients_new
             when "show"
                 add_bc_patients_show
-            when "edit"
-                add_bc_patients_edit
             end
         elsif params[:controller] == "encounters"
             case params[:action]
