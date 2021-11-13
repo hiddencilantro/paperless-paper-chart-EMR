@@ -38,12 +38,12 @@ class EncountersController < ApplicationController
     def show
         if not_authorized(@patient)
             redirect_to patient_encounters_path(current_user), alert: "You do not have access to another patient's records."
+        elsif logged_in_as_patient && !@encounter
+            redirect_to patient_encounters_path(@patient), alert: "You do not have an encounter record by that id"
         elsif !@patient
             redirect_to provider_patients_path(current_user), alert: "Patient record not found"
-        elsif !@encounter && logged_in_as_provider
+        elsif !@encounter || (@encounter.patient_id != @patient.id)
             redirect_to patient_encounters_path(@patient), alert: "No encounter record by that id for this patient"
-        elsif !@encounter && logged_in_as_patient
-            redirect_to patient_encounters_path(@patient), alert: "You do not have an encounter record by that id"
         end
     end
 
