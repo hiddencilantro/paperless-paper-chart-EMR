@@ -1,9 +1,11 @@
-<ul class="breadcrumb">
-    <% @breadcrumbs.each do |breadcrumb| %>
-        <% if breadcrumb[:path].nil? %>
-            <li><%= breadcrumb[:name] %></li>
-        <% else %>
-            <li><%= link_to breadcrumb[:name], breadcrumb[:path] %></li>
+<% if @breadcrumbs %>
+    <ul class="breadcrumb">
+        <% @breadcrumbs.each do |breadcrumb| %>
+            <% if breadcrumb[:path].nil? %>
+                <li><%= breadcrumb[:name] %></li>
+            <% else %>
+                <li><%= link_to breadcrumb[:name], breadcrumb[:path] %></li>
+            <% end %>
         <% end %>
-    <% end %>
-</ul>
+    </ul>
+<% end %>

@@ -2,7 +2,7 @@ class PatientsController < ApplicationController
     before_action :verify_if_logged_in, except: [:create, :update], unless: :path_exception
     before_action :authorize_provider, only: [:index, :directory, :search, :destroy]
     before_action :set_patient_by_id, only: [:edit, :show, :destroy]
-    skip_before_action :set_breadcrumbs, except: [:directory, :new, :edit, :show]
+    skip_before_action :set_breadcrumbs, only: [:index, :search, :create]
     before_action :load_breadcrumbs, only: [:directory, :show]
     add_flash_types :search_alert
 
