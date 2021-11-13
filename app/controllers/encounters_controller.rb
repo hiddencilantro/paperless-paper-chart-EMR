@@ -33,6 +33,16 @@ class EncountersController < ApplicationController
         else
             render :new
         end
+        # if @encounter.soap.present? && @encounter.save
+        #     @patient.touch
+        #     @encounter.patient.providers << current_user if !@encounter.patient.providers.include?(current_user)
+        #     redirect_to patient_encounter_path(@patient, @encounter), notice: "New #{@encounter.encounter_type.titleize} record created!"
+        # else
+        #     @encounter.errors.add(:soap, "fields cannot be completely empty")
+        #     @encounter.encounter_type = nil
+        #     params[:encounter_type] = "soap"
+        #     render :new
+        # end
     end
 
     def show
