@@ -43,11 +43,10 @@ This project is under exclusive copyright and is currently not offering any lice
 ///to do or fix:
 * application.rb -> config.force_ssl = true
 * remove GET route to /logout?
+* when using omniauth, is there a downside to skipping validations instead of generating a random password every time (i.e. SecureRandom.hex())?
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
-* add search/filter for encounters (by type, date, or physician)
 * encounter -> accepts_nested_attributes_for -> reject_if: :all_blank -> validate to prevent persisting encounter when nested attributes are rejected
-* breadcrumb containing patient name can error
-* when using omniauth, is there a downside to skipping validations instead of generating a random password every time (i.e. SecureRandom.hex())
+* breadcrumb containing patient name is impacted if we error while editing name
 * authorization key
 
 ///to implement next:
@@ -70,6 +69,7 @@ This project is under exclusive copyright and is currently not offering any lice
 * encounters index (limit # of displayed records per page)
     - links to page numbers
     - allow user to select how many records to display
+* add search/filter for encounters (by type, date, or physician)
 
 ///
 <%= button_to "Delete Account", current_user, method: :delete, data: {confirm: "You are about to permanently delete a provider account. ALL of your data will be lost. Are you sure?"} %>
@@ -80,6 +80,12 @@ Confirmation pop-up: Cannot use the "confirm" data attribute for FormBuilder (mu
 
 <%= f.submit, data: {confirm: "Does everything look accurate? You cannot change your information once your account has been created."} %>
 <%= f.submit, data: {confirm: "Are you sure you want to save these changes?"} %>
+///
+
+///
+another potential solution to breadcrumbs:
+    - include all actions in case statement & use before_action
+    - handle breadcrumbs for post-error re-renders by possibly using different layouts or variants
 ///
 
  -->
