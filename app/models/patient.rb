@@ -25,29 +25,6 @@ class Patient < ApplicationRecord
 
     private
 
-    def password_requirements
-        requirements = {
-            " must be least 8 characters long" => /.{8,}/,
-            " must contain at least one number but cannot start with a number" => /\D+\d+/,
-            " must contain at least one lowercase letter" => /[a-z]+/,
-            " must contain at least one uppercase letter" => /[A-Z]+/,
-            " must contain at least one special character" => /[[:^alnum:]]+/
-        }
-
-        requirements.each do |message, regex|
-            errors.add(:password, message) unless password.match(regex)
-        end
-    end
-
-    def downcase_email
-        self.email = email.downcase
-    end
-
-    def capitalize_name
-        self.first_name = first_name.capitalize
-        self.last_name = last_name.capitalize
-    end
-
     def self.set_from_omniauth(auth)
         find_by(first_name: auth.info.first_name.capitalize, last_name: auth.info.last_name.capitalize) #include sex and dob in query
     end

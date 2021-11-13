@@ -12,22 +12,6 @@ class Provider < ApplicationRecord
     validates :password, presence: true, confirmation: { message: "doesn't match" }
     validates :password, confirmation: { message: "doesn't match" }, unless: -> {password.blank?}
     validate :password_requirements, unless: -> {password.blank?}
-    before_save { self.email = email.downcase }
-
-    private
-
-    def password_requirements
-        requirements = {
-            " must be least 8 characters long" => /.{8,}/,
-            " must contain at least one number but cannot start with a number" => /\D+\d+/,
-            " must contain at least one lowercase letter" => /[a-z]+/,
-            " must contain at least one uppercase letter" => /[A-Z]+/,
-            " must contain at least one special character" => /[[:^alnum:]]+/
-        }
-
-        requirements.each do |message, regex|
-            errors.add(:password, message) unless password.match(regex)
-        end
-    end
+    before_save :downcase_email
+    before_save :capitalize_name
 end
-21
