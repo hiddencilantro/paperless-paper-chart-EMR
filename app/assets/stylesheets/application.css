@@ -261,3 +261,9 @@ ul.breadcrumb li+li:before {
     color: #303030;
     content: "\276F";
 }
+
+.emphasize {
+    font-family: Roboto-Bold;
+    font-style: italic;
+    text-decoration: underline;
+}

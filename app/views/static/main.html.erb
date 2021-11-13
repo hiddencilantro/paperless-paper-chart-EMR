@@ -1,7 +1,7 @@
 <div class="subcontainer-col static-header">
     <h3>Welcome to</h3>
     <h1>Paperless Paper Chart</h1>
-    <p>The nation's most versatile and clutter-free EMR system.</p>
+    <p>The nation's most intuitive and clutter-free EMR</p>
     <%= render 'layouts/flash' %>
 </div>
 
@@ -16,8 +16,8 @@
 
     <div class="wrapper-row-static static-patients">
         <h3>Patients:</h3>
-        <p>If this is your first visit,</p>
-        <p>click here to make an appointment!</p>
+        <p>If you've <span class="emphasize">never</span> visited us before,</p>
+        <p><a href="#">click here</a> to make an appointment!</p>
         <%= button_to "Create an account", new_patient_path, method: :get %>
         <p>Already have an account? <%= link_to "Log in", patients_login_path %></p>
         <p>Or log in with your <%= link_to "Google account", '/auth/google_oauth2', method: :post %></p>
