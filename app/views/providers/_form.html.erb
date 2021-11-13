@@ -16,7 +16,7 @@
         <%= f.password_field :password_confirmation %>
 
         <%= f.label :authorization_key, "Authorization Key" %>
-        <%= f.password_field :authorization_key, disabled: true %>
+        <%= f.text_field :authorization_key %>
 
         <%= f.submit "Create account", class: "basic-btn add-top-margin" %>
     <% end %>

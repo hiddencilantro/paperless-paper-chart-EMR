@@ -6,16 +6,15 @@ class ProvidersController < ApplicationController
         @provider = Provider.new
     end
 
-    # providers#create is easily accessible for the sake of project demo,
-    # but in production it would operate in a closed environment
-    # in order to prevent patients or other parties from gaining access to private information,
-    # only allowing creation of a provider account either on the backend
-    # or by requiring a key and/or some sort of additional layer of security
+    # providers#create uses temp_key[:authorization_key] for the sake of demonstration,
+    # in production we would need some sort of product key/software licensing API
     def create
         @provider = Provider.new(provider_params)
-        if @provider.save
+        if temp_key[:authorization_key] == '0000' && @provider.save
             log_in(@provider)
             redirect_to @provider
+        elsif @provider.valid? && temp_key[:authorization_key] != '0000'
+            redirect_to new_provider_path, alert: "Invalid authorization key"
         else
             render :new
         end
@@ -59,5 +58,9 @@ class ProvidersController < ApplicationController
 
     def set_provider
         @provider = Provider.find_by(id: params[:id])
+    end
+
+    def temp_key
+        params.require(:provider).permit(:authorization_key)
     end
 end
