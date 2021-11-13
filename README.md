@@ -46,8 +46,7 @@ This project is under exclusive copyright and is currently not offering any lice
 * when using omniauth, is there a downside to skipping validations instead of generating a random password every time (i.e. SecureRandom.hex())?
 * pull birthday and gender from Google OAuth [prevent OAuth users from intercepting other patients' accounts]
 * encounter -> accepts_nested_attributes_for -> reject_if: :all_blank -> validate to prevent persisting encounter when nested attributes are rejected
-* breadcrumb containing patient name is impacted if we error while editing name
-* authorization key
+* breadcrumb w/ patient name can change if we error while editing name fields
 
 ///to implement next:
 * Apppintment class
@@ -57,12 +56,6 @@ This project is under exclusive copyright and is currently not offering any lice
     - pre-populate patient info from details in Appointment
 * SOAP#create
     - pre-populate encounter from details in Appointment
-
-///stretch goals:
-* security (https://guides.rubyonrails.org/security.html)
-    - session hijacking
-    - injections
-    - prevent password params from being logged
 * implement additional OAuth providers
 * password entry for destroying records instead of just confirmation pop-ups
 * have user select time zone or use JS to get local time on client side?
@@ -70,6 +63,15 @@ This project is under exclusive copyright and is currently not offering any lice
     - links to page numbers
     - allow user to select how many records to display
 * add search/filter for encounters (by type, date, or physician)
+* add physical and well child encounters
+
+///stretch goals:
+* security (https://guides.rubyonrails.org/security.html)
+    - session hijacking
+    - injections
+    - prevent password params from being logged
+* software licensing (product key)
+    - allow users to select location during signup
 
 ///
 <%= button_to "Delete Account", current_user, method: :delete, data: {confirm: "You are about to permanently delete a provider account. ALL of your data will be lost. Are you sure?"} %>
