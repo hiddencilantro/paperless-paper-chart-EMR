@@ -2,6 +2,7 @@ class EncountersController < ApplicationController
     before_action :verify_if_logged_in, :set_patient_by_id
     before_action :authorize_provider, except: [:index, :show]
     before_action :set_encounter_by_id, except: [:index, :new, :create]
+    skip_before_action :set_breadcrumbs, only: [:create, :update, :destroy]
     before_action :load_breadcrumbs, except: [:create, :update, :destroy]
     
     def index
