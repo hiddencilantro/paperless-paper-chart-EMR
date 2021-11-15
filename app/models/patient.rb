@@ -11,6 +11,7 @@ class Patient < ApplicationRecord
     validates :last_name, format: {with: /\A[-a-z A-Z']+\z/, message: "only accepts letters, spaces, hyphens and apostrophes"}, unless: -> {last_name.blank?}
     validates :sex, presence: true
     validates :dob, presence: true
+    validate :valid_date?, unless: -> {dob.blank?}
     with_options unless: [:as_provider, :is_using_oauth] do |user|
         user.validates :email, presence: true
         user.validates :email, uniqueness: {case_sensitive: false}, format: {with: URI::MailTo::EMAIL_REGEXP}, unless: -> {email.blank?}
@@ -24,6 +25,18 @@ class Patient < ApplicationRecord
     scope :search_records, -> (search) {where(search.transform_values(&:capitalize))}
 
     private
+    
+    def valid_date?
+        unless dob_before_type_cast.is_a?(String)
+            values = dob_before_type_cast.values
+            begin
+                Date.new(values[2], values[0], values[1])
+            rescue ArgumentError
+                errors.add(:dob, "must be a valid date")
+                self.dob = nil
+            end
+        end
+    end
 
     def self.set_from_omniauth(auth)
         find_by(first_name: auth.info.first_name.capitalize, last_name: auth.info.last_name.capitalize) #include sex and dob in query

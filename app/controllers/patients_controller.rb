@@ -121,19 +121,11 @@ class PatientsController < ApplicationController
             flash.now[:alert] = "There is already a patient that matches this information."
             render :new
         else
-            begin
-                @patient = Patient.new(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
-                @patient.valid?
-                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i) unless @patient.errors[:dob].any?
-                @patient.providers << current_user
-                if @patient.save
-                    redirect_to @patient, notice: "Patient record created!"
-                else
-                    render :new
-                end
-            rescue ArgumentError
-                @patient.errors.add(:dob, "must be a valid date")
-                @patient.dob = nil
+            @patient = Patient.new(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
+            @patient.providers << current_user
+            if @patient.save
+                redirect_to @patient, notice: "Patient record created!"
+            else
                 render :new
             end
         end
@@ -152,19 +144,11 @@ class PatientsController < ApplicationController
         elsif @patient && @patient.email
             redirect_to patients_login_path, alert: "Looks like you already have an account! Please sign in to continue."
         else
-            begin
-                @patient = Patient.new(patient_params)
-                @patient.valid?
-                Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i) unless @patient.errors[:dob].any?
-                if @patient.errors.any?
-                    render :new
-                else
-                    flash.now[:alert] = "We couldn't find you in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call."
-                    render :new
-                end
-            rescue ArgumentError
-                @patient.errors.add(:dob, "must be a valid date")
-                @patient.dob = nil
+            @patient = Patient.new(patient_params)
+            if !@patient.valid?
+                render :new
+            else
+                flash.now[:alert] = "We couldn't find you in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call."
                 render :new
             end
         end
@@ -189,18 +173,10 @@ class PatientsController < ApplicationController
     end
 
     def update_as_provider
-        begin
-            @patient.assign_attributes(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
-            @patient.valid?
-            Date.new(patient_params["dob(1i)"].to_i, patient_params["dob(2i)"].to_i, patient_params["dob(3i)"].to_i) unless @patient.errors[:dob].any?
-            if @patient.save
-                redirect_to @patient, notice: "Patient info was successfully updated"
-            else
-                render :edit
-            end
-        rescue ArgumentError
-            @patient.errors.add(:dob, "must be a valid date")
-            @patient.dob = nil
+        @patient.assign_attributes(patient_params_splat(:first_name, :last_name, :sex, :dob, :as_provider))
+        if @patient.save
+            redirect_to @patient, notice: "Patient info was successfully updated"
+        else
             render :edit
         end
     end
