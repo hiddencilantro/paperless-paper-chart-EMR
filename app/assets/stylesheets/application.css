@@ -233,7 +233,7 @@ select {
     padding-left: 16px;
 }
 
-input[value="Create an account"], input[value="Create account"], input[value="Log in"], input[value="View patient directory"], input[value="Search"], input[value="Create patient record"], input[value="Edit patient info"], input[value="Save changes"], input[value="Change Email/Password"], input[value="Create new encounter"], input[value="Submit"], input[value="Edit SOAP"] {
+input[value="Create an account"], input[value="Create account"], input[value="Log in"], input[value="View patient directory"], input[value="Search"], input[value="Create patient record"], input[value="Edit patient info"], input[value="Save changes"], input[value="Change Email/Password"], input[value="Create new encounter"], input[value="Submit"], input[value="Edit SOAP"], input[value="Edit Physical"], input[value="Edit Well Child"] {
     font-size: 18px;
     font-weight: bold;
     line-height: 1.33;
