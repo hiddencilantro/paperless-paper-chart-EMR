@@ -16,19 +16,19 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: font-url('/assets/fonts/Roboto-Regular.ttf');
+    src: font-url('Roboto-Regular.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Roboto-Bold';
-    src: font-url('/assets/fonts/Roboto-Bold.ttf');
+    src: font-url('Roboto-Bold.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Roboto-Italic';
-    src: font-url('/assets/fonts/Roboto-Italic.ttf');
+    src: font-url('Roboto-Italic.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Roboto-Light';
-    src: font-url('/assets/fonts/Roboto-Light.ttf');
+    src: font-url('Roboto-Light.ttf') format('truetype');
 }
 
 body {
