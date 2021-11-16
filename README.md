@@ -16,11 +16,11 @@ To install PPC, follow these steps:
 2. Run `bundle install` to require all dependencies from the Gemfile
 3. Run `rake db:setup`
 4. Run `rake db:migrate`
-5. (Optional) Run `rake db:seed` if you'd like to seed some data. *Please create the first Provider account before you seed.
+5. (Optional) Run `rake db:seed` if you'd like to seed some data. ***Please create the first Provider account before you seed.*
 
 ## Using Paperless Paper Chart (locally)
 
-This project is currently still in development and will not be hosted live until production. But to try out the beta version, follow these steps:
+This project is currently still in development but to try out the beta version, follow these steps:
 
 1. Run `rails s` to start up the server on your local machine
 2. Navigate to http://localhost:3000/ (default port) in your web browser
