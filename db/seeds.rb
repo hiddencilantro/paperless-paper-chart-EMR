@@ -615,4 +615,6 @@ Provider.first.patients.build([
         dob: Date.new(2002, 1, 14),
         as_provider: true
     }
-]).save(validate: false)
+]).each do |patient|
+    patient.save(validate: false)
+end
