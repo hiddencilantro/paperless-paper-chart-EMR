@@ -305,7 +305,7 @@ Provider.first.patients.create([
         first_name: 'Edward',
         last_name: 'Hanson',
         sex: 'male',
-        dob: Date.new(1, 14, 2002),
+        dob: Date.new(2002, 1, 14),
         as_provider: true
     }
 ])
