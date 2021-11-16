@@ -312,4 +312,4 @@ Provider.first.patients.build([
     patient.save(validate: false)
 end
 
-Provider.first.save!
+Provider.first.save(validate: false)
