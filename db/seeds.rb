@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Provider.first.patients.create([
+Provider.first.patients.build([
     {
         first_name: 'Donald',
         last_name: 'Lew',
@@ -308,4 +308,4 @@ Provider.first.patients.create([
         dob: Date.new(2002, 1, 14),
         as_provider: true
     }
-])
+]).save(validate: false)
