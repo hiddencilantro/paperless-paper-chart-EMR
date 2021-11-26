@@ -16,11 +16,11 @@ To install PPC, follow these steps:
 2. Run `bundle install` to require all dependencies from the Gemfile
 3. Run `rake db:setup`
 4. Run `rake db:migrate`
-5. (Optional) Run `rake db:seed` if you'd like to seed some data. ***Please create the first Provider account before you seed.*
+5. (Optional) Run `rake db:seed` if you'd like to seed some dummy data. ***Please create the first Provider account before you seed.*
 
 ## Using Paperless Paper Chart (locally)
 
-This project is currently still in development but to try out the beta version, follow these steps:
+This project is currently still in development but to try out the alpha version, follow these steps:
 
 1. Run `rails s` to start up the server on your local machine
 2. Navigate to http://localhost:3000/ (default port) in your web browser
@@ -34,7 +34,7 @@ If you want to contact me you can reach me at <thehiddencilantro@gmail.com>.
 This project is under exclusive copyright and is currently not offering any license for open-source contributions. Nobody shall copy, distribute, or modify this project unless specified otherwise.
 
 ## Links
-[Beta version](https://shielded-beach-31390.herokuapp.com/)
+[Alpha version](https://shielded-beach-31390.herokuapp.com/)
 
 <!-- 
 
