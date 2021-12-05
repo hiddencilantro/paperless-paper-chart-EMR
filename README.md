@@ -1,4 +1,4 @@
-# Paperless Paper Chart (Beta)
+# Paperless Paper Chart (Alpha)
 
 Paperless Paper Chart is an Electronic Medical Record (EMR) system that allows both providers and patients to easily communicate, manage appointments, keep track of health records, and upload imaging or other documents. Its primary purpose is to seamlessly connect physicians with their patients using a straightforward and clutter-free platform that's convenient for any medical setting.
 
