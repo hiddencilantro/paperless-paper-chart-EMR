@@ -148,7 +148,7 @@ class PatientsController < ApplicationController
             if !@patient.valid?
                 render :new
             else
-                flash.now[:alert] = "We couldn't find you in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call."
+                flash.now[:alert] = "We couldn't find you in our database. <br> If you've never visited us before, please return to the main page and click the link to set up an appointment. <br> Otherwise, please make sure the information you entered is correct and try again. <br> If you're still experiencing issues, please give us a call. <br><br> *** NOTICE: The appointment feature is not yet available in this demo version. If you would like to test creating an account as a patient, please log in as a provider and add the patient record to the database first before trying again. Sorry for the incovenience. ***"
                 render :new
             end
         end
