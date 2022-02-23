@@ -215,7 +215,7 @@ input[type="text"], input[type="password"] {
     padding: 0px 20px 0px 20px;
 }
 
-input[type="text"]:disabled, input[type="password"]:disabled {
+input[type="text"]:disabled, input[type="password"]:disabled, .disabled {
     background-color: rgba(255, 255, 255, 0.753);
     color: rgb(167, 167, 167);
 }
