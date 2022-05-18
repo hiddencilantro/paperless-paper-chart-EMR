@@ -34,7 +34,7 @@ If you want to contact me you can reach me at <thehiddencilantro@gmail.com>.
 This project is under exclusive copyright and is currently not offering any license for open-source contributions. Nobody shall copy, distribute, or modify this project unless specified otherwise.
 
 ## Links
-[Alpha version](https://shielded-beach-31390.herokuapp.com/)
+[Alpha version](http://paperless-paper-chart.herokuapp.com/)
 
 <!-- 
 
